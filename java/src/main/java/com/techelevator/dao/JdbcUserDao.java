@@ -52,7 +52,7 @@ public class JdbcUserDao implements UserDao {
         List<User> users = new ArrayList<>();
         String sql = "select * from users";
 
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        SqlRowSet results = jdbcTemplate.   queryForRowSet(sql);
         while (results.next()) {
             User user = mapRowToUser(results);
             users.add(user);
