@@ -1,6 +1,8 @@
 -- ********************************************************************************
 -- This script creates the database users and grants them the necessary permissions
 -- ********************************************************************************
+DROP USER IF EXISTS final_capstone_appuser;
+DROP USER IF EXISTS final_capstone_owner;
 
 CREATE USER final_capstone_owner
 WITH PASSWORD 'finalcapstone';
