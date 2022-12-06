@@ -10,6 +10,6 @@ public class PostController {
     @Autowired
     private PostDao dao;
 
-    
+
 
 }
