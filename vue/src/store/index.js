@@ -25,6 +25,23 @@ export default new Vuex.Store({
     activePostId: 0,
 
     posts: [],
+    forums: [
+      {
+        "forumId": 1,
+        "name": "ducks",
+        "description": "We post pictures of ducks here",
+      },
+      {
+        "forumId": 2,
+        "name": "trucks",
+        "description": "We post pictures of trucks here",
+      },
+      {
+        "forumId": 3,
+        "name": "flowers",
+        "description": "We post pictures of flowers here",
+      }
+    ],
     post: {
       id: "",
       title: "",

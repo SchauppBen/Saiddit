@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import ForumView from "";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
@@ -50,6 +51,14 @@ const router = new Router({
       path: "/register",
       name: "register",
       component: Register,
+      meta: {
+        requiresAuth: false,
+      },
+    },
+    {
+      path: "/:forumName",
+      name: "forum-view",
+      component: ForumView,
       meta: {
         requiresAuth: false,
       },
