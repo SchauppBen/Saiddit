@@ -21,6 +21,9 @@ export default new Vuex.Store({
     token: currentToken || "",
     user: currentUser || {},
 
+    // The post that the user is currently viewing
+    activePostId: 0,
+
     posts: [
       {
         id: 1,
@@ -29,7 +32,7 @@ export default new Vuex.Store({
         media:
           "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/09/720/405/ducks-1.png?ve=1&tl=1",
         datetime: "2022-12-05 8:00:00",
-        forumId: 1,
+        forumName: "Ducks",
         username: "ThomASS",
       },
       {
@@ -39,7 +42,7 @@ export default new Vuex.Store({
         media:
           "https://www.thedrive.com/uploads/2022/05/27/Ram-Heavy-Hero.jpg?auto=webp&auto=webp&optimize=high&quality=70&width=1920",
         datetime: "2022-12-05 9:00:00",
-        forumId: 1,
+        forumName: "Trucks",
         username: "Kevbitch",
       },
     ],
@@ -70,5 +73,8 @@ export default new Vuex.Store({
       state.user = {};
       axios.defaults.headers.common = {};
     },
+    SET_ACTIVE_POST(state, postId) {
+      state.activePostId = postId;
+    }
   },
 });

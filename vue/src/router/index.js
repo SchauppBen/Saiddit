@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
+import PostDetails from "../views/PostDetails.vue";
 import Register from "../views/Register.vue";
 import store from "../store/index";
 
@@ -53,6 +54,14 @@ const router = new Router({
         requiresAuth: false,
       },
     },
+    {
+      path: "/:forumName/:postId",
+      name: "post-details",
+      component: PostDetails,
+      meta: {
+        requiresAuth: false,
+      },
+    }
   ],
 });
 
