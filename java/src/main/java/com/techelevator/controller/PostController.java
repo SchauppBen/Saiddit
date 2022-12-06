@@ -23,6 +23,11 @@ public class PostController {
         return dao.getPostsForHomePage();
     }
 
+    @PostMapping(path = "/{forumName}/posts/createNewPost")
+    public Post createNewPost(@RequestBody Post newPost) {
+        return dao.createNewPost(newPost);
+    }
+
     @GetMapping(path = "/{forumName}")
     public List<Post> getPostsByForum(@PathVariable String forumName) {
         return dao.getPostsByForum(forumName);

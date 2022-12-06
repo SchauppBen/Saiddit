@@ -10,4 +10,6 @@ public interface PostDao {
 
     List<Post> getPostsByForum(String forumName);
 
+    Post createNewPost(Post newPost);
+
 }
