@@ -1,5 +1,6 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS direct_messages;
 DROP TABLE IF EXISTS reply_votes;
 DROP TABLE IF EXISTS replies;
 DROP TABLE IF EXISTS post_votes;
@@ -68,9 +69,9 @@ CREATE TABLE replies (
 	text varchar(1000),
 	media_link varchar(50),
 	date_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
-	CONSTRAINT fk_post_id FOREIGN KEY (post_id) REFERENCES posts(post_id),
-	CONSTRAINT fk_reply_to_id FOREIGN KEY(reply_to_id) REFERENCES replies(reply_id)
+	CONSTRAINT fk_user_to_id FOREIGN KEY (user_to_id) REFERENCES users(user_id),
+	CONSTRAINT fk_user_from_id FOREIGN KEY (user_from_id) REFERENCES users(user_id),
+	CONSTRAINT fk_post_id FOREIGN KEY (post_id) REFERENCES posts(post_id)
 );
 
 CREATE TABLE reply_votes (
@@ -79,6 +80,17 @@ CREATE TABLE reply_votes (
 	is_upvote boolean NOT NULL,
 	date_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (user_id, reply_id)
+);
+
+CREATE TABLE direct_messages (
+	message_id serial PRIMARY KEY,
+	user_from_id int,
+	user_to_id int ,
+	text varchar(200),
+	media_link varchar(50),
+	time_sent timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT fk_user_from_id FOREIGN KEY(user_from_id) REFERENCES users(user_id),
+	CONSTRAINT fk_user_to_id FOREIGN KEY (user_to_id) REFERENCES users(user_id)
 );
 
 COMMIT TRANSACTION;
