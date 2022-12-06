@@ -32,6 +32,33 @@ public class JdbcPostDao implements PostDao {
         return getPosts;
     }
 
+    @Override
+    public List<Post> getPostsByForum(String forumName) {
+        List<Post> getPosts = new ArrayList<>();
+
+        String sql = "SELECT post_id, user_id, forum_id, title, text, media_link, date_time FROM posts JOIN forums USING (forum_id) WHERE forums.name = ?;";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, forumName);
+        while(rowSet.next()) {
+            getPosts.add(mapRowToPost(rowSet));
+        }
+        return getPosts;
+    }
+
+    @Override
+    public Post createNewPost(Post newPost) {
+        String sql = "INSERT INTO posts (user_id, forum_id, title, text, media_link) VALUES (?, ?, ?, ?, ?);";
+
+        Integer postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId()
+                                                    , newPost.getTitle(), newPost.getText(), newPost.getMediaLink());
+        if (postId != null) {
+            newPost.setPostId(postId);
+        } else {
+            return null;
+        }
+        return newPost;
+    }
+
     private Post mapRowToPost(SqlRowSet rowSet) {
         Post post = new Post();
         post.setPostId(rowSet.getInt("post_id"));

@@ -63,13 +63,13 @@ CREATE TABLE post_votes (
 
 CREATE TABLE replies (
 	reply_id SERIAL PRIMARY KEY,
-	user_to_id int NOT NULL,
+	reply_to_id int NOT NULL,
 	user_from_id int NOT NULL,
 	post_id int NOT NULL REFERENCES posts(post_id),
 	text varchar(1000),
 	media_link varchar(50),
 	date_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT fk_user_to_id FOREIGN KEY (user_to_id) REFERENCES users(user_id),
+	CONSTRAINT fk_reply_to_id FOREIGN KEY (reply_to_id) REFERENCES replies(reply_id),
 	CONSTRAINT fk_user_from_id FOREIGN KEY (user_from_id) REFERENCES users(user_id),
 	CONSTRAINT fk_post_id FOREIGN KEY (post_id) REFERENCES posts(post_id)
 );
