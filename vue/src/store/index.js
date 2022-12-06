@@ -24,28 +24,7 @@ export default new Vuex.Store({
     // The post that the user is currently viewing
     activePostId: 0,
 
-    posts: [
-      {
-        id: 1,
-        title: "Check out this duck",
-        text: "lol",
-        media:
-          "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/09/720/405/ducks-1.png?ve=1&tl=1",
-        datetime: "2022-12-05 8:00:00",
-        forumName: "Ducks",
-        username: "ThomASS",
-      },
-      {
-        id: 2,
-        title: "Example2",
-        text: "HAHAHA",
-        media:
-          "https://www.thedrive.com/uploads/2022/05/27/Ram-Heavy-Hero.jpg?auto=webp&auto=webp&optimize=high&quality=70&width=1920",
-        datetime: "2022-12-05 9:00:00",
-        forumName: "Trucks",
-        username: "Kevbitch",
-      },
-    ],
+    posts: [],
     post: {
       id: "",
       title: "",
@@ -72,6 +51,9 @@ export default new Vuex.Store({
       state.token = "";
       state.user = {};
       axios.defaults.headers.common = {};
+    },
+    SET_POSTS(state, data) {
+      state.posts = data;
     },
     SET_ACTIVE_POST(state, postId) {
       state.activePostId = postId;

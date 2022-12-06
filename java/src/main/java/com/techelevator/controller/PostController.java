@@ -23,7 +23,7 @@ public class PostController {
         return dao.getPostsForHomePage();
     }
 
-    @PostMapping(path = "/{forumName}/posts/createNewPost")
+    @PostMapping(path = "/{forumName}/posts/")
     public Post createNewPost(@RequestBody Post newPost) {
         return dao.createNewPost(newPost);
     }
