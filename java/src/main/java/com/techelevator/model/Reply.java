@@ -1,26 +1,29 @@
 package com.techelevator.model;
 
 import java.security.Timestamp;
+import java.time.LocalDate;
 
 public class Reply {
 
     private int replyId;
-    private User userFrom;
-    private User userTo;
+    private int userFrom;
+    private int replyTo;
     private int postId;
     private String replyText;
     private String mediaLink;
-    private Timestamp dateTime;
+    private LocalDate dateTime;
 
-    public Reply(int replyId, User userFrom, User userTo, int postId, String replyText, String mediaLink, Timestamp dateTime) {
+    public Reply(int replyId, int userFrom, int replyTo, int postId, String replyText, String mediaLink, LocalDate dateTime) {
         this.replyId = replyId;
         this.userFrom = userFrom;
-        this.userTo = userTo;
+        this.replyTo = replyTo;
         this.postId = postId;
         this.replyText = replyText;
         this.mediaLink = mediaLink;
         this.dateTime = dateTime;
     }
+
+    public Reply() {}
 
     public int getReplyId() {
         return replyId;
@@ -30,20 +33,20 @@ public class Reply {
         this.replyId = replyId;
     }
 
-    public User getUserFrom() {
+    public int getUserFrom() {
         return userFrom;
     }
 
-    public void setUserFrom(User userFrom) {
+    public void setUserFrom(int userFrom) {
         this.userFrom = userFrom;
     }
 
-    public User getUserTo() {
-        return userTo;
+    public int getReplyTo() {
+        return replyTo;
     }
 
-    public void setUserTo(User userTo) {
-        this.userTo = userTo;
+    public void setReplyTo(int replyTo) {
+        this.replyTo = replyTo;
     }
 
     public int getPostId() {
@@ -70,11 +73,11 @@ public class Reply {
         this.mediaLink = mediaLink;
     }
 
-    public Timestamp getDateTime() {
+    public LocalDate getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Timestamp dateTime) {
+    public void setDateTime(LocalDate dateTime) {
         this.dateTime = dateTime;
     }
 
