@@ -6,4 +6,6 @@ public interface ForumDao {
 
     Forum createNewForum(Forum newForum);
 
+    Forum getForumByName(String forumName);
+
 }

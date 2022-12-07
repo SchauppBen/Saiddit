@@ -62,7 +62,7 @@ public class JdbcPostDao implements PostDao {
             postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId(),
                     newPost.getTitle(), newPost.getText());
         } else {
-            sql = "INSERT INTO posts (user_id, forum_id, title, text) VALUES (?, ?, ?, ?, ?) RETURNING post_id;";
+            sql = "INSERT INTO posts (user_id, forum_id, title, text, media_link) VALUES (?, ?, ?, ?, ?) RETURNING post_id;";
             postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId()
                     , newPost.getTitle(), newPost.getText(), newPost.getMediaLink());
         }

@@ -25,4 +25,25 @@ public class JdbcForumDao implements ForumDao {
         }
         return newForum;
     }
+
+    @Override
+    public Forum getForumByName(String forumName) {
+        String sql = "SELECT * FROM forums WHERE name = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, forumName);
+        if (rowSet.next()) {
+            return mapRowSetToForum(rowSet);
+        }
+        return null;
+    }
+
+    public Forum mapRowSetToForum(SqlRowSet rowSet) {
+        Forum forum = new Forum();
+        forum.setForumId(rowSet.getInt("forum_id"));
+        forum.setName(rowSet.getString("name"));
+        forum.setDescription(rowSet.getString("description"));
+        if (rowSet.getDate("time_created") != null) {
+            forum.setDateCreated(rowSet.getDate("time_created").toLocalDate());
+        }
+        return forum;
+    }
 }

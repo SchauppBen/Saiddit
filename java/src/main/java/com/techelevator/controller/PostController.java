@@ -12,25 +12,25 @@ import java.util.List;
 public class PostController {
 
     @Autowired
-    private final PostDao dao;
+    private final PostDao postDao;
 
-    public PostController(PostDao dao) {
-        this.dao = dao;
+    public PostController(PostDao postDao) {
+        this.postDao = postDao;
     }
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "/posts")
     public List<Post> getPostsForHomePage() {
-        return dao.getPostsForHomePage();
+        return postDao.getPostsForHomePage();
     }
 
     @PostMapping(path = "/{forumName}/posts/createNewPost")
     public Post createNewPost(@RequestBody Post newPost) {
-        return dao.createNewPost(newPost);
+        return postDao.createNewPost(newPost);
     }
 
-    @GetMapping(path = "/{forumName}")
+    @GetMapping(path = "/{forumName}/posts")
     public List<Post> getPostsByForum(@PathVariable String forumName) {
-        return dao.getPostsByForum(forumName);
+        return postDao.getPostsByForum(forumName);
     }
 
 }

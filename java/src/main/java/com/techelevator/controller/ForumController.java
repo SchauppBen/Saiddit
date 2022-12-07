@@ -2,10 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.ForumDao;
 import com.techelevator.model.Forum;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -13,15 +10,20 @@ import javax.validation.Valid;
 @CrossOrigin
 public class ForumController {
 
-    private ForumDao dao;
+    private final ForumDao forumDao;
 
-    public ForumController(ForumDao dao) {
-        this.dao = dao;
+    public ForumController(ForumDao forumDao) {
+        this.forumDao = forumDao;
     }
 
-    @PostMapping(path = "/")
+    @PostMapping(path = "/forums/createNewForum")
     public Forum createNewForum(@Valid @RequestBody Forum forum) {
-        return dao.createNewForum(forum);
+        return forumDao.createNewForum(forum);
+    }
+
+    @GetMapping(path = "/forums/{forumName}")
+    public Forum getForumByName(@PathVariable String forumName) {
+        return forumDao.getForumByName(forumName);
     }
 
 }
