@@ -2,7 +2,7 @@
   <div class="home">
     <div id ="body">
       <NavBar id="nav"/>
-      <posts />
+      <posts id="post-list"/>
     </div>
     
     <!-- ACTIVE FORUMS ON THE RIGHT SIDE -->
@@ -22,10 +22,14 @@ export default {
 
 <style scoped>
   #body {
-    display: flex
+    display: flex;
     
   }
-
+  #post-list {
+    justify-content: center;
+    width: 100%;
+    
+  }
 </style>
   
 

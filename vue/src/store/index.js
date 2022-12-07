@@ -47,8 +47,14 @@ export default new Vuex.Store({
     SET_POSTS(state, data) {
       state.posts = data;
     },
+    SAVE_POST(state, post) {
+      state.post.push(post);
+    },
     SET_ACTIVE_POST(state, postId) {
       state.activePostId = postId;
     },
+    SET_FORUMS(state, data) {
+      state.forums = data;
+    }
   }
 });

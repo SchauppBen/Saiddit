@@ -19,4 +19,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+
+#postBox img {
+  width: 500px;
+}
+</style>
