@@ -36,7 +36,7 @@ public class JdbcForumDao implements ForumDao {
     public List<Forum> getAllForums() {
         List<Forum> allForums = new ArrayList<>();
 
-        String sql = "SELECT * FROM forums;";
+        String sql = "SELECT * FROM forums ORDER BY name;";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
         while(rowSet.next()) {
             allForums.add(mapRowSetToForum(rowSet));
@@ -63,6 +63,16 @@ public class JdbcForumDao implements ForumDao {
         }
         return null;
     }
+
+//    @Override
+//    public void deleteForum(int forumId) {
+//        String sql = "DELETE FROM posts WHERE forum_id = ?;";
+//        jdbcTemplate.update(sql, forumId);
+//        sql = "DELETE FROM forums_users WHERE forum_id = ?;";
+//        jdbcTemplate.update(sql, forumId);
+//        sql = "DELETE FROM forums WHERE forum_id = ?;";
+//    }
+    // NOT WORKING DO THIS LATER IF WE HAVE TIME
 
     @Override
     public void addUserToForum(int forumId, int userId) {

@@ -35,6 +35,11 @@ public class PostController {
         return postDao.createNewPost(newPost);
     }
 
+    @PutMapping(path = "/posts/{postId}")
+    public void editPost(@PathVariable int postId, @RequestBody Post post) {
+        postDao.editPost(postId, post);
+    }
+
     @GetMapping(path = "/posts/search/{searchString}")
     public List<Post> searchPosts(@PathVariable String searchString) {
         return postDao.searchPosts(searchString);

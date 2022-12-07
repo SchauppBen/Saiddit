@@ -21,4 +21,6 @@ public interface ForumDao {
 
     Forum getForumByName(String forumName);
 
+//    void deleteForum(int forumId);
+
 }

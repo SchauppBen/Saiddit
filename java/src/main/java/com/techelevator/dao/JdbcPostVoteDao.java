@@ -14,14 +14,14 @@ public class JdbcPostVoteDao implements PostVoteDao {
     }
 
     @Override
-    public void upvotePost(int userId, int postId) {
+    public void upvotePost(PostVote postVote) {
         String sql = "INSERT INTO post_votes (user_id, post_id, is_upvote) VALUES (?, ?, true)";
-        jdbcTemplate.update(sql, userId, postId);
+        jdbcTemplate.update(sql, postVote.getUserId(), postVote.getPostId());
     }
 
     @Override
-    public void downvotePost(int userId, int postId) {
+    public void downvotePost(PostVote postVote) {
         String sql = "INSERT INTO post_votes (user_id, post_id, is_upvote) VALUES (?, ?, false)";
-        jdbcTemplate.update(sql, userId, postId);
+        jdbcTemplate.update(sql, postVote.getUserId(), postVote.getPostId());
     }
 }

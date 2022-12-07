@@ -53,4 +53,11 @@ public class ForumController {
         forumDao.addUserToForum(forumId, userId);
     }
 
+    //DOESN'T WORK
+//    @DeleteMapping(path = "/forums/{forumId}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void deleteForum(@PathVariable int forumId) {
+//        forumDao.deleteForum(forumId);
+//    }
+
 }
