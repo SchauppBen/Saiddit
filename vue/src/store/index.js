@@ -23,15 +23,6 @@ export default new Vuex.Store({
 
     // The post that the user is currently viewing
     activePostId: 0,
-    activePost: {
-      id: "",
-      title: "",
-      text: "I love sucking big cocks",
-      media: "",
-      datetime: "",
-      forumId: "",
-      userId: "",
-    },
 
     posts: [],
     post: {
@@ -64,8 +55,8 @@ export default new Vuex.Store({
     SET_POSTS(state, data) {
       state.posts = data;
     },
-    SET_ACTIVE_POST(state, data) {
-      state.activePost = data;
-    }
-  },
+    SET_ACTIVE_POST(state, postId) {
+      state.activePostId = postId;
+    },
+  }
 });

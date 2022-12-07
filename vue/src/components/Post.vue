@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'post-details', params: { forumName: post.forumName, postId: post.id} }">
+  <router-link :to="{ name: 'post-details', params: { postId: post.id} }">
     <div id="postBox">
       <h4>{{ post.forumName }}</h4>
       <h1>{{ post.title }}</h1> 
