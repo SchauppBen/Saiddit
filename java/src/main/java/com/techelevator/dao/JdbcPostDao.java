@@ -13,10 +13,12 @@ public class JdbcPostDao implements PostDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final ForumDao forumDao;
+    private final UserDao userDao;
 
-    public JdbcPostDao(JdbcTemplate jdbcTemplate, ForumDao forumDao) {
+    public JdbcPostDao(JdbcTemplate jdbcTemplate, ForumDao forumDao, UserDao userDao) {
         this.jdbcTemplate = jdbcTemplate;
         this.forumDao = forumDao;
+        this.userDao = userDao;
     }
 
 
@@ -82,6 +84,7 @@ public class JdbcPostDao implements PostDao {
         Post post = new Post();
         post.setPostId(rowSet.getInt("post_id"));
         post.setUserId(rowSet.getInt("user_id"));
+        post.setUsername(userDao.getUserById(post.getUserId()).getUsername());
         post.setForumId(rowSet.getInt("forum_id"));
         post.setForumName(forumDao.getForumById(post.getForumId()).getName());
         post.setTitle(rowSet.getString("title"));

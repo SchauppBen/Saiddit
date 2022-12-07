@@ -30,4 +30,9 @@ public class ForumController {
         return forumDao.getForumByName(forumName);
     }
 
+    @GetMapping(path = "/forums/{forumId}/users/{userId}")
+    public void addUserToForum(@PathVariable int forumId, @PathVariable int userId) {
+        forumDao.addUserToForum(forumId, userId);
+    }
+
 }

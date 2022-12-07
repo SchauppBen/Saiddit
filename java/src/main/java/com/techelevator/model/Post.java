@@ -6,6 +6,7 @@ public class Post {
 
     private int postId;
     private int userId;
+    private String username;
     private int forumId;
     private String forumName;
     private String title;
@@ -38,6 +39,14 @@ public class Post {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getForumId() {
