@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class JdbcForumDao implements ForumDao {
 
@@ -53,6 +56,22 @@ public class JdbcForumDao implements ForumDao {
     public void addUserToForum(int forumId, int userId) {
         String sql = "INSERT INTO forums_users (forum_id, user_id, is_moderator) VALUES (?, ?, false)";
         jdbcTemplate.update(sql, forumId, userId);
+    }
+
+    @Override
+    public List<Forum> searchForums(String searchString) {
+        List<Forum> forums = new ArrayList<>();
+        String sql = "SELECT * FROM forums WHERE name ILIKE ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, "%" + searchString + "%");
+        while(rowSet.next()) {
+            forums.add(mapRowSetToForum(rowSet));
+        }
+        return forums;
+    }
+
+    @Override
+    public Forum updateForum(Forum oldForum, Forum newForum) {
+        return null;
     }
 
     public Forum mapRowSetToForum(SqlRowSet rowSet) {

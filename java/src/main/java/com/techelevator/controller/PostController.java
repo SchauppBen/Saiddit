@@ -27,10 +27,15 @@ public class PostController {
         return postDao.getPostsForHomePage();
     }
 
-    @PostMapping(path = "forums/{forumName}/posts/createNewPost")
+    @PostMapping(path = "forums/{forumName}/posts/")
     public Post createNewPost(@RequestBody Post newPost, Principal principal) {
         newPost.setUserId(userDao.findIdByUsername(principal.getName()));
         return postDao.createNewPost(newPost);
+    }
+
+    @GetMapping(path = "/posts/search/{searchString}")
+    public List<Post> searchPosts(@PathVariable String searchString) {
+        return postDao.searchPosts(searchString);
     }
 
     @GetMapping(path = "forums/{forumName}/posts")

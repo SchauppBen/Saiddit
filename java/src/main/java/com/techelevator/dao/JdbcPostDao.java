@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Forum;
 import com.techelevator.model.Post;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -78,6 +79,17 @@ public class JdbcPostDao implements PostDao {
             return null;
         }
         return newPost;
+    }
+
+    @Override
+    public List<Post> searchPosts(String searchString) {
+        List<Post> posts = new ArrayList<>();
+        String sql = "SELECT * FROM posts WHERE title ILIKE ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, "%" + searchString + "%");
+        while(rowSet.next()) {
+            posts.add(mapRowToPost(rowSet));
+        }
+        return posts;
     }
 
     private Post mapRowToPost(SqlRowSet rowSet) {
