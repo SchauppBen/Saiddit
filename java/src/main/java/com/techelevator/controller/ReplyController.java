@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Null;
 
 @RestController
+@CrossOrigin
 public class ReplyController {
 
     private ReplyDao dao;

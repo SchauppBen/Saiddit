@@ -6,7 +6,19 @@ export default {
     return axios.get("/");
   },
 
-  addPost(forumName, post) {
-    return axios.post(`/${forumName}/posts`, post);
-  }
+  getPost(postID) {
+    return axios.get(`/posts/${postID}`);
+  },
+
+  addPost(post) {
+    return axios.post("/posts", post);
+  },
+
+  updatePost(post, postID) {
+    return axios.put(`/posts/${postID}`, post);
+  },
+
+  deletePost(postID) {
+    return axios.get(`/posts/${postID}`);
+  },
 };

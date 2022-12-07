@@ -21,13 +21,36 @@ export default new Vuex.Store({
     token: currentToken || "",
     user: currentUser || {},
 
-    // The post that the user is currently viewing
-    activePostId: 0,
-
-    posts: [],
-    forums: [
-      
-
+    posts: [
+      {
+        id: 1,
+        title: "Check out this duck",
+        text: "lol",
+        media:
+          "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/09/720/405/ducks-1.png?ve=1&tl=1",
+        datetime: "2022-12-05 8:00:00",
+        forumId: 1,
+        username: "ThomASS",
+      },
+      {
+        id: 2,
+        title: "Example2",
+        text: "HAHAHA",
+        media:
+          "https://www.thedrive.com/uploads/2022/05/27/Ram-Heavy-Hero.jpg?auto=webp&auto=webp&optimize=high&quality=70&width=1920",
+        datetime: "2022-12-05 9:00:00",
+        forumId: 1,
+        username: "Kevbitch",
+      },
+      {
+        id: 3,
+        title: "ThomASS is a fraud",
+        text: "User ThomASS tried to scam me yesterday, don't interact with him, we should get a moderator to ban him.",
+        media: "",
+        datetime: "2022-12-06 10:31:21",
+        forumId: 1,
+        username: "Ben Schitt"
+      },
     ],
     post: {
       id: "",

@@ -47,10 +47,25 @@ public class JdbcPostDao implements PostDao {
 
     @Override
     public Post createNewPost(Post newPost) {
-        String sql = "INSERT INTO posts (user_id, forum_id, title, text, media_link) VALUES (?, ?, ?, ?, ?);";
-
-        Integer postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId()
-                                                    , newPost.getTitle(), newPost.getText(), newPost.getMediaLink());
+        String sql = "";
+        Integer postId = null;
+        if (newPost.getText() == null && newPost.getMediaLink() == null) {
+            sql = "INSERT INTO posts (user_id, forum_id, title) VALUES (?, ?, ?) RETURNING post_id";
+            postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId(),
+                    newPost.getTitle());
+        } else if (newPost.getText() == null) {
+            sql = "INSERT INTO posts (user_id, forum_id, title, media_link) VALUES (?, ?, ?, ?) RETURNING post_id;";
+            postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId(),
+                    newPost.getTitle(), newPost.getMediaLink());
+        } else if (newPost.getMediaLink() == null) {
+            sql = "INSERT INTO posts (user_id, forum_id, title, text) VALUES (?, ?, ?, ?) RETURNING post_id;";
+            postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId(),
+                    newPost.getTitle(), newPost.getText());
+        } else {
+            sql = "INSERT INTO posts (user_id, forum_id, title, text) VALUES (?, ?, ?, ?, ?) RETURNING post_id;";
+            postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId()
+                    , newPost.getTitle(), newPost.getText(), newPost.getMediaLink());
+        }
         if (postId != null) {
             newPost.setPostId(postId);
         } else {
