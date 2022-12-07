@@ -1,10 +1,12 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.PostDao;
+import com.techelevator.dao.UserDao;
 import com.techelevator.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -13,9 +15,11 @@ public class PostController {
 
     @Autowired
     private final PostDao postDao;
+    private final UserDao userDao;
 
-    public PostController(PostDao postDao) {
+    public PostController(PostDao postDao, UserDao userDao) {
         this.postDao = postDao;
+        this.userDao = userDao;
     }
 
     @GetMapping(path = "/posts")
@@ -23,12 +27,13 @@ public class PostController {
         return postDao.getPostsForHomePage();
     }
 
-    @PostMapping(path = "/{forumName}/posts/createNewPost")
-    public Post createNewPost(@RequestBody Post newPost) {
+    @PostMapping(path = "forums/{forumName}/posts/createNewPost")
+    public Post createNewPost(@RequestBody Post newPost, Principal principal) {
+        newPost.setUserId(userDao.findIdByUsername(principal.getName()));
         return postDao.createNewPost(newPost);
     }
 
-    @GetMapping(path = "/{forumName}/posts")
+    @GetMapping(path = "forums/{forumName}/posts")
     public List<Post> getPostsByForum(@PathVariable String forumName) {
         return postDao.getPostsByForum(forumName);
     }

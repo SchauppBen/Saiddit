@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Forum;
+import com.techelevator.model.User;
 import org.springframework.stereotype.Component;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -15,7 +16,7 @@ public class JdbcForumDao implements ForumDao {
     }
 
     @Override
-    public Forum createNewForum(Forum newForum) {
+    public Forum createNewForum(Forum newForum, User userCreated) {
         String sql = "INSERT INTO forums (name, description) VALUES (?, ?) RETURNING forum_id;";
         Integer forumId = jdbcTemplate.queryForObject(sql, Integer.class, newForum.getName(), newForum.getDescription());
         if (forumId != null) {
@@ -24,6 +25,16 @@ public class JdbcForumDao implements ForumDao {
             return null;
         }
         return newForum;
+    }
+
+    @Override
+    public Forum getForumById(int id) {
+        String sql = "SELECT * FROM forums WHERE forum_id = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
+        if (rowSet.next()) {
+            return mapRowSetToForum(rowSet);
+        }
+        return null;
     }
 
     @Override
