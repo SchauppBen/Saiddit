@@ -9,6 +9,8 @@ public interface ForumDao {
 
     Forum createNewForum(Forum newForum, User userCreated);
 
+    List<Forum> getAllForums();
+
     Forum getForumById(int id);
 
     void addUserToForum(int forumId, int userId);

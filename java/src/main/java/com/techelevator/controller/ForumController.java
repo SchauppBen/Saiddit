@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.ForumDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Forum;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,8 +23,14 @@ public class ForumController {
     }
 
     @PostMapping(path = "/forums/createNewForum")
+    @ResponseStatus(HttpStatus.CREATED)
     public Forum createNewForum(@Valid @RequestBody Forum forum, Principal principal) {
         return forumDao.createNewForum(forum, userDao.findByUsername(principal.getName()));
+    }
+
+    @GetMapping(path = "/forums")
+    public List<Forum> getAllForums() {
+        return forumDao.getAllForums();
     }
 
     @GetMapping(path = "/forums/{forumName}")
@@ -35,6 +42,7 @@ public class ForumController {
     public List<Forum> searchForums(@PathVariable String searchString) {
         return forumDao.searchForums(searchString);
     }
+
     @PutMapping(path = "/forums/{forumName}")
     public Forum updateForum(@PathVariable String forumName, @RequestBody Forum forum) {
         return forumDao.updateForum(forumDao.getForumByName(forumName), forum);

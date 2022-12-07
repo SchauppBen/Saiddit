@@ -33,6 +33,18 @@ public class JdbcForumDao implements ForumDao {
     }
 
     @Override
+    public List<Forum> getAllForums() {
+        List<Forum> allForums = new ArrayList<>();
+
+        String sql = "SELECT * FROM forums;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
+        while(rowSet.next()) {
+            allForums.add(mapRowSetToForum(rowSet));
+        }
+        return allForums;
+    }
+
+    @Override
     public Forum getForumById(int id) {
         String sql = "SELECT * FROM forums WHERE forum_id = ?";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
@@ -71,7 +83,12 @@ public class JdbcForumDao implements ForumDao {
 
     @Override
     public Forum updateForum(Forum oldForum, Forum newForum) {
-        return null;
+        if (oldForum.getForumId() != newForum.getForumId() && !oldForum.getName().equals(newForum.getName())) {
+            return oldForum;
+        }
+        String sql = "UPDATE forums SET description = ? WHERE forum_id = ?";
+        jdbcTemplate.update(sql, newForum.getDescription(), oldForum.getForumId());
+        return newForum;
     }
 
     public Forum mapRowSetToForum(SqlRowSet rowSet) {
