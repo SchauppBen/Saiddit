@@ -12,9 +12,11 @@ import java.util.List;
 public class JdbcPostDao implements PostDao {
 
     private final JdbcTemplate jdbcTemplate;
+    private final ForumDao forumDao;
 
-    public JdbcPostDao(JdbcTemplate jdbcTemplate) {
+    public JdbcPostDao(JdbcTemplate jdbcTemplate, ForumDao forumDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.forumDao = forumDao;
     }
 
 
@@ -25,9 +27,11 @@ public class JdbcPostDao implements PostDao {
         String sql = "SELECT * FROM posts;";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
 
+
         while(rowSet.next()) {
             getPosts.add(mapRowToPost(rowSet));
         }
+
 
         return getPosts;
     }
@@ -79,6 +83,7 @@ public class JdbcPostDao implements PostDao {
         post.setPostId(rowSet.getInt("post_id"));
         post.setUserId(rowSet.getInt("user_id"));
         post.setForumId(rowSet.getInt("forum_id"));
+        post.setForumName(forumDao.getForumById(post.getForumId()).getName());
         post.setTitle(rowSet.getString("title"));
         post.setText(rowSet.getString("text"));
         post.setMediaLink(rowSet.getString("media_link"));

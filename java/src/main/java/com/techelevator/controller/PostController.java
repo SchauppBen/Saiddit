@@ -1,10 +1,12 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.PostDao;
+import com.techelevator.dao.UserDao;
 import com.techelevator.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -12,25 +14,28 @@ import java.util.List;
 public class PostController {
 
     @Autowired
-    private final PostDao dao;
+    private final PostDao postDao;
+    private final UserDao userDao;
 
-    public PostController(PostDao dao) {
-        this.dao = dao;
+    public PostController(PostDao postDao, UserDao userDao) {
+        this.postDao = postDao;
+        this.userDao = userDao;
     }
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "/posts")
     public List<Post> getPostsForHomePage() {
-        return dao.getPostsForHomePage();
+        return postDao.getPostsForHomePage();
     }
 
-    @PostMapping(path = "/{forumName}/posts/")
-    public Post createNewPost(@RequestBody Post newPost) {
-        return dao.createNewPost(newPost);
+    @PostMapping(path = "forums/{forumName}/posts/createNewPost")
+    public Post createNewPost(@RequestBody Post newPost, Principal principal) {
+        newPost.setUserId(userDao.findIdByUsername(principal.getName()));
+        return postDao.createNewPost(newPost);
     }
 
-    @GetMapping(path = "/{forumName}")
+    @GetMapping(path = "forums/{forumName}/posts")
     public List<Post> getPostsByForum(@PathVariable String forumName) {
-        return dao.getPostsByForum(forumName);
+        return postDao.getPostsByForum(forumName);
     }
 
 }
