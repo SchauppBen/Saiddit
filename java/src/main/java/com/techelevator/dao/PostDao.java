@@ -8,4 +8,8 @@ public interface PostDao {
 
     List<Post> getPostsForHomePage();
 
+    List<Post> getPostsByForum(String forumName);
+
+    Post createNewPost(Post newPost);
+
 }

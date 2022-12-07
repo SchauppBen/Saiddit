@@ -3,10 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.PostDao;
 import com.techelevator.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,15 @@ public class PostController {
         return dao.getPostsForHomePage();
     }
 
+    @PostMapping(path = "/{forumName}/posts/")
+    public Post createNewPost(@RequestBody Post newPost) {
+        return dao.createNewPost(newPost);
+    }
+
+    @GetMapping(path = "/{forumName}")
+    public List<Post> getPostsByForum(@PathVariable String forumName) {
+        return dao.getPostsByForum(forumName);
+    }
 
 
 
