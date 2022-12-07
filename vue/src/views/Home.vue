@@ -1,12 +1,18 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
-    <p>You must be authenticated to see this</p>
+    <Header />
+    <!-- NAVIGATION BAR ON THE LEFT SIDE -->
+    <!-- ACTIVE FORUMS ON THE RIGHT SIDE -->
+    <posts />
+    <!-- POSTS COMPONENT -->
   </div>
 </template>
 
 <script>
+import Header from "../components/Header.vue";
+import posts from "../components/Posts.vue";
 export default {
-  name: "home"
+  name: "home",
+  components: { posts, Header },
 };
 </script>
