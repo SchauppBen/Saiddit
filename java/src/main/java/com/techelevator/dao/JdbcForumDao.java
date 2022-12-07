@@ -24,6 +24,8 @@ public class JdbcForumDao implements ForumDao {
         } else {
             return null;
         }
+        sql = "INSERT INTO forums_users (forum_id, user_id, is_moderator) VALUES (?, ?, true);";
+        jdbcTemplate.update(sql, newForum.getForumId(), userCreated.getId());
         return newForum;
     }
 
@@ -45,6 +47,12 @@ public class JdbcForumDao implements ForumDao {
             return mapRowSetToForum(rowSet);
         }
         return null;
+    }
+
+    @Override
+    public void addUserToForum(int forumId, int userId) {
+        String sql = "INSERT INTO forums_users (forum_id, user_id, is_moderator) VALUES (?, ?, false)";
+        jdbcTemplate.update(sql, forumId, userId);
     }
 
     public Forum mapRowSetToForum(SqlRowSet rowSet) {

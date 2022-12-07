@@ -9,6 +9,9 @@ public interface ForumDao {
 
     Forum getForumById(int id);
 
+    void addUserToForum(int forumId, int userId);
+
+
     Forum getForumByName(String forumName);
 
 }
