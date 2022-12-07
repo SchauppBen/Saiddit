@@ -93,4 +93,26 @@ CREATE TABLE direct_messages (
 	CONSTRAINT fk_user_to_id FOREIGN KEY (user_to_id) REFERENCES users(user_id)
 );
 
+
+INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+INSERT INTO users (username,password_hash,role) VALUES ('thomas','$2a$10$o5.Ewr63EeKteAETT66C3OfH0hAf70edtJYeF5HEyr.xK7irTOdKW','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('tommy','$2a$10$lqxLRsaMs2jlYS4EpK45DOTRzDO5wvXsuJ4jUj1x75ghHk3LY6rAG','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('kevin','$2a$10$beTSk0ZDcT/2bcYxnzDwdOZak/VCT.45JRwMIG/0s2fHh0CsjZ/zq','ROLE_USER');
+
+INSERT INTO forums (name, description) VALUES ('ducks','We post pictures of ducks here');
+INSERT INTO forums (name, description) VALUES ('trucks','We post pictures of trucks here');
+INSERT INTO forums (name, description) VALUES ('flowers','We post pictures of flowers here');
+
+INSERT INTO posts (user_id, forum_id, title, text, media_link)
+		   VALUES (3, 1, 'Check out this duck', 'lol',
+				   'https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/09/720/405/ducks-1.png?ve=1&tl=1');
+INSERT INTO posts (user_id, forum_id, title, text, media_link)
+		   VALUES (5, 2, 'Example2', 'HAHAHAHA',
+				   'https://www.thedrive.com/uploads/2022/05/27/Ram-Heavy-Hero.jpg?auto=webp&auto=webp&optimize=high&quality=70&width=1920');
+INSERT INTO posts (user_id, forum_id, title, text, media_link)
+		   VALUES (4, 3, 'purple flower', 'woooo',
+				   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx4r3njXKlHUhqmsDkuxfAnUhVTSecf_1oRJWTpcAY1SV7jLHC18alzpm-zUhQU85J2jo&usqp=CAU');
+
+
 COMMIT TRANSACTION;

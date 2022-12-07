@@ -1,8 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
+import ForumView from "../views/ForumView.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
+import PostDetails from "../views/PostDetails.vue";
 import Register from "../views/Register.vue";
 import store from "../store/index";
 
@@ -53,6 +55,22 @@ const router = new Router({
         requiresAuth: false,
       },
     },
+    {
+      path: "/:forumName",
+      name: "forum-view",
+      component: ForumView,
+      meta: {
+        requiresAuth: false,
+      },
+    },
+    {
+      path: "/:forumId/:postId",
+      name: "post-details",
+      component: PostDetails,
+      meta: {
+        requiresAuth: false,
+      },
+    }
   ],
 });
 
