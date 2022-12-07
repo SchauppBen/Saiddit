@@ -1,6 +1,6 @@
 <template>
   <div id="Posts">
-      <post v-for="post in $store.state.posts" :key="post.id" :post="post" />
+      <post v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
 
@@ -19,7 +19,11 @@ export default {
       });
     }
   },
-  computed: {},
+  computed: {
+    posts() {
+      return this.$store.state.posts;
+    }
+  },
   created() {
     this.getPosts();
   }

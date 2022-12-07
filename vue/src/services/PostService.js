@@ -6,6 +6,10 @@ export default {
     return axios.get("/");
   },
 
+  getPost(forumId, postId) {
+    return axios.get(`/${forumId}/posts/${postId}`);
+  },
+
   addPost(forumName, post) {
     return axios.post(`/${forumName}/posts`, post);
   }
