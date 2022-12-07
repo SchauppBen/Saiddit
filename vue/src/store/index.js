@@ -42,6 +42,15 @@ export default new Vuex.Store({
         forumId: 1,
         username: "Kevbitch",
       },
+      {
+        id: 3,
+        title: "ThomASS is a fraud",
+        text: "User ThomASS tried to scam me yesterday, don't interact with him, we should get a moderator to ban him.",
+        media: "",
+        datetime: "2022-12-06 10:31:21",
+        forumId: 1,
+        username: "Ben Schitt"
+      },
     ],
     post: {
       id: "",

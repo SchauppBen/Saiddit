@@ -1,5 +1,5 @@
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "http://localhost:9000";
 
 export default {
   getPosts() {
@@ -14,7 +14,7 @@ export default {
     return axios.post("/posts", post);
   },
 
-  updatePost(post) {
+  updatePost(post, postID) {
     return axios.put(`/posts/${postID}`, post);
   },
 
