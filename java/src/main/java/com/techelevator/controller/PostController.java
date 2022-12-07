@@ -4,6 +4,7 @@ import com.techelevator.dao.PostDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -28,6 +29,7 @@ public class PostController {
     }
 
     @PostMapping(path = "forums/{forumName}/posts/")
+    @ResponseStatus(HttpStatus.CREATED)
     public Post createNewPost(@RequestBody Post newPost, Principal principal) {
         newPost.setUserId(userDao.findIdByUsername(principal.getName()));
         return postDao.createNewPost(newPost);
