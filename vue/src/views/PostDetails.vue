@@ -20,7 +20,7 @@ export default {
     components: {},
     computed: {
         post() {  return this.$store.state.posts.find( (post) => {
-                return post.id === this.$store.state.activePostId;
+                return post.postId === this.$store.state.activePostId;
             });
         }
     },

@@ -24,16 +24,7 @@ export default new Vuex.Store({
     // The post that the user is currently viewing
     activePostId: 0,
 
-    posts: [],
-    post: {
-      id: "",
-      title: "",
-      text: "",
-      media: "",
-      datetime: "",
-      forumId: "",
-      userId: "",
-    },
+    posts: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
