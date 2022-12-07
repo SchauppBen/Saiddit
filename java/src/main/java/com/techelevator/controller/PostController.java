@@ -33,6 +33,4 @@ public class PostController {
         return dao.getPostsByForum(forumName);
     }
 
-
-
 }
