@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <Header />
-    <!-- NAVIGATION BAR ON THE LEFT SIDE -->
+    <div id ="body">
+      <NavBar id="nav"/>
+      <posts />
+    </div>
+    
     <!-- ACTIVE FORUMS ON THE RIGHT SIDE -->
-    <posts />
+    
     <!-- POSTS COMPONENT -->
   </div>
 </template>
 
 <script>
-import Header from "../components/Header.vue";
+import NavBar from "../components/NavBar.vue";
 import posts from "../components/Posts.vue";
 export default {
   name: "home",
-  components: { posts, Header },
+  components: { posts, NavBar },
 };
 </script>
+
+<style scoped>
+  #body {
+    display: flex
+    
+  }
+
+</style>
+  
+

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import CreatePost from "../views/CreatePost";
 import ForumView from "../views/ForumView.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
@@ -64,13 +65,21 @@ const router = new Router({
       },
     },
     {
-      path: "//:postId",
+      path: "/:forumName/:postId",
       name: "post-details",
       component: PostDetails,
       meta: {
         requiresAuth: false,
       },
-    }
+    },
+    {
+      path: "/createPost",
+      name: "create-post",
+      component: CreatePost,
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 });
 
