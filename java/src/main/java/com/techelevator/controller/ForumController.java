@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -28,6 +29,15 @@ public class ForumController {
     @GetMapping(path = "/forums/{forumName}")
     public Forum getForumByName(@PathVariable String forumName) {
         return forumDao.getForumByName(forumName);
+    }
+
+    @GetMapping(path = "/forums/search/{searchString}")
+    public List<Forum> searchForums(@PathVariable String searchString) {
+        return forumDao.searchForums(searchString);
+    }
+    @PutMapping(path = "/forums/{forumName}")
+    public Forum updateForum(@PathVariable String forumName, @RequestBody Forum forum) {
+        return forumDao.updateForum(forumDao.getForumByName(forumName), forum);
     }
 
     @GetMapping(path = "/forums/{forumId}/users/{userId}")
