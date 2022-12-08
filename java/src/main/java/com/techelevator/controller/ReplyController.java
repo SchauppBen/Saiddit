@@ -5,6 +5,7 @@ import com.techelevator.model.Reply;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Null;
@@ -21,14 +22,14 @@ public class ReplyController {
         this.dao = dao;
     }
 
-    @GetMapping(path = "users/replies/{userId}")
-    public List<Reply> getRepliesFromUser(@PathVariable int userId) {
-        return dao.listRepliesByUser(userId);
+    @GetMapping(path = "/users/replies/{userId}")
+    public List<Reply> getRepliesFromUser(@PathVariable("userId") int id) {
+        return dao.listRepliesByUser(id);
     }
 
-    @GetMapping(path = "posts/replies/{postId}")
-    public List<Reply> getRepliesByPost(@PathVariable int postId) {
-        return dao.listRepliesByPost(postId);
+    @GetMapping(path = "/posts/replies/{postId}")
+    public List<Reply> getRepliesByPost(@PathVariable("postId") int id) {
+        return dao.listRepliesByPost(id);
     }
 
     @RequestMapping(path = "/replies", method = RequestMethod.GET)
@@ -50,9 +51,9 @@ public class ReplyController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/replies/{replyId}", method = RequestMethod.DELETE)
-    public void deleteReply(@PathVariable int replyId) {
+    public void deleteReply(@PathVariable("replyId") int id) {
         try {
-            dao.deleteReply(replyId);
+            dao.deleteReply(id);
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
