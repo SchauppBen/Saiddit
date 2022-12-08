@@ -7,6 +7,19 @@
     /></router-link>
     <search-bar />
     <chat-logo />
+    <div v-if="$store.state.token != ''">
+      logged in as {{$store.state.user.username}}
+    </div>
+    <router-link
+      v-bind:to="{ name: 'logout' }"
+      v-if="$store.state.token != ''">
+      Logout
+    </router-link>
+    <router-link
+      v-bind:to="{ name: 'login' }"
+      v-else>
+      Login
+    </router-link>
   </div>
 </template>
 
