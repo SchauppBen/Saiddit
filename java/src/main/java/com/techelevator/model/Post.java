@@ -6,7 +6,9 @@ public class Post {
 
     private int postId;
     private int userId;
+    private String username;
     private int forumId;
+    private String forumName;
     private String title;
     private String text;
     private String mediaLink;
@@ -39,12 +41,28 @@ public class Post {
         this.userId = userId;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public int getForumId() {
         return forumId;
     }
 
     public void setForumId(int forumId) {
         this.forumId = forumId;
+    }
+
+    public String getForumName() {
+        return forumName;
+    }
+
+    public void setForumName(String forumName) {
+        this.forumName = forumName;
     }
 
     public String getTitle() {

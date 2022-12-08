@@ -3,7 +3,7 @@ axios.defaults.baseURL = "http://localhost:9000";
 
 export default {
   getPosts() {
-    return axios.get("/");
+    return axios.get("/posts/");
   },
 
   getPost(forumId, postId) {

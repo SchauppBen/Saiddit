@@ -1,6 +1,6 @@
 <template>
   <div id="Posts">
-      <post v-for="post in posts" :key="post.id" :post="post" />
+      <post class="allPosts" v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
 
@@ -30,4 +30,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+#posts {
+
+}
+
+.allPosts {
+  text-align: center;
+}
+</style>

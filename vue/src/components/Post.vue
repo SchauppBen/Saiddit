@@ -2,7 +2,7 @@
   <router-link
     :to="{
       name: 'post-details',
-      params: { forumId: post.forumId, postId: post.id },
+      params: { forumName: post.forumName, postId: post.postId },
     }"
   >
     <div id="postBox">
@@ -41,4 +41,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+#postBox img {
+  width: 500px;
+}
+</style>

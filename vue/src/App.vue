@@ -1,12 +1,18 @@
 <template>
+  
   <div id="app">
+    
     <div id="nav">
-      <router-link
-        v-bind:to="{ name: 'logout' }"
-        v-if="$store.state.token != ''"
-        >Logout</router-link
-      >
+      <Header />
     </div>
     <router-view />
   </div>
 </template>
+
+<script>
+import Header from "./components/Header.vue";
+
+export default {
+  components: {Header}
+}
+</script>

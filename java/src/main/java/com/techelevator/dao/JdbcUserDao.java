@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.techelevator.model.Post;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -34,6 +35,17 @@ public class JdbcUserDao implements UserDao {
         }
 
         return userId;
+    }
+
+    @Override
+    public List<User> searchUsers(String searchString) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE username ILIKE ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, "%" + searchString + "%");
+        while(rowSet.next()) {
+            users.add(mapRowToUser(rowSet));
+        }
+        return users;
     }
 
 	@Override

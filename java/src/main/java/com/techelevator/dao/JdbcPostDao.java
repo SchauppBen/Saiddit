@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Forum;
 import com.techelevator.model.Post;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -12,9 +13,13 @@ import java.util.List;
 public class JdbcPostDao implements PostDao {
 
     private final JdbcTemplate jdbcTemplate;
+    private final ForumDao forumDao;
+    private final UserDao userDao;
 
-    public JdbcPostDao(JdbcTemplate jdbcTemplate) {
+    public JdbcPostDao(JdbcTemplate jdbcTemplate, ForumDao forumDao, UserDao userDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.forumDao = forumDao;
+        this.userDao = userDao;
     }
 
 
@@ -25,9 +30,11 @@ public class JdbcPostDao implements PostDao {
         String sql = "SELECT * FROM posts;";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
 
+
         while(rowSet.next()) {
             getPosts.add(mapRowToPost(rowSet));
         }
+
 
         return getPosts;
     }
@@ -74,11 +81,30 @@ public class JdbcPostDao implements PostDao {
         return newPost;
     }
 
+    @Override
+    public void editPost(int postId, Post updatedPost) {
+        String sql = "UPDATE posts SET title = ?, text = ?, media_link = ? WHERE post_id = ?;";
+        jdbcTemplate.update(sql, updatedPost.getTitle(), updatedPost.getText(), updatedPost.getMediaLink(), postId);
+    }
+
+    @Override
+    public List<Post> searchPosts(String searchString) {
+        List<Post> posts = new ArrayList<>();
+        String sql = "SELECT * FROM posts WHERE title ILIKE ?;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, "%" + searchString + "%");
+        while(rowSet.next()) {
+            posts.add(mapRowToPost(rowSet));
+        }
+        return posts;
+    }
+
     private Post mapRowToPost(SqlRowSet rowSet) {
         Post post = new Post();
         post.setPostId(rowSet.getInt("post_id"));
         post.setUserId(rowSet.getInt("user_id"));
+        post.setUsername(userDao.getUserById(post.getUserId()).getUsername());
         post.setForumId(rowSet.getInt("forum_id"));
+        post.setForumName(forumDao.getForumById(post.getForumId()).getName());
         post.setTitle(rowSet.getString("title"));
         post.setText(rowSet.getString("text"));
         post.setMediaLink(rowSet.getString("media_link"));

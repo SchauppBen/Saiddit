@@ -13,27 +13,19 @@
 </template>
 
 <script>
-import PostService from "../services/PostService";
-
 export default {
   name: "post-details",
 
   components: {},
   computed: {
     post() {
-      return this.$store.state.activePost;
+      return this.$store.state.posts.find((post) => {
+        return post.postId === this.$store.state.activePostId;
+      });
     },
-    // return this.$store.state.posts.find( (post) => {
-    //     return post.id === this.$store.state.activePostId;
-    // });
-    // }
   },
   created() {
-    PostService.getPost(this.post.forumId, this.post.postId).then(
-      (response) => {
-        this.$store.commit("SET_ACTIVE_POST", response.data);
-      }
-    );
+    this.$store.commit("SET_ACTIVE_POST", this.$route.params.postId);
   },
 };
 </script>
