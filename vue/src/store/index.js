@@ -26,7 +26,7 @@ export default new Vuex.Store({
     activePost: {
       id: "",
       title: "",
-      text: "I love sucking big cocks",
+      text: "test",
       media: "",
       datetime: "",
       forumId: "",
@@ -66,6 +66,6 @@ export default new Vuex.Store({
     },
     SET_ACTIVE_POST(state, data) {
       state.activePost = data;
-    }
+    },
   },
 });
