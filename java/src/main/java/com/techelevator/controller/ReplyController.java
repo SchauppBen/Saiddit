@@ -21,12 +21,12 @@ public class ReplyController {
         this.dao = dao;
     }
 
-    @GetMapping(path = "users/replies/{userId}")
+    @GetMapping(path = "/users/replies/{userId}")
     public List<Reply> getRepliesFromUser(@PathVariable int userId) {
         return dao.listRepliesByUser(userId);
     }
 
-    @GetMapping(path = "posts/replies/{postId}")
+    @GetMapping(path = "/posts/replies/{postId}")
     public List<Reply> getRepliesByPost(@PathVariable int postId) {
         return dao.listRepliesByPost(postId);
     }

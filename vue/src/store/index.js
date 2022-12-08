@@ -23,6 +23,8 @@ export default new Vuex.Store({
 
     // The post that the user is currently viewing
     activePostId: 0,
+    // The replies of the post that the user is currently viewing
+    activeReplies: [],
 
     posts: [],
     forums: []
@@ -52,6 +54,9 @@ export default new Vuex.Store({
     },
     SET_ACTIVE_POST(state, postId) {
       state.activePostId = postId;
+    },
+    SET_ACTIVE_REPLIES(state, data) {
+      state.activeReplies = data;
     },
     SET_FORUMS(state, data) {
       state.forums = data;
