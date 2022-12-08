@@ -1,7 +1,8 @@
 <template>
   <div id="header">
-    <router-link v-bind:to="{ name: 'home' }"
-      ><img id="pageLogo" src="../assets/duckie.png"
+    <router-link v-bind:to="{ name: 'home' }" id="logo">
+      <a>saiddit</a>
+      <img id="pageLogo" src="../assets/duckie.png"
     /></router-link>
     <search-bar />
     <chat-logo />
@@ -30,10 +31,20 @@ export default {
   width: 100vw;
 }
 #pageLogo {
-  height: 5vh;
+  height: 8vh;
 }
 div {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
+}
+#saiddit {
+  font-size: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+a {
+  font-size: 30px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: teal;
+  font-style: italic;
 }
 </style>
