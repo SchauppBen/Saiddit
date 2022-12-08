@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.ForumDao;
 import com.techelevator.dao.UserDao;
+import com.techelevator.model.AddModeratorDto;
 import com.techelevator.model.Forum;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,11 @@ public class ForumController {
     @GetMapping(path = "/forums/{forumId}/users/{userId}")
     public void addUserToForum(@PathVariable int forumId, @PathVariable int userId) {
         forumDao.addUserToForum(forumId, userId);
+    }
+
+    @PutMapping(path = "/forums/addModerator")
+    public void addModerator(@RequestBody AddModeratorDto addModeratorDto, Principal principal) {
+        forumDao.addModerator(userDao.findByUsername(principal.getName()), addModeratorDto);
     }
 
     //DOESN'T WORK
