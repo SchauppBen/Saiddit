@@ -4,9 +4,11 @@ import com.techelevator.model.Reply;
 import com.techelevator.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
+@Component
 public class JdbcReplyDao implements ReplyDao {
 
     private final JdbcTemplate jdbcTemplate;

@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.ReplyDao;
 import com.techelevator.model.Reply;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

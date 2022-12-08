@@ -1,11 +1,14 @@
 <template>
-  <div id="postBox">
-    <h1>{{ post.title }}</h1>
-    <img :src="post.media" v-show="post.media" />
-    <h3>{{ post.text }}</h3>
-    <h2>User: {{ post.username }}</h2>
-    <h3>{{ post.datetime }}</h3>
-  </div>
+  <router-link :to="{ name: 'post-details', params: { postId: post.postId} }">
+    <div id="postBox">
+      <h4>{{ post.forumName }}</h4>
+      <h1>{{ post.title }}</h1> 
+      <img :src="post.mediaLink" v-show="post.mediaLink" />
+      <h3>{{ post.text }}</h3>
+      <h2>User: {{ post.username }}</h2>
+      <h3>{{ post.datetime }}</h3>
+    </div>
+  </router-link>
 </template>
 
 <script>
