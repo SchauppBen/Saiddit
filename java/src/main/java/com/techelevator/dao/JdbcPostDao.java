@@ -82,9 +82,15 @@ public class JdbcPostDao implements PostDao {
     }
 
     @Override
+    public void editPost(int postId, Post updatedPost) {
+        String sql = "UPDATE posts SET title = ?, text = ?, media_link = ? WHERE post_id = ?;";
+        jdbcTemplate.update(sql, updatedPost.getTitle(), updatedPost.getText(), updatedPost.getMediaLink(), postId);
+    }
+
+    @Override
     public List<Post> searchPosts(String searchString) {
         List<Post> posts = new ArrayList<>();
-        String sql = "SELECT * FROM posts WHERE title ILIKE ?";
+        String sql = "SELECT * FROM posts WHERE title ILIKE ?;";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, "%" + searchString + "%");
         while(rowSet.next()) {
             posts.add(mapRowToPost(rowSet));

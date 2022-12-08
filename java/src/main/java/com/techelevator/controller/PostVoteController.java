@@ -1,10 +1,9 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.PostVoteDao;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import com.techelevator.model.PostVote;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -16,14 +15,16 @@ public class PostVoteController {
         this.postVoteDao = postVoteDao;
     }
 
-    @GetMapping(path = "/users/{userId}/posts/{postId}/upvote")
-    public void upVotePost(@PathVariable int userId, @PathVariable int postId) {
-        postVoteDao.upvotePost(userId, postId);
+    @PostMapping(path = "posts/upvote")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void upVotePost(@RequestBody PostVote postVote) {
+        postVoteDao.upvotePost(postVote);
     }
 
-    @GetMapping(path = "/users/{userId}/posts/{postId}/downvote")
-    public void downVotePost(@PathVariable int userId, @PathVariable int postId) {
-        postVoteDao.downvotePost(userId, postId);
+    @PostMapping(path = "/posts/downvote")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void downVotePost(@RequestBody PostVote postVote) {
+        postVoteDao.downvotePost(postVote);
     }
 
 }

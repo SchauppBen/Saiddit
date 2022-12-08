@@ -6,6 +6,7 @@ import com.techelevator.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
@@ -32,7 +33,17 @@ public class PostController {
     @ResponseStatus(HttpStatus.CREATED)
     public Post createNewPost(@RequestBody Post newPost, Principal principal) {
         newPost.setUserId(userDao.findIdByUsername(principal.getName()));
-        return postDao.createNewPost(newPost);
+        try {
+            return postDao.createNewPost(newPost);
+        } catch(ResponseStatusException e) {
+            e.getMessage();
+        }
+        return null;
+    }
+
+    @PutMapping(path = "/posts/{postId}")
+    public void editPost(@PathVariable int postId, @RequestBody Post post) {
+        postDao.editPost(postId, post);
     }
 
     @GetMapping(path = "/posts/search/{searchString}")

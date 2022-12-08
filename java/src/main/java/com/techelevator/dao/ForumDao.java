@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.AddModeratorDto;
 import com.techelevator.model.Forum;
 import com.techelevator.model.User;
 
@@ -20,5 +21,9 @@ public interface ForumDao {
     Forum updateForum(Forum oldForum, Forum newForum);
 
     Forum getForumByName(String forumName);
+
+    void addModerator(User userAddingMod, AddModeratorDto addModeratorDto);
+
+//    void deleteForum(int forumId);
 
 }
