@@ -25,9 +25,10 @@ export default new Vuex.Store({
     activePostId: 0,
     // The replies of the post that the user is currently viewing
     activeReplies: [],
+    activeForumName: "",
 
     posts: [],
-    forums: []
+    forums: [],
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -60,6 +61,9 @@ export default new Vuex.Store({
     },
     SET_FORUMS(state, data) {
       state.forums = data;
-    }
-  }
+    },
+    SET_ACTIVE_FORUM(state, forumName) {
+      state.activeForumName = forumName;
+    },
+  },
 });

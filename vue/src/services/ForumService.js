@@ -4,5 +4,9 @@ axios.defaults.baseURL = "http://localhost:9000";
 export default {
   getForums() {
     return axios.get("/forums/");
-  }
+  },
+
+  getForum(forumName) {
+    return axios.get(`/${forumName}/`);
+  },
 };
