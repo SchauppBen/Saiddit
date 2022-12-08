@@ -18,13 +18,13 @@ public class PostVoteController {
     @PostMapping(path = "posts/upvote")
     @ResponseStatus(HttpStatus.CREATED)
     public void upVotePost(@RequestBody PostVote postVote) {
-        postVoteDao.upvotePost(postVote);
+        postVoteDao.upVotePost(postVote);
     }
 
     @PostMapping(path = "/posts/downvote")
     @ResponseStatus(HttpStatus.CREATED)
     public void downVotePost(@RequestBody PostVote postVote) {
-        postVoteDao.downvotePost(postVote);
+        postVoteDao.downVotePost(postVote);
     }
 
 }

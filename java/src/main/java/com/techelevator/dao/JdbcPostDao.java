@@ -81,10 +81,12 @@ public class JdbcPostDao implements PostDao {
         return newPost;
     }
 
+    // this method also functions as an addImageToPost() method without the redundancy of 2 edit methods
     @Override
     public void editPost(int postId, Post updatedPost) {
         String sql = "UPDATE posts SET title = ?, text = ?, media_link = ? WHERE post_id = ?;";
         jdbcTemplate.update(sql, updatedPost.getTitle(), updatedPost.getText(), updatedPost.getMediaLink(), postId);
+        // is this returning void since it's not actually returning a new updated post?
     }
 
     @Override
