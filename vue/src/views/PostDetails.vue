@@ -36,5 +36,6 @@ export default {
 }
 div {
   text-align: center;
+  color: pink;
 }
 </style>

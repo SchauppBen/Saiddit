@@ -34,7 +34,8 @@ export default {
 #post-container {
   border: groove;
   border-width: 5px;
-  border-color: steelblue;
+  border-color: aquamarine;
   margin-bottom: 5px;
+  background-color: whitesmoke;
 }
 </style>
