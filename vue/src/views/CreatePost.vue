@@ -52,7 +52,7 @@ export default {
         },
         savePost() {
             this.$store.commit("SAVE_POST", this.post);
-            postService.addPost(this.selectedForum.name, this.post)
+            postService.addPost(this.post)
                 .then(response => {
                     if (response.status === 201) {
                         this.post = {

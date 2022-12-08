@@ -107,7 +107,9 @@ public class JdbcReplyDao implements ReplyDao {
 
         reply.setReplyId(rowSet.getInt("reply_id"));
         reply.setUserFrom(rowSet.getInt("user_from_id"));
+        reply.setUsername(userDao.getUserById(reply.getUserFrom()).getUsername());
         reply.setReplyTo(rowSet.getInt("reply_to_id"));
+        reply.setUsername(userDao.getUserById(reply.getReplyTo()).getUsername());
         reply.setPostId(rowSet.getInt("post_id"));
         reply.setReplyText(rowSet.getString("text"));
         reply.setMediaLink(rowSet.getString("media_link"));

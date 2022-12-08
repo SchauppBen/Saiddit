@@ -67,7 +67,7 @@ CREATE TABLE replies (
 	user_from_id int NOT NULL,
 	post_id int NOT NULL REFERENCES posts(post_id),
 	text varchar(1000),
-	media_link varchar(50),
+	media_link varchar(2048),
 	date_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT fk_reply_to_id FOREIGN KEY (reply_to_id) REFERENCES replies(reply_id),
 	CONSTRAINT fk_user_from_id FOREIGN KEY (user_from_id) REFERENCES users(user_id),
@@ -87,7 +87,7 @@ CREATE TABLE direct_messages (
 	user_from_id int,
 	user_to_id int ,
 	text varchar(200),
-	media_link varchar(50),
+	media_link varchar(2048),
 	time_sent timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT fk_user_from_id FOREIGN KEY(user_from_id) REFERENCES users(user_id),
 	CONSTRAINT fk_user_to_id FOREIGN KEY (user_to_id) REFERENCES users(user_id)
@@ -114,5 +114,11 @@ INSERT INTO posts (user_id, forum_id, title, text, media_link)
 		   VALUES (4, 3, 'purple flower', 'woooo',
 				   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx4r3njXKlHUhqmsDkuxfAnUhVTSecf_1oRJWTpcAY1SV7jLHC18alzpm-zUhQU85J2jo&usqp=CAU');
 
+INSERT INTO replies (reply_to_id, user_from_id, post_id, text, media_link)
+		   VALUES (null, 3, 1, 'That is a big duck',
+				   '');
+INSERT INTO replies (reply_to_id, user_from_id, post_id, text, media_link)
+		   VALUES (null, 4, 1, 'I was there. The duck was truly scary',
+				   'https://dejpknyizje2n.cloudfront.net/svgcustom/clipart/preview/cute-terrified-emoji-sticker-29791-300x300.png');
 
 COMMIT TRANSACTION;
