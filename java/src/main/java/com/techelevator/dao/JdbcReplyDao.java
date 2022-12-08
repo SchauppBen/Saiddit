@@ -7,6 +7,8 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class JdbcReplyDao implements ReplyDao {
@@ -24,43 +26,93 @@ public class JdbcReplyDao implements ReplyDao {
     @Override
     public Reply getReplyById(int id) {
         String sql = "select reply_id, user_from_id, reply_to_id, post_id from replies where reply_id = ?;";
-        SqlRowSet queryResults = jdbcTemplate.queryForRowSet(sql, id);
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
         Reply reply = new Reply();
 
-        while (queryResults.next()) {
-            reply = mapRowToReply(queryResults);
+        while (rowSet.next()) {
+            reply = mapRowToReply(rowSet);
         }
 
         return reply;
     }
 
     @Override
-    public Reply reply(int replyFromId, int replyToId, String replyText) {
-        String sql = "insert into replies (reply_id, user_from_id, reply_to_id, post_id, text, media_link, date_time) " +
-                "values (?, ?, ?, ?, ?, ?, ?) returning reply_id;";
+    public List<Reply> listAllReplies() {
+        String sql = "select * from replies;";
+        List<Reply> allReplies = new ArrayList<>();
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
+
+        while (rowSet.next()) {
+            allReplies.add(mapRowToReply(rowSet));
+        }
+
+        return allReplies;
+    }
+
+    @Override
+    public List<Reply> listRepliesByPost(int postId) {
+        String sql = "select * from replies where post_id = ?;";
+        List<Reply> allReplies = new ArrayList<>();
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, postId);
+
+        while (rowSet.next()) {
+            allReplies.add(mapRowToReply(rowSet));
+        }
+
+        return allReplies;
+    }
+
+    @Override
+    public List<Reply> listRepliesByUser(int userId) {
+        String sql = "select * from replies where user_from_id = ?;";
+        List<Reply> allReplies = new ArrayList<>();
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+
+        while (rowSet.next()) {
+            allReplies.add(mapRowToReply(rowSet));
+        }
+
+        return allReplies;
+    }
+
+    @Override
+    public Reply reply(Reply newReply) {
+        String sql = "insert into replies (user_from_id, reply_to_id, post_id, text, media_link) " +
+                "values (?, ?, ?, ?, ?) returning reply_id;";
         Integer newReplyId;
 
-        newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, userDao.getUserById(replyToId), replyText);
+        newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(), newReply.getReplyTo(),
+                newReply.getPostId(), newReply.getReplyText(), newReply.getMediaLink());
         if (newReplyId == null) {
             throw new NullPointerException();
         }
 
-        Reply newReply = getReplyById(newReplyId);
+        newReply.setReplyId(newReplyId);
 
         return newReply;
     }
 
-    private Reply mapRowToReply(SqlRowSet queryResults) {
+    @Override
+    public void deleteReply(int id) {
+        String sql = "delete from replies where reply_id = ?;";
+
+        jdbcTemplate.update(sql, id);
+    }
+
+    private Reply mapRowToReply(SqlRowSet rowSet) {
         Reply reply = new Reply();
 
-        reply.setReplyId(queryResults.getInt("reply_id"));
-        reply.setUserFrom(queryResults.getInt("user_from_id"));
-        reply.setReplyTo(queryResults.getInt("reply_to_id"));
-        reply.setPostId(queryResults.getInt("post_id"));
-        reply.setReplyText(queryResults.getString("text"));
-        reply.setMediaLink(queryResults.getString("media_link"));
-        if (queryResults.getDate("date_time") != null) {
-            reply.setDateTime(queryResults.getDate("date_time").toLocalDate());
+        reply.setReplyId(rowSet.getInt("reply_id"));
+        reply.setUserFrom(rowSet.getInt("user_from_id"));
+        reply.setReplyTo(rowSet.getInt("reply_to_id"));
+        reply.setPostId(rowSet.getInt("post_id"));
+        reply.setReplyText(rowSet.getString("text"));
+        reply.setMediaLink(rowSet.getString("media_link"));
+        if (rowSet.getDate("date_time") != null) {
+            reply.setDateTime(rowSet.getDate("date_time").toLocalDate());
         }
         return reply;
     }

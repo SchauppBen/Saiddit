@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import ChatLogo from "./ChatLogo.vue";
-import SearchBar from "./SearchBar.vue";
+import ChatLogo from "../components/ChatLogo.vue";
+import SearchBar from "../components/SearchBar.vue";
 export default {
   components: { SearchBar, ChatLogo },
 };

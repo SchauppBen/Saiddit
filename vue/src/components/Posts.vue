@@ -11,7 +11,7 @@ import postService from "../services/PostService.js";
 
 export default {
   name: "posts-list",
-  components: { Post },
+  components: { Post, },
   methods: {
     getPosts() {
       postService.getPosts().then(response => {

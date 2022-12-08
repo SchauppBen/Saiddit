@@ -63,7 +63,7 @@ CREATE TABLE post_votes (
 
 CREATE TABLE replies (
 	reply_id SERIAL PRIMARY KEY,
-	reply_to_id int NOT NULL,
+	reply_to_id int,
 	user_from_id int NOT NULL,
 	post_id int NOT NULL REFERENCES posts(post_id),
 	text varchar(1000),
