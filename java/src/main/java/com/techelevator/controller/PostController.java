@@ -29,7 +29,7 @@ public class PostController {
         return postDao.getPostsForHomePage();
     }
 
-    @PostMapping(path = "forums/{forumName}/posts/")
+    @PostMapping(path = "forums/posts/")
     @ResponseStatus(HttpStatus.CREATED)
     public Post createNewPost(@RequestBody Post newPost, Principal principal) {
         newPost.setUserId(userDao.findIdByUsername(principal.getName()));

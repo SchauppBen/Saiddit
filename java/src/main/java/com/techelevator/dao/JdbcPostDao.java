@@ -2,10 +2,13 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Forum;
 import com.techelevator.model.Post;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,22 +59,26 @@ public class JdbcPostDao implements PostDao {
     public Post createNewPost(Post newPost) {
         String sql = "";
         Integer postId = null;
-        if (newPost.getText() == null && newPost.getMediaLink() == null) {
-            sql = "INSERT INTO posts (user_id, forum_id, title) VALUES (?, ?, ?) RETURNING post_id";
-            postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId(),
-                    newPost.getTitle());
-        } else if (newPost.getText() == null) {
-            sql = "INSERT INTO posts (user_id, forum_id, title, media_link) VALUES (?, ?, ?, ?) RETURNING post_id;";
-            postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId(),
-                    newPost.getTitle(), newPost.getMediaLink());
-        } else if (newPost.getMediaLink() == null) {
-            sql = "INSERT INTO posts (user_id, forum_id, title, text) VALUES (?, ?, ?, ?) RETURNING post_id;";
-            postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId(),
-                    newPost.getTitle(), newPost.getText());
-        } else {
-            sql = "INSERT INTO posts (user_id, forum_id, title, text, media_link) VALUES (?, ?, ?, ?, ?) RETURNING post_id;";
-            postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId()
-                    , newPost.getTitle(), newPost.getText(), newPost.getMediaLink());
+        try {
+            if (newPost.getText() == null && newPost.getMediaLink() == null) {
+                sql = "INSERT INTO posts (user_id, forum_id, title) VALUES (?, ?, ?) RETURNING post_id";
+                postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId(),
+                        newPost.getTitle());
+            } else if (newPost.getText() == null) {
+                sql = "INSERT INTO posts (user_id, forum_id, title, media_link) VALUES (?, ?, ?, ?) RETURNING post_id;";
+                postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId(),
+                        newPost.getTitle(), newPost.getMediaLink());
+            } else if (newPost.getMediaLink() == null) {
+                sql = "INSERT INTO posts (user_id, forum_id, title, text) VALUES (?, ?, ?, ?) RETURNING post_id;";
+                postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId(),
+                        newPost.getTitle(), newPost.getText());
+            } else {
+                sql = "INSERT INTO posts (user_id, forum_id, title, text, media_link) VALUES (?, ?, ?, ?, ?) RETURNING post_id;";
+                postId = jdbcTemplate.queryForObject(sql, Integer.class, newPost.getUserId(), newPost.getForumId()
+                        , newPost.getTitle(), newPost.getText(), newPost.getMediaLink());
+            }
+        } catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         if (postId != null) {
             newPost.setPostId(postId);
