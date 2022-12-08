@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>{{replies}}</div>
     <h4>Posted in [{{ post.forumName }}]</h4>
     <h1>{{ post.title }}</h1>
     <img id="detail-img" :src="post.mediaLink" v-show="post.mediaLink" />
