@@ -1,7 +1,8 @@
 <template>
-  <div id="searchBar">
-    <label>Search</label>
-    <input type="text" name="search" />
+  <div id="searchBar" class="$info">
+    <label>Search: </label>
+    <input type="text" name="search" />&nbsp;
+    <button class="button is-danger is-small is-outlined radius-rounded">Submit</button>
   </div>
 </template>
 

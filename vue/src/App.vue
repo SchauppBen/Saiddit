@@ -1,6 +1,6 @@
 <template>
   
-  <div id="app">
+  <div id="app" class="has-background-grey-dark has-text-primary">
     
     <div id="nav">
       <Header />
@@ -16,3 +16,4 @@ export default {
   components: {Header}
 }
 </script>
+
