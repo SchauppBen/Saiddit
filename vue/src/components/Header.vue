@@ -1,7 +1,7 @@
 <template>
   <div id="header">
     <router-link v-bind:to="{ name: 'home' }"
-      ><img id="pageLogo" src="../assets/duck_logo.jpg"
+      ><img id="pageLogo" src="../assets/duckie.png"
     /></router-link>
     <search-bar />
     <chat-logo />
@@ -31,5 +31,9 @@ export default {
 }
 #pageLogo {
   height: 5vh;
+}
+div {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 </style>

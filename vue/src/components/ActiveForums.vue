@@ -36,12 +36,15 @@ export default {
 
 <style scoped>
 div {
-  margin: 0 0 0 5px;
+  margin: 0 5px 0 5px;
+  background-image: linear-gradient(pink, aquamarine);
 }
 h2 {
   text-align: center;
 }
 ul {
   list-style: none;
+  text-align: center;
+  font-family: monospace;
 }
 </style>

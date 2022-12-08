@@ -31,7 +31,8 @@ export default {
   background-color: pink;
   padding: 10px;
   align-items: center;
-  height: 5vh;
+  height: 10vh;
+  margin: 10px 5px 0 5px;
 }
 
 #nav-bar {
@@ -40,8 +41,10 @@ export default {
   padding: 10px;
   margin-top: 10px;
   margin-right: 10px;
-  height: 100vh;
+  margin-left: 5px;
+  height: 187vh;
   border-radius: 5px;
+  background-image: linear-gradient(aquamarine, pink);
 }
 
 #main-page {
@@ -50,5 +53,8 @@ export default {
 }
 div {
   border-radius: 5px;
+}
+#app {
+  background-color: teal;
 }
 </style>
