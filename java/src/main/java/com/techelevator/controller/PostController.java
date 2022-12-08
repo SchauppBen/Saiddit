@@ -33,13 +33,13 @@ public class PostController {
     @ResponseStatus(HttpStatus.CREATED)
     public Post createNewPost(@RequestBody Post newPost, Principal principal) {
         newPost.setUserId(userDao.findIdByUsername(principal.getName()));
-        try {
-            return postDao.createNewPost(newPost);
-        } catch(ResponseStatusException e) {
-            e.getMessage();
+        Post createdPost = postDao.createNewPost(newPost);
+        if (createdPost == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        return null;
+        return createdPost;
     }
+
 
     @PutMapping(path = "/posts/{postId}")
     public void editPost(@PathVariable int postId, @RequestBody Post post) {
