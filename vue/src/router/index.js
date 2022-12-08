@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import ForumView from "";
+import ForumView from "../views/ForumView.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
@@ -64,7 +64,7 @@ const router = new Router({
       },
     },
     {
-      path: "/:forumName/:postId",
+      path: "//:postId",
       name: "post-details",
       component: PostDetails,
       meta: {

@@ -1,11 +1,11 @@
 <template>
   <div id="Posts">
-      <Post v-for="post in $store.state.posts" :key="post.id" :post="post" />
+      <post v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
 
 <script>
-import Post from "../components/Post.vue";
+import Post from "./Post.vue";
 import postService from "../services/PostService.js";
 
 
@@ -19,7 +19,11 @@ export default {
       });
     }
   },
-  computed: {},
+  computed: {
+    posts() {
+      return this.$store.state.posts;
+    }
+  },
   created() {
     this.getPosts();
   }
