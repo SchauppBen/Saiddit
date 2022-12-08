@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.AddModeratorDto;
 import com.techelevator.model.Forum;
 import com.techelevator.model.User;
 import org.springframework.stereotype.Component;
@@ -62,6 +63,11 @@ public class JdbcForumDao implements ForumDao {
             return mapRowSetToForum(rowSet);
         }
         return null;
+    }
+
+    @Override
+    public void addModerator(User userAddingMod, AddModeratorDto addModeratorDto) {
+
     }
 
 //    @Override

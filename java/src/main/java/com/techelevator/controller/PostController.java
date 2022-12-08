@@ -6,6 +6,7 @@ import com.techelevator.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
@@ -28,12 +29,17 @@ public class PostController {
         return postDao.getPostsForHomePage();
     }
 
-    @PostMapping(path = "forums/{forumName}/posts/")
+    @PostMapping(path = "forums/posts/")
     @ResponseStatus(HttpStatus.CREATED)
     public Post createNewPost(@RequestBody Post newPost, Principal principal) {
         newPost.setUserId(userDao.findIdByUsername(principal.getName()));
-        return postDao.createNewPost(newPost);
+        Post createdPost = postDao.createNewPost(newPost);
+        if (createdPost == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        return createdPost;
     }
+
 
     @PutMapping(path = "/posts/{postId}")
     public void editPost(@PathVariable int postId, @RequestBody Post post) {

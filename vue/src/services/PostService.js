@@ -11,6 +11,6 @@ export default {
   },
 
   addPost(forumName, post) {
-    return axios.post(`/${forumName}/posts`, post);
+    return axios.post(`/forums/${forumName}/posts/`, post);
   },
 };

@@ -47,7 +47,7 @@ CREATE TABLE posts (
 	forum_id int NOT NULL,
 	title varchar(100) NOT NULL,
 	text varchar(1000),
-	media_link varchar(200),
+	media_link varchar(2048),
 	date_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
 	CONSTRAINT fk_forum_id FOREIGN KEY (forum_id) REFERENCES forums(forum_id)
@@ -63,7 +63,7 @@ CREATE TABLE post_votes (
 
 CREATE TABLE replies (
 	reply_id SERIAL PRIMARY KEY,
-	reply_to_id int NOT NULL,
+	reply_to_id int,
 	user_from_id int NOT NULL,
 	post_id int NOT NULL REFERENCES posts(post_id),
 	text varchar(1000),

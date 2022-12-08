@@ -4,7 +4,7 @@ import com.techelevator.model.PostVote;
 
 public interface PostVoteDao {
 
-    void upvotePost(PostVote postVote);
+    void upVotePost(PostVote postVote);
 
-    void downvotePost(PostVote postVote);
+    void downVotePost(PostVote postVote);
 }
