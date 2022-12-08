@@ -23,6 +23,7 @@ export default new Vuex.Store({
 
     // The post that the user is currently viewing
     activePostId: 0,
+    activeForumName: "",
 
     posts: [],
     forums: [],
@@ -55,6 +56,9 @@ export default new Vuex.Store({
     },
     SET_FORUMS(state, data) {
       state.forums = data;
+    },
+    SET_ACTIVE_FORUM(state, forumName) {
+      state.activeForumName = forumName;
     },
   },
 });

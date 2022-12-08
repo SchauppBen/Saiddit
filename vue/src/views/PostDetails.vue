@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h4>{{ post.forumId }}</h4>
+    <h4>{{ post.forumName }}</h4>
     <h1>{{ post.title }}</h1>
-    <img :src="post.mediaLink" v-show="post.mediaLink" />
+    <img id="detail-img" :src="post.mediaLink" v-show="post.mediaLink" />
     <h3>{{ post.text }}</h3>
     <h2>User: {{ post.username }}</h2>
     <h3>{{ post.datetime }}</h3>
@@ -30,4 +30,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+#detail-img {
+  width: 500px;
+}
+div {
+  text-align: center;
+}
+</style>
