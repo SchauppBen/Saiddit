@@ -17,26 +17,9 @@
 </template>
 
 <script>
-import PostService from "../services/PostService";
 export default {
   props: {
     Post: Object,
-  },
-
-  computed: {
-    post() {
-      return this.$store.state.activePost;
-    },
-
-    methods: {
-      created() {
-        PostService.getPost(this.post.forumId, this.post.id).then(
-          (response) => {
-            this.$store.commit("SET_ACTIVE_POST", response.data);
-          }
-        );
-      },
-    },
   },
 };
 </script>
