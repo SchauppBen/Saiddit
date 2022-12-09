@@ -66,8 +66,26 @@ public class JdbcForumDao implements ForumDao {
     }
 
     @Override
-    public void addModerator(User userAddingMod, AddModeratorDto addModeratorDto) {
+    public boolean isModerator(int forumId, int userId) {
+        String sql = "SELECT is_moderator FROM forums_users WHERE forum_id = ? AND user_id = ?;";
+        try {
+            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, forumId, userId);
+            if (rowSet.next()) {
+                return rowSet.getBoolean("is_moderator");
+            }
+        } catch(NullPointerException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return false;
+    }
 
+    @Override
+    public void addModerator(User userAddingMod, AddModeratorDto addModeratorDto) {
+        if (isModerator(addModeratorDto.getForumId(), userAddingMod.getId())) {
+            String sql = "UPDATE forums_users SET is_moderator = true WHERE forum_id = ? AND user_id = ?";
+            jdbcTemplate.update(sql, addModeratorDto.getForumId(), addModeratorDto.getUserId());
+        }
     }
 
 //    @Override
