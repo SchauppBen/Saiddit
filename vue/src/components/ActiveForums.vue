@@ -2,12 +2,12 @@
   <div>
     <h2><em>Active Forums</em></h2>
     <ul>
-      <li v-for="forum in forums" :key="forum.name">
+      <li v-for="forum in forums" :key="forum">
         <router-link
           class="highlighted"
-          :to="{ name: 'forum-view', params: { forumName: forum.name } }"
+          :to="{ name: 'forum-view', params: { forumName: forum } }"
         >
-          <br />{{ forum.name }}</router-link
+          <br />{{ forum }}</router-link
         >
       </li>
     </ul>
@@ -25,14 +25,19 @@ export default {
         this.$store.commit("SET_FORUMS", response.data);
       });
     },
+    activeForums() {
+      forumService.getActiveForums().then((response) => {
+        this.$store.commit("SET_ACTIVE_FORUMS", response.data);
+      });
+    },
   },
   computed: {
     forums() {
-      return this.$store.state.forums;
+      return this.$store.state.activeForums;
     },
   },
   created() {
-    this.getForums();
+    this.activeForums();
   },
 };
 </script>
