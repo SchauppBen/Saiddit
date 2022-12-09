@@ -10,7 +10,7 @@
         <router-link
           class="highlighted"
           :to="{ name: 'forum-view', params: { forumName: post.forumName } }"
-          ><h4>{{ post.forumName }}</h4></router-link
+          ><h4>[{{ post.forumName }}]</h4></router-link
         >
         <h1>{{ post.title }}</h1>
         <img :src="post.mediaLink" v-show="post.mediaLink" />
