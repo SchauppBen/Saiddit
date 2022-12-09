@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface ReplyDao {
 
+    int getUserIdFromReplyId(int replyId);
+
     Reply reply(Reply newReply);
 
     void deleteReply(int id);

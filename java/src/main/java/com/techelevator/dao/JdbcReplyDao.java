@@ -79,13 +79,26 @@ public class JdbcReplyDao implements ReplyDao {
 
         return allReplies;
     }
-    
+
+    @Override
+    public int getUserIdFromReplyId(int replyId) {
+        String sql = "select user_from_id from replies where reply_id = ?;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, replyId);
+        int userId = 0;
+
+        if (rowSet.next()) {
+            userId = rowSet.getInt("user_from_id");
+        }
+
+        return userId;
+    }
+
     @Override
     public Reply reply(Reply newReply) {
         String sql = "";
         Integer newReplyId = null;
         try {
-            if (newReply.getReplyTo() == 0) { // if reply_to_id = null
+            if (newReply.getReplyToReplyId() == 0) { // if reply_to_id = null
                 sql = "insert into replies (user_from_id, post_id, text, media_link) " +
                         "values (?, ?, ?, ?) returning reply_id;";
                 newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(),
@@ -93,12 +106,12 @@ public class JdbcReplyDao implements ReplyDao {
             } else if (newReply.getMediaLink() == null) { // if media_link = null
                 sql = "insert into replies (user_from_id, reply_to_id, post_id, text) values (?, ?, ?, ?) returning reply_id;";
                 newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(),
-                        newReply.getReplyTo(), newReply.getPostId(), newReply.getReplyText());
+                        newReply.getReplyToReplyId(), newReply.getPostId(), newReply.getReplyText());
             } else if (newReply.getReplyText() == null) { // if text = null
                 sql = "insert into replies (user_from_id, reply_to_id, post_id, media_link) " +
                         "values (?, ?, ?, ?) returning reply_id;";
                 newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(),
-                        newReply.getReplyTo(), newReply.getPostId(), newReply.getMediaLink());
+                        newReply.getReplyToReplyId(), newReply.getPostId(), newReply.getMediaLink());
             } else if (newReply.getPostId() == 0) { // if post_id = null
                 return null;
             } else if (newReply.getMediaLink() == null && newReply.getReplyText() == null) { // if media_link && text = null
@@ -107,7 +120,7 @@ public class JdbcReplyDao implements ReplyDao {
                 sql = "insert into replies (user_from_id, reply_to_id, post_id, text, media_link) " +
                         "values (?, ?, ?, ?, ?) returning reply_id;";
                 newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(),
-                        newReply.getReplyTo(), newReply.getPostId(), newReply.getReplyText(), newReply.getMediaLink());
+                        newReply.getReplyToReplyId(), newReply.getPostId(), newReply.getReplyText(), newReply.getMediaLink());
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
@@ -135,8 +148,10 @@ public class JdbcReplyDao implements ReplyDao {
         reply.setReplyId(rowSet.getInt("reply_id"));
         reply.setUserFrom(rowSet.getInt("user_from_id"));
         reply.setUsernameFrom(userDao.getUserById(reply.getUserFrom()).getUsername());
-        reply.setReplyTo(rowSet.getInt("reply_to_id"));
-        reply.setUsernameTo(userDao.getUserById(reply.getReplyTo()).getUsername());
+        reply.setReplyToReplyId(rowSet.getInt("reply_to_id"));
+        if (reply.getReplyToReplyId() != 0) {
+            reply.setUsernameTo(userDao.getUserById(getUserIdFromReplyId(reply.getReplyToReplyId())).getUsername());
+        }
         reply.setPostId(rowSet.getInt("post_id"));
         reply.setReplyText(rowSet.getString("text"));
         reply.setMediaLink(rowSet.getString("media_link"));
