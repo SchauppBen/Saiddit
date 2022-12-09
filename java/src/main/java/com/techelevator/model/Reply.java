@@ -9,7 +9,8 @@ public class Reply {
     private int userFrom;
     private int replyTo;
     private int postId;
-    private String username;
+    private String usernameFrom;
+    private String usernameTo;
     private String replyText;
     private String mediaLink;
     private LocalDate dateTime;
@@ -26,12 +27,20 @@ public class Reply {
 
     public Reply() {}
 
-    public String getUsername() {
-        return username;
+    public String getUsernameFrom() {
+        return usernameFrom;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsernameFrom(String username) {
+        this.usernameFrom = username;
+    }
+
+    public String getUsernameTo() {
+        return usernameTo;
+    }
+
+    public void setUsernameTo(String username) {
+        this.usernameTo = username;
     }
 
     public int getReplyId() {
