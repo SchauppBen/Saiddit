@@ -12,7 +12,7 @@ public interface ForumDao {
 
     List<Forum> getAllForums();
 
-    List<String> getForumNamesForHomePage();
+    List<Forum> getForumNamesForHomePage();
 
     Forum getForumById(int id);
 
