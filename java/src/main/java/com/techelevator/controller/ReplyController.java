@@ -57,6 +57,13 @@ public class ReplyController {
         return null;
     }
 
+    @PutMapping(path="/replies/{replyId}")
+    public void editReply(@PathVariable int replyId, @Valid @RequestBody Reply newReply, Principal principal) {
+        if (principal != null && userDao.findByUsername(principal.getName()).getId() == newReply.getUserFrom()) {
+            replyDao.editReply(replyId, newReply);
+        }
+    }
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/replies/{replyId}", method = RequestMethod.DELETE)
     public void deleteReply(@PathVariable("replyId") int id) {
