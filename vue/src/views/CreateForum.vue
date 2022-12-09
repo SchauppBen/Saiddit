@@ -29,11 +29,8 @@ export default {
       forumService.addForum(this.forum)
         .then(response => {
             if (response.status === 201) {
-                this.forum = {
-                  name: "",
-                  description: ""
-                }
-                this.$router.push('/');
+                // this.$router.push("/");
+                this.$router.push(`/${this.forum.name}/`);
             }
         })
         .catch(error => {

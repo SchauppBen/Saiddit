@@ -11,6 +11,6 @@ export default {
   },
 
   addForum(forum) {
-    return axios.post(`/forums/createNewForum/`, forum);
+    return axios.post("/forums/", forum);
   }
 };
