@@ -31,8 +31,7 @@ export default {
 
 <style>
 .posts {
-  border: groove;
-  border-color: aquamarine;
+  text-align: center;
 }
 
 .allPosts {

@@ -27,8 +27,8 @@ ul {
 ul li {
   text-align: left;
 }
-h1 {
+#nav-title {
   font-family: Georgia, "Times New Roman", Times, serif;
-  color: teal;
+  color: #7c9eb7;
 }
 </style>
