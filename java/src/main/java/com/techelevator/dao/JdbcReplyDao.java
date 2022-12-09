@@ -144,6 +144,16 @@ public class JdbcReplyDao implements ReplyDao {
         jdbcTemplate.update(sql, id);
     }
 
+    @Override
+    public void editReply(int replyId, Reply newReply) {
+        try {
+            String sql = "UPDATE replies SET text = ?, media_link = ? WHERE reply_id = ?;";
+            jdbcTemplate.update(sql, newReply.getReplyText(), newReply.getMediaLink(), replyId);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     private Reply mapRowToReply(SqlRowSet rowSet) {
         Reply reply = new Reply();
 
