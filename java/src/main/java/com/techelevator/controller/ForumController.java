@@ -40,7 +40,7 @@ public class ForumController {
     }
 
     @GetMapping(path = "/forums/home")
-    public List<String> getForumNamesForHomePage() {
+    public List<Forum> getForumNamesForHomePage() {
         return forumDao.getForumNamesForHomePage();
     }
 
