@@ -38,6 +38,7 @@ export default {
   },
   created() {
     this.activeForums();
+    this.getForums();
   },
 };
 </script>
