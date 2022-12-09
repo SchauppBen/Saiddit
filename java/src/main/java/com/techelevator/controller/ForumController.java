@@ -39,6 +39,11 @@ public class ForumController {
         return forumDao.getAllForums();
     }
 
+    @GetMapping(path = "/forums/home")
+    public List<String> getForumNamesForHomePage() {
+        return forumDao.getForumNamesForHomePage();
+    }
+
     @GetMapping(path = "/forums/{forumName}")
     public Forum getForumByName(@PathVariable String forumName) {
         return forumDao.getForumByName(forumName);

@@ -1,23 +1,23 @@
 package com.techelevator.model;
 
-import java.security.Timestamp;
 import java.time.LocalDate;
 
 public class Reply {
 
     private int replyId;
     private int userFrom;
-    private int replyTo;
+    private int replyToReplyId;
     private int postId;
-    private String username;
+    private String usernameFrom;
+    private String usernameTo;
     private String replyText;
     private String mediaLink;
     private LocalDate dateTime;
 
-    public Reply(int replyId, int userFrom, int replyTo, int postId, String replyText, String mediaLink, LocalDate dateTime) {
+    public Reply(int replyId, int userFrom, int replyToReplyId, int postId, String replyText, String mediaLink, LocalDate dateTime) {
         this.replyId = replyId;
         this.userFrom = userFrom;
-        this.replyTo = replyTo;
+        this.replyToReplyId = replyToReplyId;
         this.postId = postId;
         this.replyText = replyText;
         this.mediaLink = mediaLink;
@@ -26,12 +26,20 @@ public class Reply {
 
     public Reply() {}
 
-    public String getUsername() {
-        return username;
+    public String getUsernameFrom() {
+        return usernameFrom;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsernameFrom(String username) {
+        this.usernameFrom = username;
+    }
+
+    public String getUsernameTo() {
+        return usernameTo;
+    }
+
+    public void setUsernameTo(String username) {
+        this.usernameTo = username;
     }
 
     public int getReplyId() {
@@ -50,12 +58,12 @@ public class Reply {
         this.userFrom = userFrom;
     }
 
-    public int getReplyTo() {
-        return replyTo;
+    public int getReplyToReplyId() {
+        return replyToReplyId;
     }
 
-    public void setReplyTo(int replyTo) {
-        this.replyTo = replyTo;
+    public void setReplyToReplyId(int replyToReplyId) {
+        this.replyToReplyId = replyToReplyId;
     }
 
     public int getPostId() {
@@ -80,10 +88,6 @@ public class Reply {
 
     public void setMediaLink(String mediaLink) {
         this.mediaLink = mediaLink;
-    }
-
-    public LocalDate getDateTime() {
-        return dateTime;
     }
 
     public void setDateTime(LocalDate dateTime) {
