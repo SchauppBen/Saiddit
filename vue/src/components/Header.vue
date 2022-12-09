@@ -27,11 +27,12 @@ export default {
 <style scoped>
 #header {
   display: flex;
-  justify-content: space-between;
-  width: 100vw;
+  justify-content: space-around;
+  width: 100%;
+  height: 100px;
 }
 #pageLogo {
-  height: 8vh;
+  height: 50px;
 }
 div {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
@@ -42,9 +43,9 @@ div {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 a {
-  font-size: 30px;
+  font-size: 25px;
   font-family: Georgia, "Times New Roman", Times, serif;
-  color: teal;
+  color: #7c9eb7;
   font-style: italic;
 }
 </style>

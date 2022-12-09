@@ -4,60 +4,63 @@
       <Header id="app-header" />
     </div>
     <div id="container">
-      <div>
-        <nav-bar id="nav-bar" class="full-height" />
-      </div>
-
-      <router-view id="main-page" />
+      <nav-bar class="sidebar" />
+      <router-view class="main-content" />
+      <active-forums class="sidebar" />
     </div>
   </div>
 </template>
 
 <script>
+import ActiveForums from "./components/ActiveForums.vue";
 import Header from "./components/Header.vue";
 import NavBar from "./components/NavBar.vue";
 
 export default {
-  components: { Header, NavBar },
+  components: { Header, NavBar, ActiveForums },
 };
 </script>
 <style>
 .highlighted:hover {
-  color: orange;
+  color: #ffc20c;
 }
 #container {
   display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
 }
 #app-header {
   display: flex;
   justify-content: space-between;
-  background-color: pink;
-  padding: 10px;
+  background-color: #ffd3d7;
+  padding: 5px;
   align-items: center;
-  height: 10vh;
-  margin: 10px 5px 0 5px;
+  border-radius: 0px;
 }
 
-#nav-bar {
+.sidebar {
+  background-image: linear-gradient(#ffd3d7, #fff3e0);
   width: 200px;
-  background-color: teal;
   padding: 10px;
   margin-top: 10px;
   margin-right: 10px;
-  margin-left: 5px;
-  height: 187vh;
-  border-radius: 5px;
-  background-image: linear-gradient(aquamarine, pink);
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
 }
 
-#main-page {
-  width: 100vw;
+.main-content {
+  flex: 1;
   margin: 10px 0px 10px 0px;
+  border-radius: 10px;
 }
-div {
-  border-radius: 5px;
-}
+
 #app {
-  background-color: teal;
+  background-color: #ffc20c;
+  height: 100%;
+}
+.posts {
+  padding: 10px;
+  border-radius: 10px;
 }
 </style>

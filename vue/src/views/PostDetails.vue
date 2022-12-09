@@ -8,10 +8,10 @@
         >[{{ post.forumName }}]</router-link
       >
     </h4>
-    <h1>{{ post.title }}</h1>
+    <h1 class="text">{{ post.title }}</h1>
     <img id="detail-img" :src="post.mediaLink" v-show="post.mediaLink" />
-    <h3>{{ post.text }}</h3>
-    <h2>
+    <h3 class="text">{{ post.text }}</h3>
+    <h2 class="text">
       Posted by:
       <router-link
         class="highlighted"
@@ -19,7 +19,7 @@
         >{{ post.username }}</router-link
       >
     </h2>
-    <h3>{{ post.datetime }}</h3>
+    <h3 class="text">{{ post.datetime }}</h3>
 
     <label for="replyInput">Reply</label>
     <input type="text" id="replyInput" name="replyInput" />
@@ -66,9 +66,15 @@ export default {
 #detail-img {
   width: 500px;
 }
+.text {
+  font-family: sans-serif;
+  color: royalblue;
+  font-size: 20px;
+}
 .posts {
   text-align: center;
-  color: pink;
+  color: #7e96a7;
+  background-color: #c5d6db;
 }
 .links {
   color: pink;

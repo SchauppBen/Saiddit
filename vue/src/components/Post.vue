@@ -1,5 +1,5 @@
 <template>
-  <div id="post-container">
+  <div id="post-container" class="posts">
     <router-link
       :to="{
         name: 'post-details',
@@ -7,19 +7,23 @@
       }"
     >
       <div id="postBox">
-        <router-link
-          class="highlighted"
-          :to="{ name: 'forum-view', params: { forumName: post.forumName } }"
-          ><h4>[{{ post.forumName }}]</h4></router-link
-        >
+        <h4>
+          <router-link
+            class="highlighted"
+            :to="{ name: 'forum-view', params: { forumName: post.forumName } }"
+            >[{{ post.forumName }}]</router-link
+          >
+        </h4>
         <h1>{{ post.title }}</h1>
         <img :src="post.mediaLink" v-show="post.mediaLink" />
         <h3>{{ post.text }}</h3>
-        <router-link
-          class="highlighted"
-          :to="{ name: 'user-posts', params: { username: post.username } }"
-          ><h2>User: {{ post.username }}</h2></router-link
-        >
+        <h2>
+          <router-link
+            class="highlighted"
+            :to="{ name: 'user-posts', params: { username: post.username } }"
+            >User: {{ post.username }}</router-link
+          >
+        </h2>
         <h3>{{ post.datetime }}</h3>
       </div>
     </router-link>
@@ -42,8 +46,8 @@ export default {
 #post-container {
   border: groove;
   border-width: 5px;
-  border-color: aquamarine;
-  margin-bottom: 5px;
-  background-color: whitesmoke;
+  border-color: #ffd3d7;
+  background-color: #c5d6db;
+  margin: 10px;
 }
 </style>
