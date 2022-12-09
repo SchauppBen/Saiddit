@@ -32,12 +32,16 @@ public class PostController {
     @PostMapping(path = "forums/posts/")
     @ResponseStatus(HttpStatus.CREATED)
     public Post createNewPost(@RequestBody Post newPost, Principal principal) {
-        newPost.setUserId(userDao.findIdByUsername(principal.getName()));
-        Post createdPost = postDao.createNewPost(newPost);
-        if (createdPost == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        if (principal != null) {
+            newPost.setUserId(userDao.findIdByUsername(principal.getName()));
+            Post createdPost = postDao.createNewPost(newPost);
+            if (createdPost == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            }
+            return createdPost;
+        } else {
+            return null;
         }
-        return createdPost;
     }
 
 
