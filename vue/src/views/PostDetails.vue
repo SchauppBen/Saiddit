@@ -1,10 +1,24 @@
 <template>
   <div class="posts">
-    <h4>Posted in [{{ post.forumName }}]</h4>
+    <h4>
+      Posted in
+      <router-link
+        class="highlighted"
+        :to="{ name: 'forum-view', params: { forumName: post.forumName } }"
+        >[{{ post.forumName }}]</router-link
+      >
+    </h4>
     <h1>{{ post.title }}</h1>
     <img id="detail-img" :src="post.mediaLink" v-show="post.mediaLink" />
     <h3>{{ post.text }}</h3>
-    <h2>Posted by: {{ post.username }}</h2>
+    <h2>
+      Posted by:
+      <router-link
+        class="highlighted"
+        :to="{ name: 'user-posts', params: { username: post.username } }"
+        >{{ post.username }}</router-link
+      >
+    </h2>
     <h3>{{ post.datetime }}</h3>
 
     <label for="replyInput">Reply</label>
@@ -54,6 +68,9 @@ export default {
 }
 .posts {
   text-align: center;
+  color: pink;
+}
+.links {
   color: pink;
 }
 </style>
