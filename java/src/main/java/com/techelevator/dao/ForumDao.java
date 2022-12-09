@@ -22,6 +22,8 @@ public interface ForumDao {
 
     Forum getForumByName(String forumName);
 
+    boolean isModerator(int forumId, int userId);
+
     void addModerator(User userAddingMod, AddModeratorDto addModeratorDto);
 
 //    void deleteForum(int forumId);

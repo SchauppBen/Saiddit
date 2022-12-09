@@ -3,9 +3,11 @@ package com.techelevator.dao;
 import com.techelevator.model.AddModeratorDto;
 import com.techelevator.model.Forum;
 import com.techelevator.model.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ public class JdbcForumDao implements ForumDao {
         if (forumId != null) {
             newForum.setForumId(forumId);
         } else {
-            return null;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         sql = "INSERT INTO forums_users (forum_id, user_id, is_moderator) VALUES (?, ?, true);";
         jdbcTemplate.update(sql, newForum.getForumId(), userCreated.getId());
@@ -66,8 +68,28 @@ public class JdbcForumDao implements ForumDao {
     }
 
     @Override
-    public void addModerator(User userAddingMod, AddModeratorDto addModeratorDto) {
+    public boolean isModerator(int forumId, int userId) {
+        String sql = "SELECT is_moderator FROM forums_users WHERE forum_id = ? AND user_id = ?;";
+        try {
+            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, forumId, userId);
+            if (rowSet.next()) {
+                return rowSet.getBoolean("is_moderator");
+            }
+        } catch(NullPointerException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return false;
+    }
 
+    @Override
+    public void addModerator(User userAddingMod, AddModeratorDto addModeratorDto) {
+        if (isModerator(addModeratorDto.getForumId(), userAddingMod.getId())) {
+            String sql = "UPDATE forums_users SET is_moderator = true WHERE forum_id = ? AND user_id = ?";
+            jdbcTemplate.update(sql, addModeratorDto.getForumId(), addModeratorDto.getUserId());
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
     }
 
 //    @Override

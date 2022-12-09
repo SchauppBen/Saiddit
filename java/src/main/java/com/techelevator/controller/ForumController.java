@@ -6,6 +6,7 @@ import com.techelevator.model.AddModeratorDto;
 import com.techelevator.model.Forum;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -23,10 +24,14 @@ public class ForumController {
         this.userDao = userDao;
     }
 
-    @PostMapping(path = "/forums/createNewForum")
+    @PostMapping(path = "/forums/")
     @ResponseStatus(HttpStatus.CREATED)
     public Forum createNewForum(@Valid @RequestBody Forum forum, Principal principal) {
-        return forumDao.createNewForum(forum, userDao.findByUsername(principal.getName()));
+        if (principal != null) {
+            return forumDao.createNewForum(forum, userDao.findByUsername(principal.getName()));
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @GetMapping(path = "/forums")
@@ -54,9 +59,18 @@ public class ForumController {
         forumDao.addUserToForum(forumId, userId);
     }
 
+    @GetMapping(path = "/forums/{forumId}/users/{userId}/isModerator")
+    public boolean isModerator(@PathVariable int forumId, @PathVariable int userId) {
+        return forumDao.isModerator(forumId, userId);
+    }
+
     @PutMapping(path = "/forums/addModerator")
     public void addModerator(@RequestBody AddModeratorDto addModeratorDto, Principal principal) {
-        forumDao.addModerator(userDao.findByUsername(principal.getName()), addModeratorDto);
+        if (principal != null) {
+            forumDao.addModerator(userDao.findByUsername(principal.getName()), addModeratorDto);
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     //DOESN'T WORK

@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <post v-for="post in forumPosts" :key="post.postId" :post="post" />
+  <div class="posts">
+    <post
+      class="allPosts"
+      v-for="post in forumPosts"
+      :key="post.postId"
+      :post="post"
+    />
   </div>
 </template>
 
@@ -17,18 +22,21 @@ export default {
         return forum.name == this.$store.state.activeForumName;
       });
     },
-  },
-  created() {
-    this.$store.commit("SET_ACTIVE_FORUM", this.$route.params.forumName);
-  },
-  methods: {
     forumPosts() {
       return this.$store.state.posts.filter((post) => {
         return post.forumName == this.thisForum.name;
       });
     },
   },
+  created() {
+    this.$store.commit("SET_ACTIVE_FORUM", this.$route.params.forumName);
+  },
+  methods: {},
 };
 </script>
 
-<style></style>
+<style scoped>
+#forum-posts {
+  align-content: center;
+}
+</style>
