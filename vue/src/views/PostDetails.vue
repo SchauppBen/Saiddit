@@ -10,18 +10,17 @@
     <label for="replyInput">Reply</label>
     <input type="text" id="replyInput" name="replyInput" />
 
-    <div v-for="reply in replies" :key="reply.replyId">
-      <div>User {{ reply.userFrom }} : {{ reply.replyText }}</div>
-    </div>
+    <reply-section :replies = replies />
   </div>
 </template>
 
 <script>
 import replyService from "../services/ReplyService.js";
+import replySection from "../components/ReplySection.vue"
 
 export default {
   name: "post-details",
-  components: {},
+  components: {replySection},
   computed: {
     post() {
       return this.$store.state.posts.find((post) => {

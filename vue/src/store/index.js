@@ -25,6 +25,7 @@ export default new Vuex.Store({
     activePostId: 0,
     // The replies of the post that the user is currently viewing
     activeReplies: [],
+    activeNestedReplies: [],
     activeForumName: "",
 
     posts: [],
@@ -74,6 +75,9 @@ export default new Vuex.Store({
     // Reply Mutations
     SET_ACTIVE_REPLIES(state, data) {
       state.activeReplies = data;
+    },
+    SET_ACTIVE_NESTED_REPLIES(state, data) {
+      state.activeNestedReplies = data;
     },
   },
 });
