@@ -1,7 +1,7 @@
 <template>
   <div id="header">
     <router-link v-bind:to="{ name: 'home' }" id="logo">
-      <a>saiddit</a>
+      <a class="highlighted">saiddit</a>
       <img id="pageLogo" src="../assets/duckie.png"
     /></router-link>
     <search-bar />
