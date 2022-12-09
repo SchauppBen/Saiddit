@@ -146,6 +146,7 @@ public class JdbcReplyDao implements ReplyDao {
 
     @Override
     public void editReply(int replyId, Reply newReply) {
+        if (replyId == newReply.getReplyId())
         try {
             String sql = "UPDATE replies SET text = ?, media_link = ? WHERE reply_id = ?;";
             jdbcTemplate.update(sql, newReply.getReplyText(), newReply.getMediaLink(), replyId);
