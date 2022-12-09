@@ -1,5 +1,5 @@
 <template>
-  <div id="Posts">
+  <div class="posts">
     <post class="allPosts" v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
@@ -29,8 +29,8 @@ export default {
 };
 </script>
 
-<style scoped>
-#posts {
+<style>
+.posts {
   border: groove;
   border-color: aquamarine;
 }
