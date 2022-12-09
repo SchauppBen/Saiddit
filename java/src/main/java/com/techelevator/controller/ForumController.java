@@ -30,7 +30,7 @@ public class ForumController {
         if (principal != null) {
             return forumDao.createNewForum(forum, userDao.findByUsername(principal.getName()));
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
     }
 

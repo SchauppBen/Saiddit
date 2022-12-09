@@ -36,7 +36,7 @@ public class PostController {
             newPost.setUserId(userDao.findIdByUsername(principal.getName()));
             Post createdPost = postDao.createNewPost(newPost);
             if (createdPost == null) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
             }
             return createdPost;
         } else {
