@@ -3,7 +3,9 @@
     <h2><em>Active Forums</em></h2>
     <ul>
       <li v-for="forum in forums" :key="forum.name">
-        <router-link :to="{ name: 'forum-view', params: forum.name }">
+        <router-link
+          :to="{ name: 'forum-view', params: { forumName: forum.name } }"
+        >
           <br />{{ forum.name }}</router-link
         >
       </li>
