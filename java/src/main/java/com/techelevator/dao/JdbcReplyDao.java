@@ -2,9 +2,11 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Reply;
 import com.techelevator.model.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -77,20 +79,45 @@ public class JdbcReplyDao implements ReplyDao {
 
         return allReplies;
     }
-
+    
     @Override
     public Reply reply(Reply newReply) {
-        String sql = "insert into replies (user_from_id, reply_to_id, post_id, text, media_link) " +
-                "values (?, ?, ?, ?, ?) returning reply_id;";
-        Integer newReplyId;
-
-        newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(), newReply.getReplyTo(),
-                newReply.getPostId(), newReply.getReplyText(), newReply.getMediaLink());
-        if (newReplyId == null) {
-            throw new NullPointerException();
+        String sql = "";
+        Integer newReplyId = null;
+        try {
+            if (newReply.getReplyTo() == 0) { // if reply_to_id = null
+                sql = "insert into replies (user_from_id, post_id, text, media_link) " +
+                        "values (?, ?, ?, ?) returning reply_id;";
+                newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(),
+                        newReply.getPostId(), newReply.getReplyText(), newReply.getMediaLink());
+            } else if (newReply.getMediaLink() == null) { // if media_link = null
+                sql = "insert into replies (user_from_id, reply_to_id, post_id, text) values (?, ?, ?, ?) returning reply_id;";
+                newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(),
+                        newReply.getReplyTo(), newReply.getPostId(), newReply.getReplyText());
+            } else if (newReply.getReplyText() == null) { // if text = null
+                sql = "insert into replies (user_from_id, reply_to_id, post_id, media_link) " +
+                        "values (?, ?, ?, ?) returning reply_id;";
+                newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(),
+                        newReply.getReplyTo(), newReply.getPostId(), newReply.getMediaLink());
+            } else if (newReply.getPostId() == 0) { // if post_id = null
+                return null;
+            } else if (newReply.getMediaLink() == null && newReply.getReplyText() == null) { // if media_link && text = null
+                return null;
+            } else { // if all values != null
+                sql = "insert into replies (user_from_id, reply_to_id, post_id, text, media_link) " +
+                        "values (?, ?, ?, ?, ?) returning reply_id;";
+                newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(),
+                        newReply.getReplyTo(), newReply.getPostId(), newReply.getReplyText(), newReply.getMediaLink());
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-        newReply.setReplyId(newReplyId);
+        if (newReplyId != null) {
+            newReply.setReplyId(newReplyId);
+        } else {
+            return null;
+        }
 
         return newReply;
     }
@@ -107,9 +134,9 @@ public class JdbcReplyDao implements ReplyDao {
 
         reply.setReplyId(rowSet.getInt("reply_id"));
         reply.setUserFrom(rowSet.getInt("user_from_id"));
-        reply.setUsername(userDao.getUserById(reply.getUserFrom()).getUsername());
+        reply.setUsernameFrom(userDao.getUserById(reply.getUserFrom()).getUsername());
         reply.setReplyTo(rowSet.getInt("reply_to_id"));
-        reply.setUsername(userDao.getUserById(reply.getReplyTo()).getUsername());
+        reply.setUsernameTo(userDao.getUserById(reply.getReplyTo()).getUsername());
         reply.setPostId(rowSet.getInt("post_id"));
         reply.setReplyText(rowSet.getString("text"));
         reply.setMediaLink(rowSet.getString("media_link"));
