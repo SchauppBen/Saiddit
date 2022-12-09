@@ -9,6 +9,7 @@ import Logout from "../views/Logout.vue";
 import PostDetails from "../views/PostDetails.vue";
 import Register from "../views/Register.vue";
 import store from "../store/index";
+import UserPosts from "../views/UserPosts";
 
 Vue.use(Router);
 
@@ -87,6 +88,14 @@ const router = new Router({
       component: CreateForum,
       meta: {
         requiresAuth: true,
+      },
+    },
+    {
+      path: "/:username",
+      name: "user-posts",
+      component: UserPosts,
+      meta: {
+        requiresAuth: false,
       },
     },
   ],
