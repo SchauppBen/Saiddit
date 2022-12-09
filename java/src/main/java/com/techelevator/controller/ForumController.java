@@ -66,7 +66,11 @@ public class ForumController {
 
     @PutMapping(path = "/forums/addModerator")
     public void addModerator(@RequestBody AddModeratorDto addModeratorDto, Principal principal) {
-        forumDao.addModerator(userDao.findByUsername(principal.getName()), addModeratorDto);
+        if (principal != null) {
+            forumDao.addModerator(userDao.findByUsername(principal.getName()), addModeratorDto);
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     //DOESN'T WORK
