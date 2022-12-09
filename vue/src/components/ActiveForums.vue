@@ -4,6 +4,7 @@
     <ul>
       <li v-for="forum in forums" :key="forum.name">
         <router-link
+          class="highlighted"
           :to="{ name: 'forum-view', params: { forumName: forum.name } }"
         >
           <br />{{ forum.name }}</router-link
