@@ -7,11 +7,19 @@
       }"
     >
       <div id="postBox">
-        <h4>{{ post.forumName }}</h4>
+        <router-link
+          class="highlighted"
+          :to="{ name: 'forum-view', params: { forumName: post.forumName } }"
+          ><h4>[{{ post.forumName }}]</h4></router-link
+        >
         <h1>{{ post.title }}</h1>
         <img :src="post.mediaLink" v-show="post.mediaLink" />
         <h3>{{ post.text }}</h3>
-        <h2>User: {{ post.username }}</h2>
+        <router-link
+          class="highlighted"
+          :to="{ name: 'user-posts', params: { username: post.username } }"
+          ><h2>User: {{ post.username }}</h2></router-link
+        >
         <h3>{{ post.datetime }}</h3>
       </div>
     </router-link>

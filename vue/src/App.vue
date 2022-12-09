@@ -22,6 +22,9 @@ export default {
 };
 </script>
 <style>
+.highlighted:hover {
+  color: orange;
+}
 #container {
   display: flex;
 }
