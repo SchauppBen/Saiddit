@@ -1,13 +1,12 @@
 package com.techelevator.model;
 
-import java.security.Timestamp;
 import java.time.LocalDate;
 
 public class Reply {
 
     private int replyId;
     private int userFrom;
-    private int replyTo;
+    private int replyToReplyId;
     private int postId;
     private String usernameFrom;
     private String usernameTo;
@@ -15,10 +14,10 @@ public class Reply {
     private String mediaLink;
     private LocalDate dateTime;
 
-    public Reply(int replyId, int userFrom, int replyTo, int postId, String replyText, String mediaLink, LocalDate dateTime) {
+    public Reply(int replyId, int userFrom, int replyToReplyId, int postId, String replyText, String mediaLink, LocalDate dateTime) {
         this.replyId = replyId;
         this.userFrom = userFrom;
-        this.replyTo = replyTo;
+        this.replyToReplyId = replyToReplyId;
         this.postId = postId;
         this.replyText = replyText;
         this.mediaLink = mediaLink;
@@ -59,12 +58,12 @@ public class Reply {
         this.userFrom = userFrom;
     }
 
-    public int getReplyTo() {
-        return replyTo;
+    public int getReplyToReplyId() {
+        return replyToReplyId;
     }
 
-    public void setReplyTo(int replyTo) {
-        this.replyTo = replyTo;
+    public void setReplyToReplyId(int replyToReplyId) {
+        this.replyToReplyId = replyToReplyId;
     }
 
     public int getPostId() {
@@ -89,10 +88,6 @@ public class Reply {
 
     public void setMediaLink(String mediaLink) {
         this.mediaLink = mediaLink;
-    }
-
-    public LocalDate getDateTime() {
-        return dateTime;
     }
 
     public void setDateTime(LocalDate dateTime) {
