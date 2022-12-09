@@ -55,8 +55,12 @@ public class ForumController {
     }
 
     @PutMapping(path = "/forums/{forumName}")
-    public Forum updateForum(@PathVariable String forumName, @RequestBody Forum forum) {
-        return forumDao.updateForum(forumDao.getForumByName(forumName), forum);
+    public Forum updateForum(@PathVariable String forumName, @RequestBody Forum forum, Principal principal) {
+        if (principal != null && forumDao.isModerator(forum.getForumId(), userDao.findIdByUsername(principal.getName()))) {
+            return forumDao.updateForum(forumDao.getForumByName(forumName), forum);
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @GetMapping(path = "/forums/{forumId}/users/{userId}")

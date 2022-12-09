@@ -51,12 +51,12 @@ public class JdbcForumDao implements ForumDao {
     public List<Forum> getForumNamesForHomePage() {
         List<Forum> forumNames = new ArrayList<>();
 
-        String sql = "SELECT * FROM forums JOIN posts USING (forum_id) ORDER BY posts.date_time LIMIT 10;";
+        String sql = "SELECT forum_id, name, description, time_created FROM forums JOIN posts USING (forum_id) ORDER BY posts.date_time LIMIT 10;";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
 
         while (rowSet.next()) {
-            mapRowSetToForum(rowSet);
+            forumNames.add(mapRowSetToForum(rowSet));
         }
 
         return forumNames;
