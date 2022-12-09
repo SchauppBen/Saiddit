@@ -9,4 +9,8 @@ export default {
   getForum(forumName) {
     return axios.get(`/${forumName}/`);
   },
+
+  addForum(forum) {
+    return axios.post(`/forums/createNewForum/`, forum);
+  }
 };
