@@ -26,7 +26,7 @@ export default new Vuex.Store({
     // The replies of the post that the user is currently viewing
     activeReplies: [],
     activeForumName: "",
-
+    activeForums: [],
     posts: [],
     forums: [],
   },
@@ -55,6 +55,9 @@ export default new Vuex.Store({
     },
     SET_ACTIVE_FORUM(state, forumName) {
       state.activeForumName = forumName;
+    },
+    SET_ACTIVE_FORUMS(state, data) {
+      state.activeForums = data;
     },
     SAVE_FORUM(state, forum) {
       state.forums.push(forum);

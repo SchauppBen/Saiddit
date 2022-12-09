@@ -25,13 +25,19 @@ export default {
         this.$store.commit("SET_FORUMS", response.data);
       });
     },
+    activeForums() {
+      forumService.getActiveForums().then((response) => {
+        this.$store.commit("SET_ACTIVE_FORUMS", response.data);
+      });
+    },
   },
   computed: {
     forums() {
-      return this.$store.state.forums;
+      return this.$store.state.activeForums;
     },
   },
   created() {
+    this.activeForums();
     this.getForums();
   },
 };
