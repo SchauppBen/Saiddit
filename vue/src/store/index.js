@@ -31,6 +31,7 @@ export default new Vuex.Store({
     forums: [],
   },
   mutations: {
+    // Authentication Mutations
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
       localStorage.setItem("token", token);
@@ -47,6 +48,19 @@ export default new Vuex.Store({
       state.user = {};
       axios.defaults.headers.common = {};
     },
+
+    // Forum Mutations
+    SET_FORUMS(state, data) {
+      state.forums = data;
+    },
+    SET_ACTIVE_FORUM(state, forumName) {
+      state.activeForumName = forumName;
+    },
+    SAVE_FORUM(state, forum) {
+      state.forums.push(forum);
+    },
+
+    // Post Mutations
     SET_POSTS(state, data) {
       state.posts = data;
     },
@@ -56,14 +70,10 @@ export default new Vuex.Store({
     SET_ACTIVE_POST(state, postId) {
       state.activePostId = postId;
     },
+
+    // Reply Mutations
     SET_ACTIVE_REPLIES(state, data) {
       state.activeReplies = data;
-    },
-    SET_FORUMS(state, data) {
-      state.forums = data;
-    },
-    SET_ACTIVE_FORUM(state, forumName) {
-      state.activeForumName = forumName;
     },
   },
 });
