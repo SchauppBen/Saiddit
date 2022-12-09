@@ -7,7 +7,7 @@ export default {
   },
 
   getActiveForums() {
-    return axios.get("/forums/home");
+    return axios.get("/forums/home/");
   },
 
   getForum(forumName) {

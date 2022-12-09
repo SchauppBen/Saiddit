@@ -2,12 +2,12 @@
   <div>
     <h2><em>Active Forums</em></h2>
     <ul>
-      <li v-for="forum in forums" :key="forum">
+      <li v-for="forum in forums" :key="forum.name">
         <router-link
           class="highlighted"
-          :to="{ name: 'forum-view', params: { forumName: forum } }"
+          :to="{ name: 'forum-view', params: { forumName: forum.name } }"
         >
-          <br />{{ forum }}</router-link
+          <br />{{ forum.name }}</router-link
         >
       </li>
     </ul>
