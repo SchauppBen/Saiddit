@@ -54,6 +54,11 @@ public class ForumController {
         forumDao.addUserToForum(forumId, userId);
     }
 
+    @GetMapping(path = "/forums/{forumId}/users/{userId}/isModerator")
+    public boolean isModerator(@PathVariable int forumId, @PathVariable int userId) {
+        return forumDao.isModerator(forumId, userId);
+    }
+
     @PutMapping(path = "/forums/addModerator")
     public void addModerator(@RequestBody AddModeratorDto addModeratorDto, Principal principal) {
         forumDao.addModerator(userDao.findByUsername(principal.getName()), addModeratorDto);
