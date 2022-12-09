@@ -12,6 +12,8 @@ public interface ForumDao {
 
     List<Forum> getAllForums();
 
+    List<String> getForumNamesForHomePage();
+
     Forum getForumById(int id);
 
     void addUserToForum(int forumId, int userId);

@@ -66,6 +66,8 @@ public class JdbcReplyDao implements ReplyDao {
         return allReplies;
     }
 
+
+
     @Override
     public List<Reply> listRepliesByUser(int userId) {
         String sql = "select * from replies where user_from_id = ?;";

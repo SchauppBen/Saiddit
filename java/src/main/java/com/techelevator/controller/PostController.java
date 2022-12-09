@@ -44,7 +44,6 @@ public class PostController {
         }
     }
 
-
     @PutMapping(path = "/posts/{postId}")
     public void editPost(@PathVariable int postId, @RequestBody Post post) {
         postDao.editPost(postId, post);
