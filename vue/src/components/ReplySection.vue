@@ -1,32 +1,42 @@
 <template>
   <div>
-      Reply Section
-    <div v-for="reply in replies" :key="reply.replyId">
-      <div>User {{ reply.usernameFrom }} : {{ reply.replyText }}</div>
-    </div>
+    <ul v-for="(principalReplyObject, index) in nestedReplies" :key="index" class="replies">
+      <Reply
+        v-bind="{
+          reply: principalReplyObject.reply,
+          subReplies: principalReplyObject.subReplies,
+        }"
+      />
+    </ul>
   </div>
 </template>
 
 <script>
+import Reply from "./Reply.vue";
+
 export default {
     data() {
         return {
         };
     },
-    computed: {
-        nestedReplies() {
-            return this.$store.state.activeNestedReplies;
-        }
+    props: {
+        unNestedRepliesArray: {
+            type: Array,
+            required: true
+        },
     },
+    components: {Reply},
     methods: {
         createNestedReplies() {
             // create array of sub-replies
-            const subReplies = this.replies.filter(reply => reply.replyToReplyId != 0);
+            console.log("method activated");
+            console.log(this.unNestedRepliesArray);
+            const subReplies = this.unNestedRepliesArray.filter(reply => reply.replyToReplyId != 0);
             const subRepliesLength = subReplies.length;
 
             // add all direct post replies to nested replies
             let nestedReplies = [];
-            this.replies.forEach(currentReply => {
+            this.unNestedRepliesArray.forEach(currentReply => {
                 if(currentReply.replyToReplyId == 0) {
                     const replyObject = {
                         reply: currentReply
@@ -35,7 +45,7 @@ export default {
                 }
             });
 
-            // Recursively add the sub-replies to the nested replies
+            // Recursively add the sub-replies to the nested replies. Stop after a certain point
             let subReplyIndex = 0;
             let loop_count = 0;
             while(subReplies.length > 0 && loop_count < subRepliesLength*100) {
@@ -59,8 +69,8 @@ export default {
                 }
                 loop_count++;
             }
-
             this.$store.commit("SET_ACTIVE_NESTED_REPLIES", nestedReplies);
+            console.log("data saved in store");
         },
 
         // Recursively search within a nested comment object array to find the target reply and add the sub-reply to it 
@@ -97,12 +107,17 @@ export default {
             return [newRepliesArray, replyAdded];
         }
     },
-    props: {
-        replies: Array,
+    computed: {
+        nestedReplies() {
+            console.log("retrieving data from store");
+            return this.$store.state.activeNestedReplies;
+            
+        }
     },
-    created() {
+    mounted() {
         this.createNestedReplies();
-    },
+        
+    }
 }
 </script>
 

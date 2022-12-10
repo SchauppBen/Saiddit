@@ -9,8 +9,7 @@
 
     <label for="replyInput">Reply</label>
     <input type="text" id="replyInput" name="replyInput" />
-
-    <reply-section :replies = replies />
+    <reply-section v-if="this.replies.length" :unNestedRepliesArray = replies />
   </div>
 </template>
 
@@ -40,7 +39,7 @@ export default {
         });
     },
   },
-  created() {
+  mounted() {
     this.$store.commit("SET_ACTIVE_POST", this.$route.params.postId);
     this.getReplies();
   },
