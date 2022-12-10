@@ -24,7 +24,7 @@ export default {
     },
   },
   created() {
-    this.getPosts(this.$store.searchTerm);
+    this.getPosts();
   },
 };
 </script>
