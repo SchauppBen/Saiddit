@@ -1,9 +1,9 @@
 <template>
   <div id="searchBar" class="$info">
-    <form>
+    <form @submit.prevent="search">
       <label>Search: </label>
-      <input @submit.prevent="search" type="text" name="search" v-model="searchTerm" />&nbsp;
-      <button type="submit" class="button is-danger is-small is-outlined radius-rounded">Submit</button>
+      <input type="text" name="search" v-model="searchTerm" />&nbsp;
+      <button type="submit" class="button is-danger is-small is-outlined radius-rounded">Search</button>
     </form>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
   methods: {
     search() {
       this.$store.commit("SET_SEARCH_TERM", this.searchTerm)
-      this.$router.push("/")
+      this.$router.push("/search")
     }
   }
 };

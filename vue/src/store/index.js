@@ -29,7 +29,8 @@ export default new Vuex.Store({
     activeForums: [],
     posts: [],
     forums: [],
-    searchTern: ""
+    searchTerm: "",
+    searchedPosts: []
   },
   mutations: {
     // Authentication Mutations
@@ -74,13 +75,16 @@ export default new Vuex.Store({
     SET_ACTIVE_POST(state, postId) {
       state.activePostId = postId;
     },
+    SET_SEARCH_TERM(state, searchTerm) {
+      state.searchTerm = searchTerm;
+    },
+    SET_SEARCHED_POSTS(state, posts) {
+      state.searchedPosts = posts;
+    },
 
     // Reply Mutations
     SET_ACTIVE_REPLIES(state, data) {
       state.activeReplies = data;
     },
-    SET_SEARCH_TERM(state, searchTerm) {
-      state.searchTerm = searchTerm;
-    }
   },
 });
