@@ -60,6 +60,14 @@ const router = new Router({
       },
     },
     {
+      path:"/search",
+      name: "search-posts",
+      component: SearchPosts,
+      meta: {
+        requiresAuth: false,
+      },
+    },
+    {
       path: "/:forumName",
       name: "forum-view",
       component: ForumView,
@@ -83,14 +91,7 @@ const router = new Router({
         requiresAuth: true,
       },
     },
-    {
-      path:"/search",
-      name: "search-posts",
-      component: SearchPosts,
-      meta: {
-        requiresAuth: false,
-      },
-    },
+    
     {
       path: "/createForum",
       name: "create-forum",

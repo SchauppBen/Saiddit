@@ -11,8 +11,8 @@ export default {
     name: "posts-list",
     components: { Post },
     methods: {
-    getPosts() {
-        postService.searchForPosts(this.$store.state.searchTerm).then((response) => {
+    getPosts(searchTerm) {
+        postService.searchForPosts(searchTerm).then((response) => {
           this.$store.commit("SET_SEARCHED_POSTS", response.data);
         });
     },
@@ -23,7 +23,7 @@ export default {
       }
   },
   created() {
-      this.getPosts();
+      this.getPosts(this.$store.state.searchTerm);
   }
 }
 </script>
