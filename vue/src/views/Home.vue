@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <div id="body">
+      <h1 id="home-title" class="title">Welcome to saiddit</h1>
       <posts id="post-list" />
     </div>
 
@@ -19,9 +20,6 @@ export default {
 </script>
 
 <style scoped>
-#body {
-  display: flex;
-}
 #post-list {
   justify-content: center;
   width: 100%;

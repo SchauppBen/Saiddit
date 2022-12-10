@@ -13,9 +13,9 @@ export default {
   components: { Post },
   methods: {
     getPosts() {
-        postService.getPosts().then((response) => {
-          this.$store.commit("SET_POSTS", response.data);
-        });
+      postService.getPosts().then((response) => {
+        this.$store.commit("SET_POSTS", response.data);
+      });
     },
   },
   computed: {
