@@ -1,5 +1,5 @@
 <template>
-  <img id="chatPic" src="../assets/message.png" />
+  <img id="chatPic" src="../assets/message.webp" />
 </template>
 
 <script>
@@ -10,6 +10,6 @@ export default {
 
 <style scoped>
 #chatPic {
-  height: 20px;
+  height: 70px;
 }
 </style>

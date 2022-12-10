@@ -1,31 +1,34 @@
 <template>
-  <div class="posts">
-    <h4>
-      Posted in
-      <router-link
-        class="highlighted"
-        :to="{ name: 'forum-view', params: { forumName: post.forumName } }"
-        >[{{ post.forumName }}]</router-link
-      >
-    </h4>
-    <h1 class="text">{{ post.title }}</h1>
-    <img id="detail-img" :src="post.mediaLink" v-show="post.mediaLink" />
-    <h3 class="text">{{ post.text }}</h3>
-    <h2 class="text">
-      Posted by:
-      <router-link
-        class="highlighted"
-        :to="{ name: 'user-posts', params: { username: post.username } }"
-        >{{ post.username }}</router-link
-      >
-    </h2>
-    <h3 class="text">{{ post.datetime }}</h3>
+  <div>
+    <h1 class="title">Post details</h1>
+    <div class="posts">
+      <h4>
+        Posted in
+        <router-link
+          class="highlighted"
+          :to="{ name: 'forum-view', params: { forumName: post.forumName } }"
+          >[{{ post.forumName }}]</router-link
+        >
+      </h4>
+      <h1 class="text">{{ post.title }}</h1>
+      <img id="detail-img" :src="post.mediaLink" v-show="post.mediaLink" />
+      <h3 class="text">{{ post.text }}</h3>
+      <h2 class="text">
+        Posted by:
+        <router-link
+          class="highlighted"
+          :to="{ name: 'user-posts', params: { username: post.username } }"
+          >{{ post.username }}</router-link
+        >
+      </h2>
+      <h3 class="text">{{ post.datetime }}</h3>
 
-    <label for="replyInput">Reply</label>
-    <input type="text" id="replyInput" name="replyInput" />
+      <label for="replyInput">Reply</label>
+      <input type="text" id="replyInput" name="replyInput" />
 
-    <div v-for="reply in replies" :key="reply.replyId">
-      <div>User {{ reply.userFrom }} : {{ reply.replyText }}</div>
+      <div v-for="reply in replies" :key="reply.replyId">
+        <div>User {{ reply.userFrom }} : {{ reply.replyText }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -75,6 +78,9 @@ export default {
   text-align: center;
   color: #7e96a7;
   background-color: #c5d6db;
+  border: groove;
+  border-width: 5px;
+  border-color: #ffd3d7;
 }
 .links {
   color: pink;
