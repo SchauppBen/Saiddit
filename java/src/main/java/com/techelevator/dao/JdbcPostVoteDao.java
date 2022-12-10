@@ -1,10 +1,13 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.PostVote;
+import com.techelevator.model.VotesForPostDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,17 +62,16 @@ public class JdbcPostVoteDao implements PostVoteDao {
     }
 
     @Override
-    public List<PostVote> getPostVotesByPost(int postId) {
-        List<PostVote> postVotes = new ArrayList<>();
+    public VotesForPostDto getPostVotesByPost(int postId) {
 
-        String sql = "SELECT * FROM post_votes WHERE post_id = ?";
+        String sql = "SELECT COUNT(*) FILTER(WHERE is_upvote) AS upvotes, COUNT(*) FILTER(WHERE NOT is_upvote) AS downvotes FROM post_votes WHERE post_id = ?";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, postId);
 
-        while(rowSet.next()) {
-            postVotes.add(mapRowSetToPostVote(rowSet));
+        if(rowSet.next()) {
+            return mapRowSetToVotesForPostDto(rowSet);
         }
-        return postVotes;
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
     @Override
@@ -138,4 +140,12 @@ public class JdbcPostVoteDao implements PostVoteDao {
         }
         return postVote;
     }
+
+    private VotesForPostDto mapRowSetToVotesForPostDto(SqlRowSet rowSet) {
+        VotesForPostDto votesForPostDto = new VotesForPostDto();
+        votesForPostDto.setUpvotes(rowSet.getInt("upvotes"));
+        votesForPostDto.setDownvotes(rowSet.getInt("downvotes"));
+        return votesForPostDto;
+    }
+
 }

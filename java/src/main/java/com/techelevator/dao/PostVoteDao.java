@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.PostVote;
+import com.techelevator.model.VotesForPostDto;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface PostVoteDao {
 
     List<PostVote> getPostVotesByUser(int userId);
 
-    List<PostVote> getPostVotesByPost(int postId);
+    VotesForPostDto getPostVotesByPost(int postId);
 
     List<PostVote> getUpVotesByUser(int userId);
 

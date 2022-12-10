@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.PostVoteDao;
 import com.techelevator.model.PostVote;
+import com.techelevator.model.VotesForPostDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class PostVoteController {
     }
 
     @GetMapping(path = "/posts/{postId}/votes/")
-    public List<PostVote> getPostVotesByPost(@PathVariable int postId) {
+    public VotesForPostDto getPostVotesByPost(@PathVariable int postId) {
         return postVoteDao.getPostVotesByPost(postId);
     }
 
