@@ -1,5 +1,6 @@
 <template>
   <div class="posts">
+    <h1 class="title">Posts in {{ thisForum.name }} forum</h1>
     <post
       class="allPosts"
       v-for="post in forumPosts"
