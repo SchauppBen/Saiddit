@@ -102,8 +102,8 @@ public class JdbcPostDao implements PostDao {
     @Override
     public List<Post> searchPosts(String searchString) {
         List<Post> posts = new ArrayList<>();
-        String sql = "SELECT * FROM posts WHERE title ILIKE ?;";
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, "%" + searchString + "%");
+        String sql = "SELECT * FROM posts WHERE title ILIKE ? OR text ILIKE ?;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, "%" + searchString + "%", "%" + searchString + "%");
         while(rowSet.next()) {
             posts.add(mapRowToPost(rowSet));
         }
