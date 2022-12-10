@@ -12,10 +12,16 @@ export default {
   name: "posts-list",
   components: { Post },
   methods: {
-    getPosts() {
-      postService.getPosts().then((response) => {
-        this.$store.commit("SET_POSTS", response.data);
-      });
+    getPosts(searchTerm) {
+      if (searchTerm === "") {
+        postService.getPosts().then((response) => {
+          this.$store.commit("SET_POSTS", response.data);
+        });
+      } else {
+        postService.searchForPosts(searchTerm).then((response) => {
+          this.$store.commit("SET_POSTS", response.data);
+        });
+      }
     },
   },
   computed: {
@@ -24,7 +30,7 @@ export default {
     },
   },
   created() {
-    this.getPosts();
+    this.getPosts(this.$store.searchTerm);
   },
 };
 </script>
