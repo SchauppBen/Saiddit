@@ -1,15 +1,26 @@
 package com.techelevator.model;
 
 public class VotesForPostDto {
+
+    private int postId;
     private int upvotes;
     private int downvotes;
 
-    public VotesForPostDto(int upvotes, int downvotes) {
+    public VotesForPostDto(int postId, int upvotes, int downvotes) {
+        this.postId = postId;
         this.upvotes = upvotes;
         this.downvotes = downvotes;
     }
 
     public VotesForPostDto() {}
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
 
     public int getUpvotes() {
         return upvotes;
