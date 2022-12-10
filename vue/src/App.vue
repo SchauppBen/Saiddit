@@ -4,9 +4,9 @@
       <Header id="app-header" />
     </div>
     <div id="container">
-      <nav-bar class="sidebar" />
+      <nav-bar class="sidebar" id="nav-bar" />
       <router-view class="main-content" />
-      <active-forums class="sidebar" />
+      <active-forums class="sidebar" id="active-forums" />
     </div>
   </div>
 </template>
@@ -21,13 +21,29 @@ export default {
 };
 </script>
 <style>
+.title {
+  border-color: #c5d6db;
+  background-color: #ffd3d7;
+  text-align: center;
+  font-size: 50px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  color: #7c9eb7;
+  margin: 0 10px 0 10px;
+  border-radius: 10px;
+  border: groove;
+  border-width: 5px;
+}
+
 .highlighted:hover {
   color: #ffc20c;
 }
 #container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  top: 100px;
   border-radius: 10px;
+  padding-top: 90px;
 }
 #app-header {
   display: flex;
@@ -36,23 +52,41 @@ export default {
   padding: 5px;
   align-items: center;
   border-radius: 0px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 .sidebar {
   background-image: linear-gradient(#ffd3d7, #fff3e0);
-  width: 200px;
+  width: 150px;
   padding: 10px;
   margin-top: 10px;
   margin-right: 10px;
   margin-left: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border-radius: 10px;
+  height: calc(100vh - 100px);
+}
+#nav-bar {
+  position: fixed;
+  top: 90px;
+  left: 0;
+  height: calc(100vh - 120px);
+}
+#active-forums {
+  position: fixed;
+  top: 90px;
+  right: 0;
+  height: calc(100vh - 120px);
 }
 
 .main-content {
-  flex: 1;
-  margin: 10px 0px 10px 0px;
+  margin: 10px 0 10px 0;
   border-radius: 10px;
+  width: calc(100vw - 400px);
+  min-height: calc(100vh - 110px);
 }
 
 #app {

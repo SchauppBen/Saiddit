@@ -64,6 +64,6 @@ export default {
   border-width: 5px;
   border-color: #ffd3d7;
   background-color: #c5d6db;
-  margin: 10px;
+  margin-bottom: 10px;
 }
 </style>

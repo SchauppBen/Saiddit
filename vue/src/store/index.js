@@ -29,7 +29,7 @@ export default new Vuex.Store({
     activeForums: [],
     posts: [],
     forums: [],
-    searchTern: ""
+    searchTerm: "",
   },
   mutations: {
     // Authentication Mutations
@@ -81,6 +81,6 @@ export default new Vuex.Store({
     },
     SET_SEARCH_TERM(state, searchTerm) {
       state.searchTerm = searchTerm;
-    }
+    },
   },
 });
