@@ -16,6 +16,8 @@ public class PostVote {
         this.timeDate = timeDate;
     }
 
+    public PostVote() {}
+
     public int getUserId() {
         return userId;
     }

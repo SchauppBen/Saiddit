@@ -33,11 +33,9 @@ public class JdbcPostDao implements PostDao {
         String sql = "SELECT * FROM posts;";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
 
-
         while(rowSet.next()) {
             getPosts.add(mapRowToPost(rowSet));
         }
-
 
         return getPosts;
     }
