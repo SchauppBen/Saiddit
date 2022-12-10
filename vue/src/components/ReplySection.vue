@@ -9,6 +9,10 @@
 
 <script>
 export default {
+    data() {
+        return {
+        };
+    },
     computed: {
         nestedReplies() {
             return this.$store.state.activeNestedReplies;
@@ -18,10 +22,10 @@ export default {
         createNestedReplies() {
             // create array of sub-replies
             const subReplies = this.replies.filter(reply => reply.replyToReplyId != 0);
-            subReplies.sort((replyA, replyB) => replyA.replyId - replyB.replyId);
+            const subRepliesLength = subReplies.length;
 
             // add all direct post replies to nested replies
-            const nestedReplies = [];
+            let nestedReplies = [];
             this.replies.forEach(currentReply => {
                 if(currentReply.replyToReplyId == 0) {
                     const replyObject = {
@@ -32,34 +36,65 @@ export default {
             });
 
             // Recursively add the sub-replies to the nested replies
-            
+            let subReplyIndex = 0;
+            let loop_count = 0;
+            while(subReplies.length > 0 && loop_count < subRepliesLength*100) {
+                const subReplyObject = subReplies[subReplyIndex]; // The sub-reply object to be added
+                const aggregationResult = this.aggregate(subReplyObject, nestedReplies);
+                nestedReplies = aggregationResult[0]; // update nested replies array
+                let replyAdded = aggregationResult[1]; // defines whether the reply has been added
+                // if a sub-reply is successfully added, remove the sub-reply from the sub-reply array
+                if(replyAdded) {
+                    subReplies.splice(subReplyIndex,1);
+                // else, move on to the next sub-reply object
+                } else {
+                    if((subReplyIndex + 1) < subReplies.length) {
+                        subReplyIndex++;
+                    }
+                }
 
+                // start over and start from beginning when reaching the end   
+                if(subReplyIndex == (subReplies.length-1)) {
+                    subReplyIndex = 0;
+                }
+                loop_count++;
+            }
 
-            this.$store.commit("SET_ACTIVE_NESTED_REPLIES", subReplies);
+            this.$store.commit("SET_ACTIVE_NESTED_REPLIES", nestedReplies);
         },
-        addSubReply(replyObjectToAdd, repliesArray) {
+
+        // Recursively search within a nested comment object array to find the target reply and add the sub-reply to it 
+        aggregate(replyObjectToAdd, repliesArray, replyAdded=false) {
+
             const newRepliesArray = repliesArray.map(replyObject => {
                 const newReplyObject = replyObject;
 
                 // If the current reply object is the one being replied to by the sub-reply
                 if(replyObject.reply.replyId == replyObjectToAdd.replyToReplyId) {
+                    const principalSubReplyObjectToAdd = {
+                            reply: replyObjectToAdd
+                        };
                     // If the current reply object has no sub-replies yet
                     if(!replyObject.subReplies) {
-                        newReplyObject.subReplies = [replyObjectToAdd];
+                        newReplyObject.subReplies = [principalSubReplyObjectToAdd];
                     } else {
-                        newReplyObject.subReplies.push(replyObjectToAdd);
+                        newReplyObject.subReplies.push(principalSubReplyObjectToAdd);
                     }
+                    replyAdded = true;
+
                 // If the current reply object is not the one being replied to, search deeper to see if any sub-reply objects is the one being replied to
                 } else {
                     if(replyObject.subReplies) {
-                        newReplyObject.subReplies = this.addSubReply(replyObjectToAdd, replyObject.subReplies);
+                        const aggregationResult = this.aggregate(replyObjectToAdd, replyObject.subReplies);
+                        newReplyObject.subReplies = aggregationResult[0];
+                        if(aggregationResult[1]) {replyAdded = true}
                     }
                 }
 
                 return newReplyObject;
             });
 
-            return newRepliesArray;
+            return [newRepliesArray, replyAdded];
         }
     },
     props: {
