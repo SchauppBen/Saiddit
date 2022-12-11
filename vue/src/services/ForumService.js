@@ -17,4 +17,8 @@ export default {
   addForum(forum) {
     return axios.post("/forums/", forum);
   },
+
+  searchForums(searchTerm) {
+    return axios.get(`/forums/search/${searchTerm}`)
+  }
 };

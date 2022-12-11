@@ -27,6 +27,7 @@ export default new Vuex.Store({
     activeReplies: [],
     activeForumName: "",
     activeForums: [],
+    searchedForums: [],
     posts: [],
     forums: [],
     searchTerm: "",
@@ -63,6 +64,9 @@ export default new Vuex.Store({
     },
     SAVE_FORUM(state, forum) {
       state.forums.push(forum);
+    },
+    SET_SEARCHED_FORUMS(state, data) {
+      state.searchedForums = data;
     },
 
     // Post Mutations
