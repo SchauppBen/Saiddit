@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="post-container">
     <h1 class="title">Post details</h1>
     <div class="posts">
       <h4>
@@ -14,12 +14,35 @@
       <img id="detail-img" :src="post.mediaLink" v-show="post.mediaLink" />
       <h3 class="text">{{ post.text }}</h3>
       <h2 class="text">
-        Posted by:
-        <router-link
-          class="highlighted"
-          :to="{ name: 'user-posts', params: { username: post.username } }"
-          >{{ post.username }}</router-link
-        >
+        <div class="inline">
+          <router-link
+            class="highlighted"
+            :to="{ name: 'user-posts', params: { username: post.username } }"
+            ><font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />  {{ post.username }}</router-link
+          >
+          <div class="votes">
+            <div class="up-vote" >
+              <a href="#" @mouseover="isActive=true" @mouseleave="isActive=false">
+                <i v-if="!isActive">
+                  <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
+                </i>
+                <span v-else >
+                  <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
+                </span>
+              </a>
+            </div>
+            <div class="down-vote" >
+              <a href="#" @mouseover="isActive=true" @mouseleave="isActive=false">
+                <i v-if="!isActive">
+                  <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
+                </i>
+                <span v-else >
+                  <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
       </h2>
       <h3 class="text">{{ post.datetime }}</h3>
 
@@ -103,6 +126,27 @@ export default {
 </script>
 
 <style scoped>
+.inline, .votes {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.up-color {
+  color: rgb(255, 102, 0);
+}
+
+.down-color {
+  color: rgb(76, 0, 255);
+}
+
+.title {
+  margin-top: -10px;
+  margin-right: 0px;
+  margin-bottom: 34px;
+  margin-left: 0px;
+}
+
 .reply-input {
   text-indent: 10%;
   text-align: left;
@@ -126,6 +170,7 @@ export default {
   font-family: sans-serif;
   color: royalblue;
   font-size: 20px;
+  
 }
 .posts {
   text-align: center;
@@ -133,9 +178,12 @@ export default {
   background-color: #c5d6db;
   border: groove;
   border-width: 5px;
-  border-color: #ffd3d7;
+  border-color: #76acbd;
 }
 .links {
   color: pink;
+}
+.post-container {
+  padding: 10px;
 }
 </style>
