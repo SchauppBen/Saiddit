@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.AddModeratorDto;
 import com.techelevator.model.Forum;
+import com.techelevator.model.ForumsUsersDto;
 import com.techelevator.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -16,9 +17,11 @@ import java.util.List;
 public class JdbcForumDao implements ForumDao {
 
     private final JdbcTemplate jdbcTemplate;
+    private final UserDao userDao;
 
-    public JdbcForumDao(JdbcTemplate jdbcTemplate) {
+    public JdbcForumDao(JdbcTemplate jdbcTemplate, UserDao userDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userDao = userDao;
     }
 
     @Override
@@ -33,6 +36,19 @@ public class JdbcForumDao implements ForumDao {
         sql = "INSERT INTO forums_users (forum_id, user_id, is_moderator) VALUES (?, ?, true);";
         jdbcTemplate.update(sql, newForum.getForumId(), userCreated.getId());
         return newForum;
+    }
+
+    @Override
+    public ForumsUsersDto joinUserToForum(ForumsUsersDto forumsUsersDto) {
+        String sql = "INSERT INTO forums_users (forum_id, user_id, is_moderator) VALUES (?, ?, false);";
+        try {
+            jdbcTemplate.update(sql, forumsUsersDto.getForumId(), forumsUsersDto.getUserId());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        forumsUsersDto.setForumName(getForumById(forumsUsersDto.getForumId()).getName());
+        forumsUsersDto.setUsername(userDao.getUserById(forumsUsersDto.getUserId()).getUsername());
+        return forumsUsersDto;
     }
 
     @Override
