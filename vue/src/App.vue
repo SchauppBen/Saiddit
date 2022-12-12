@@ -22,6 +22,13 @@ export default {
 </script>
 
 <style>
+.pink-border {
+  border-radius: 10px;
+  border: groove;
+  border-width: 5px;
+  border-color: #ffaeb5;
+}
+
 .title {
   background-color: #ffd3d7;
   text-align: center;
@@ -30,10 +37,6 @@ export default {
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   color: #7c9eb7;
   margin: 0 10px 0 10px;
-  border-radius: 10px;
-  border: groove;
-  border-width: 5px;
-  border-color: #ffaeb5;
 }
 
 .highlighted:hover {
@@ -70,12 +73,12 @@ export default {
 }
 
 .up-color {
-  color: rgb(76, 0, 255);
+  color: rgb(0, 55, 206);
   
 }
 
 .down-color {
-  color: rgb(255, 102, 0);
+  color: rgb(214, 0, 0);
 }
 
 .forumsTab {
@@ -121,7 +124,7 @@ export default {
 }
 
 #app {
-  background-color: #ffc20c;
+  background-image: linear-gradient(#e69d00, #ffc20c);
   height: 100%;
 }
 .posts {

@@ -1,9 +1,9 @@
 <template>
-  <div id="header">
-    <router-link v-bind:to="{ name: 'home' }" id="logo">
-      <a class="highlighted">saiddit</a>
-      <img id="pageLogo" src="../assets/duckie.png"
-    /></router-link>
+  <div id="header" class="border">
+      <router-link v-bind:to="{ name: 'home' }" id="logo">
+      <img id="pageLogo" src="../assets/duckie.png"/>
+      <p id="saiddit" class="highlighted">saiddit</p>
+      </router-link>
     <search-bar />
     <chat-logo />
     <div v-if="$store.state.token != ''">
@@ -25,6 +25,13 @@ export default {
 </script>
 
 <style scoped>
+.border {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-style: groove;
+  border-bottom-width: 5px;
+  border-bottom-color: #ffaeb5;
+}
 #header {
   display: flex;
   justify-content: space-around;
@@ -33,16 +40,23 @@ export default {
 }
 #pageLogo {
   height: 50px;
+  padding: 0 10px 0 10px;
 }
 div {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 }
-#saiddit {
-  font-size: 20px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+#logo {
+  display: flex;
+  flex-direction: row;
 }
-a {
+#saiddit {
+  font-weight: bold;
+  font-size: 30px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  height: 100%;
+}
+p {
   font-size: 25px;
   font-family: Georgia, "Times New Roman", Times, serif;
   color: #7c9eb7;
