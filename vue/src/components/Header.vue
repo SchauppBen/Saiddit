@@ -7,7 +7,7 @@
     <search-bar />
     <chat-logo />
     <div v-if="$store.state.token != ''">
-      logged in as {{ $store.state.user.username }}
+      <font-awesome-icon icon="fa-solid fa-user" size="lg" />   {{ $store.state.user.username }}
     </div>
     <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">
       Logout

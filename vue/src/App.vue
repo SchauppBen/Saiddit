@@ -22,7 +22,6 @@ export default {
 </script>
 <style>
 .title {
-  border-color: #c5d6db;
   background-color: #ffd3d7;
   text-align: center;
   font-size: 50px;
@@ -33,10 +32,11 @@ export default {
   border-radius: 10px;
   border: groove;
   border-width: 5px;
+  border-color: #ffaeb5;
 }
 
 .highlighted:hover {
-  color: #ffc20c;
+  color: #000000;
 }
 #container {
   display: flex;
@@ -59,7 +59,7 @@ export default {
 }
 
 .sidebar {
-  background-image: linear-gradient(#ffd3d7, #fff3e0);
+  background-color: #ffd3d7;
   width: 150px;
   padding: 10px;
   margin-top: 10px;
