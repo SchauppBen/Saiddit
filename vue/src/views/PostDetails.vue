@@ -1,21 +1,4 @@
 <template>
-  <div class="posts">
-    <h4>Posted in [{{ post.forumName }}]</h4>
-    <h1>{{ post.title }}</h1>
-    <img id="detail-img" :src="post.mediaLink" v-show="post.mediaLink" />
-    <h3>{{ post.text }}</h3>
-    <h2>Posted by: {{ post.username }}</h2>
-    <h3>{{ post.datetime }}</h3>
-    <div class = "reply-input">
-      <div>
-        <label for="reply-input">Reply to This Post as {{this.$store.state.user.username}}</label>
-      </div>
-      <div>
-        <input type="text" id="reply-input" name="replyInput" v-model="directReply.replyText"/>
-      </div>
-    </div>
-    <div>
-        <button v-on:click="saveReply()">reply</button>
   <div>
     <h1 class="title">Post details</h1>
     <div class="posts">
@@ -40,11 +23,16 @@
       </h2>
       <h3 class="text">{{ post.datetime }}</h3>
 
-      <label for="replyInput">Reply</label>
-      <input type="text" id="replyInput" name="replyInput" />
-
-      <div v-for="reply in replies" :key="reply.replyId">
-        <div>User {{ reply.userFrom }} : {{ reply.replyText }}</div>
+      <div class = "reply-input">
+        <div>
+          <label for="reply-input">Reply to This Post as {{this.$store.state.user.username}}</label>
+        </div>
+        <div>
+          <input type="text" id="reply-input" name="replyInput" v-model="directReply.replyText"/>
+        </div>
+      </div>
+      <div>
+        <button v-on:click="saveReply()">reply</button>
       </div>
     </div>
     <!-- v-if is required here to make sure when post details page is rendered, the replies passed in has been updated to a nonzero length rather than its default [] state with 0 elements. Without it here, the replies could be unaccessible the first time post-details page is rendered. -->
