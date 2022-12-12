@@ -4,6 +4,7 @@ import com.techelevator.dao.ForumDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.AddModeratorDto;
 import com.techelevator.model.Forum;
+import com.techelevator.model.ForumsUsersDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,6 +33,12 @@ public class ForumController {
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @PostMapping(path="/forums/users")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ForumsUsersDto joinUserToForum(@Valid @RequestBody ForumsUsersDto forumsUsersDto) {
+        return forumDao.joinUserToForum(forumsUsersDto);
     }
 
     @GetMapping(path = "/forums")
