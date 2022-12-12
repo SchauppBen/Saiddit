@@ -6,7 +6,7 @@
     <div id="container">
       <nav-bar class="sidebar" id="nav-bar" />
       <router-view class="main-content" />
-      <forums-sidebar class="sidebar" id="active-forums" />
+      <forums-sidebar id="active-forums" />
     </div>
   </div>
 </template>
@@ -57,7 +57,17 @@ export default {
   left: 0;
   width: 100%;
 }
-
+.forumsTab {
+  background-color: #ffd3d7;
+  width: 150px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  height: calc(50vh - 70px);
+}
 .sidebar {
   background-color: #ffd3d7;
   width: 150px;
