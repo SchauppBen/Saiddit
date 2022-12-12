@@ -6,20 +6,21 @@
     <div id="container">
       <nav-bar class="sidebar" id="nav-bar" />
       <router-view class="main-content" />
-      <active-forums class="sidebar" id="active-forums" />
+      <forums-sidebar id="active-forums" />
     </div>
   </div>
 </template>
 
 <script>
-import ActiveForums from "./components/ActiveForums.vue";
+import ForumsSidebar from "./components/ForumsSidebar.vue";
 import Header from "./components/Header.vue";
 import NavBar from "./components/NavBar.vue";
 
 export default {
-  components: { Header, NavBar, ActiveForums },
+  components: { Header, NavBar, ForumsSidebar },
 };
 </script>
+
 <style>
 .title {
   background-color: #ffd3d7;
@@ -38,6 +39,7 @@ export default {
 .highlighted:hover {
   color: #000000;
 }
+
 #container {
   display: flex;
   justify-content: center;
@@ -45,6 +47,7 @@ export default {
   border-radius: 10px;
   padding-top: 90px;
 }
+
 #app-header {
   display: flex;
   justify-content: space-between;
@@ -58,6 +61,34 @@ export default {
   width: 100%;
 }
 
+#user {
+  padding: 0 2px 0 0;
+}
+
+.up-vote, .down-vote {
+  padding: 0 4px 0 4px;
+}
+
+.up-color {
+  color: rgb(76, 0, 255);
+  
+}
+
+.down-color {
+  color: rgb(255, 102, 0);
+}
+
+.forumsTab {
+  background-color: #ffd3d7;
+  width: 150px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  height: calc(50vh - 70px);
+}
 .sidebar {
   background-color: #ffd3d7;
   width: 150px;
