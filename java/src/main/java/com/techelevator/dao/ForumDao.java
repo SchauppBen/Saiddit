@@ -13,6 +13,8 @@ public interface ForumDao {
 
     ForumsUsersDto joinUserToForum(ForumsUsersDto forumsUsersDto);
 
+    List<ForumsUsersDto> getForumsUsers();
+
     List<Forum> getAllForums();
 
     List<Forum> getForumNamesForHomePage();
