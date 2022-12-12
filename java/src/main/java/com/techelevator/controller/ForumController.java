@@ -46,6 +46,11 @@ public class ForumController {
         return forumDao.getAllForums();
     }
 
+    @GetMapping(path = "/forums/users")
+    public List<ForumsUsersDto> forumsUsersDtos() {
+        return forumDao.getForumsUsers();
+    }
+
     @GetMapping(path = "/forums/home")
     public List<Forum> getForumNamesForHomePage() {
         return forumDao.getForumNamesForHomePage();
@@ -68,11 +73,6 @@ public class ForumController {
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
-    }
-
-    @GetMapping(path = "/forums/{forumId}/users/{userId}")
-    public void addUserToForum(@PathVariable int forumId, @PathVariable int userId) {
-        forumDao.addUserToForum(forumId, userId);
     }
 
     @GetMapping(path = "/forums/{forumId}/users/{userId}/isModerator")
