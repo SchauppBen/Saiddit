@@ -6,10 +6,19 @@
     <h3>{{ post.text }}</h3>
     <h2>Posted by: {{ post.username }}</h2>
     <h3>{{ post.datetime }}</h3>
-
-    <label for="replyInput">Reply</label>
-    <input type="text" id="replyInput" name="replyInput" />
-    <reply-section v-if="this.replies.length" :unNestedRepliesArray = replies />
+    <div class = "reply-input">
+      <div>
+        <label for="reply-input">Reply to This Post as {{this.$store.state.user.username}}</label>
+      </div>
+      <div>
+        <input type="text" id="reply-input" name="replyInput" v-model="directReply.replyText"/>
+      </div>
+    </div>
+    <div>
+        <button v-on:click="saveReply()">reply</button>
+    </div>
+    <!-- v-if is required here to make sure when post details page is rendered, the replies passed in has been updated to a nonzero length rather than its default [] state with 0 elements. Without it here, the replies could be unaccessible the first time post-details page is rendered. -->
+    <reply-section class="reply-section" v-if="this.replies.length" :replies = replies /> 
   </div>
 </template>
 
@@ -19,6 +28,17 @@ import replySection from "../components/ReplySection.vue"
 
 export default {
   name: "post-details",
+  data() {
+    return {
+      directReply: {
+        replyToReplyId: 0,
+        postId: this.$store.state.activePostId,
+        userFrom: this.$store.state.user.id,
+        replyText: "",
+        mediaLink: "",
+      }
+    }
+  },
   components: {replySection},
   computed: {
     post() {
@@ -38,8 +58,28 @@ export default {
           this.$store.commit("SET_ACTIVE_REPLIES", response.data);
         });
     },
+    saveReply() {
+      this.$store.commit("SAVE_REPLY", this.directReply);
+      replyService.addReply(this.directReply)
+        .then(response => {
+            if (response.status === 201) {
+                this.directReply = {
+                  replyToReplyId: 0,
+                  postId: this.$store.state.activePostId,
+                  userFrom: this.$store.state.user.id,
+                  replyText: "",
+                  mediaLink: "",
+                }
+            }
+        })
+        .catch(error => {
+            this.handleErrorResponse(error, "adding");
+        });
+      this.getReplies();   
+      this.replies = this.$store.state.activeReplies;
+    }
   },
-  mounted() {
+  created() {
     this.$store.commit("SET_ACTIVE_POST", this.$route.params.postId);
     this.getReplies();
   },
@@ -47,9 +87,26 @@ export default {
 </script>
 
 <style scoped>
+.reply-input {
+  text-indent: 10%;
+  text-align: left;
+}
+
+#reply-input {
+  display: inline-block;
+  width: 50%;
+  padding:50px 10px;
+}
+
+.reply-section {
+  margin-top: 15px;
+  padding-top:15x;
+}
+
 #detail-img {
   width: 500px;
 }
+
 .posts {
   text-align: center;
   color: pink;

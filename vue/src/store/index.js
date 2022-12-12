@@ -69,12 +69,15 @@ export default new Vuex.Store({
       state.posts.push(post);
     },
     SET_ACTIVE_POST(state, postId) {
-      state.activePostId = postId;
+      state.activePostId = parseInt(postId);
     },
 
     // Reply Mutations
     SET_ACTIVE_REPLIES(state, data) {
       state.activeReplies = data;
+    },
+    SAVE_REPLY(state, reply) {
+      state.activeReplies.push(reply);
     },
     SET_ACTIVE_NESTED_REPLIES(state, data) {
       state.activeNestedReplies = data;

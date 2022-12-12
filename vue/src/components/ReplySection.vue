@@ -15,28 +15,21 @@
 import Reply from "./Reply.vue";
 
 export default {
-    data() {
-        return {
-        };
-    },
     props: {
-        unNestedRepliesArray: {
-            type: Array,
-            required: true
-        },
+        replies: Array
     },
     components: {Reply},
     methods: {
         createNestedReplies() {
             // create array of sub-replies
             console.log("method activated");
-            console.log(this.unNestedRepliesArray);
-            const subReplies = this.unNestedRepliesArray.filter(reply => reply.replyToReplyId != 0);
+            console.log(this.replies);
+            const subReplies = this.replies.filter(reply => reply.replyToReplyId != 0);
             const subRepliesLength = subReplies.length;
 
             // add all direct post replies to nested replies
             let nestedReplies = [];
-            this.unNestedRepliesArray.forEach(currentReply => {
+            this.replies.forEach(currentReply => {
                 if(currentReply.replyToReplyId == 0) {
                     const replyObject = {
                         reply: currentReply
@@ -114,7 +107,7 @@ export default {
             
         }
     },
-    mounted() {
+    created() {
         this.createNestedReplies();
         
     }
@@ -122,5 +115,8 @@ export default {
 </script>
 
 <style>
-
+    .replies {
+        text-indent: 10%;
+        text-align: left;
+    }
 </style>

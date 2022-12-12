@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span class="reply">{{ reply.replyText }}</span>
+    <span class="reply">{{reply.usernameFrom}}: {{ reply.replyText }}</span>
     <ul class="sub-replies" v-if="subReplies.length">
       <div v-for="(principalReplyObject, index) in subReplies" :key="index">
         <recursive-reply
@@ -32,5 +32,7 @@ export default {
 </script>
 
 <style>
-
+  .sub-replies {
+    padding-left: 25px;
+  }
 </style>

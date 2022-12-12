@@ -4,5 +4,8 @@ axios.defaults.baseURL = "http://localhost:9000";
 export default {
   getRepliesByPost(postId) {
     return axios.get(`/posts/replies/${postId}`);
+  },
+  addReply(reply) {
+    return axios.post("/replies/", reply);
   }
 };
