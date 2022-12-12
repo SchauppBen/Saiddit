@@ -16,7 +16,6 @@ import Reply from "./Reply.vue";
 
 export default {
     props: {
-        replies: Array
     },
     components: {Reply},
     methods: {
@@ -101,6 +100,9 @@ export default {
         }
     },
     computed: {
+        replies() {
+            return this.$store.state.activeReplies;
+        },
         nestedReplies() {
             console.log("retrieving data from store");
             return this.$store.state.activeNestedReplies;

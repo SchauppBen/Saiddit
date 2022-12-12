@@ -36,7 +36,7 @@
       </div>
     </div>
     <!-- v-if is required here to make sure when post details page is rendered, the replies passed in has been updated to a nonzero length rather than its default [] state with 0 elements. Without it here, the replies could be unaccessible the first time post-details page is rendered. -->
-    <reply-section class="reply-section" v-if="this.replies.length" :replies = replies /> 
+    <reply-section class="reply-section"/> 
   </div>
 </template>
 
@@ -63,12 +63,10 @@ export default {
       return this.$store.state.posts.find((post) => {
         return post.postId === this.$store.state.activePostId;
       });
-    },
-    replies() {
-      return this.$store.state.activeReplies;
-    },
+    }
   },
   methods: {
+    // update currently active replies in $store
     getReplies() {
       replyService
         .getRepliesByPost(this.$route.params.postId)
@@ -76,6 +74,7 @@ export default {
           this.$store.commit("SET_ACTIVE_REPLIES", response.data);
         });
     },
+    // u
     saveReply() {
       this.$store.commit("SAVE_REPLY", this.directReply);
       replyService.addReply(this.directReply)
@@ -93,8 +92,7 @@ export default {
         .catch(error => {
             this.handleErrorResponse(error, "adding");
         });
-      this.getReplies();   
-      this.replies = this.$store.state.activeReplies;
+      this.getReplies();
     }
   },
   created() {
