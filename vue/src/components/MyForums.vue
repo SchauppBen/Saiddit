@@ -2,15 +2,14 @@
   <div class="forumsTab scrollable">
     <h2><em>My Forums</em></h2>
     <ul>
-      <li v-for="forum in myForums" :key="forum.name">
+      <li v-for="forum in myForums" :key="forum.forumName">
         <router-link
           class="highlighted"
-          :to="{ name: 'forum-view', params: { forumName: forum.name } }"
+          :to="{ name: 'forum-view', params: { forumName: forum.forumName } }"
         >
-          <br />{{ forum.name }}</router-link
+          <br />{{ forum.forumName }}</router-link
         >
       </li>
-      <li v-for="i in 30" :key="i">i</li>
     </ul>
   </div>
 </template>
@@ -21,7 +20,7 @@ export default {
   name: "active-forums",
 
   methods: {
-    getForums() {
+    getForumUsers() {
       forumService.getForumUsers().then((response) => {
         this.$store.commit("SET_FORUM_USERS", response.data);
       });
@@ -34,12 +33,12 @@ export default {
   },
   computed: {
     forums() {
-      return this.$store.state.activeForums;
+      return this.$store.state.forumUsers;
     },
   },
   created() {
     this.activeForums();
-    this.getForums();
+    this.getForumUsers();
   },
 };
 </script>
