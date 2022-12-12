@@ -28,11 +28,12 @@ export default new Vuex.Store({
     activeNestedReplies: [],
     activeForumName: "",
     activeForums: [],
+    forumUsers: [],
     searchedForums: [],
     posts: [],
     forums: [],
     searchTerm: "",
-    searchedPosts: []
+    searchedPosts: [],
   },
   mutations: {
     // Authentication Mutations
@@ -62,6 +63,9 @@ export default new Vuex.Store({
     },
     SET_ACTIVE_FORUMS(state, data) {
       state.activeForums = data;
+    },
+    SET_FORUM_USERS(state, data) {
+      state.forumUsers = data;
     },
     SAVE_FORUM(state, forum) {
       state.forums.push(forum);

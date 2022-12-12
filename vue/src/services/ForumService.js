@@ -9,6 +9,9 @@ export default {
   getActiveForums() {
     return axios.get("/forums/home/");
   },
+  getForumUsers() {
+    return axios.get("/forums/users/");
+  },
 
   getForum(forumName) {
     return axios.get(`/${forumName}/`);
@@ -19,6 +22,6 @@ export default {
   },
 
   searchForums(searchTerm) {
-    return axios.get(`/forums/search/${searchTerm}`)
-  }
+    return axios.get(`/forums/search/${searchTerm}`);
+  },
 };
