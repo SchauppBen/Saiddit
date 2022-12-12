@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.AddModeratorDto;
 import com.techelevator.model.Forum;
+import com.techelevator.model.ForumsUsersDto;
 import com.techelevator.model.User;
 
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.List;
 public interface ForumDao {
 
     Forum createNewForum(Forum newForum, User userCreated);
+
+    ForumsUsersDto joinUserToForum(ForumsUsersDto forumsUsersDto);
 
     List<Forum> getAllForums();
 
