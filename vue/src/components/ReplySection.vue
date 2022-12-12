@@ -62,8 +62,7 @@ export default {
                 }
                 loop_count++;
             }
-            this.$store.commit("SET_ACTIVE_NESTED_REPLIES", nestedReplies);
-            console.log("data saved in store");
+            return nestedReplies;
         },
 
         // Recursively search within a nested comment object array to find the target reply and add the sub-reply to it 
@@ -102,14 +101,9 @@ export default {
     },
     computed: {
         nestedReplies() {
-            console.log("retrieving data from store");
-            return this.$store.state.activeNestedReplies;
+            return this.createNestedReplies();
             
         }
-    },
-    created() {
-        this.createNestedReplies();
-        
     }
 }
 </script>

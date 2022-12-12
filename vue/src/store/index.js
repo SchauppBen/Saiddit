@@ -25,7 +25,6 @@ export default new Vuex.Store({
     activePostId: 0,
     // The replies of the post that the user is currently viewing
     activeReplies: [],
-    activeNestedReplies: [],
     activeForumName: "",
     activeForums: [],
     forumUsers: [],
