@@ -8,7 +8,7 @@
 import Post from "./Post.vue";
 import postService from "../services/PostService.js";
 export default {
-    name: "posts-list",
+    name: "searched-posts",
     components: { Post },
     methods: {
     getPosts(searchTerm) {

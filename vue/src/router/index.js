@@ -11,6 +11,7 @@ import Register from "../views/Register.vue";
 import store from "../store/index";
 import UserPosts from "../views/UserPosts";
 import SearchPosts from "../views/SearchPosts";
+import SearchForums from "../views/SearchForums";
 
 Vue.use(Router);
 
@@ -60,12 +61,20 @@ const router = new Router({
       },
     },
     {
-      path:"/search",
+      path:"/posts/search",
       name: "search-posts",
       component: SearchPosts,
       meta: {
         requiresAuth: false,
       },
+    },
+    {
+      path:"/forums/search",
+      name: "search-forums",
+      component: SearchForums,
+      meta: {
+        requiresAuth: false,
+      }
     },
     {
       path: "/:forumName",
