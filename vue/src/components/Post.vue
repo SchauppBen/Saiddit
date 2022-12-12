@@ -1,4 +1,4 @@
-<template>
+<template id="font-awesome-icon">
   <div id="post-container" class="posts">
     <div id="postBox">
       <h4>
@@ -22,25 +22,52 @@
         <router-link
           class="highlighted"
           :to="{ name: 'user-posts', params: { username: post.username } }"
-          >User: {{ post.username }}</router-link
+          ><font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />  {{ post.username }}</router-link
         >
       </h2>
       <h3>{{ post.datetime }}</h3>
       <div id="votes">
-        <img id="up-arrow" src="../assets/arrowup.png" />#of upvotes<img
-          id="down-arrow"
-          src="../assets/arrowdown.png"
-        />#of downvotes
+        <div class="up-vote" >
+          <a href="#" @mouseover="isActive=true" @mouseleave="isActive=false">
+            <i v-if="!isActive">
+              <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
+            </i>
+            <span v-else >
+              <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
+            </span>
+          </a>
+        </div>
+        <div class="down-vote" >
+          <a href="#" @mouseover="isActive=true" @mouseleave="isActive=false">
+            <i v-if="!isActive">
+              <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
+            </i>
+            <span v-else >
+              <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
+            </span>
+          </a>
+        </div>
       </div>
     </div>
+    
   </div>
 </template>
 
 <script>
 export default {
+  name: 'Votes',
   props: {
     post: Object,
   },
+  data() {
+    return {
+      myIcon: {
+        farIcon: ['far', 'circle-up'],
+        fasIcon: ['fas', 'circle-up'],
+      },      
+      isActive: false
+    }
+  }
 };
 </script>
 
@@ -49,20 +76,22 @@ export default {
   width: 500px;
 }
 
-#votes img {
-  height: 20px;
+div #votes {
+  align-content: flex-start;
 }
-#up-arrow:hover {
-  background-color: green;
+
+.up-color {
+  color: rgb(255, 102, 0);
 }
-#down-arrow:hover {
-  background-color: red;
+
+.down-color {
+  color: rgb(76, 0, 255);
 }
 
 #post-container {
   border: groove;
   border-width: 5px;
-  border-color: #ffd3d7;
+  border-color: #76acbd;
   background-color: #c5d6db;
   margin-bottom: 10px;
 }

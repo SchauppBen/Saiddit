@@ -1,7 +1,8 @@
 <template>
   <div id="searchBar" class="$info">
+    
     <form @submit.prevent="search">
-      <label>Search: </label>
+      <font-awesome-icon id="fa-icon" icon="fa-solid fa-magnifying-glass" pull="left" size="lg" />
       <select name="search" id="searchDropdown" v-model="searchOption">
         <option value="posts">posts</option>
         <option value="forums">forums</option>
@@ -39,8 +40,13 @@ export default {
         }))
       }
     }
+    
   }
 };
 </script>
 
-<style></style>
+<style>
+#fa-icon {
+  margin-right: 7px;
+}
+</style>
