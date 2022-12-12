@@ -25,8 +25,10 @@ export default new Vuex.Store({
     activePostId: 0,
     // The replies of the post that the user is currently viewing
     activeReplies: [],
+    activeNestedReplies: [],
     activeForumName: "",
     activeForums: [],
+    searchedForums: [],
     posts: [],
     forums: [],
     searchTerm: "",
@@ -64,6 +66,9 @@ export default new Vuex.Store({
     SAVE_FORUM(state, forum) {
       state.forums.push(forum);
     },
+    SET_SEARCHED_FORUMS(state, data) {
+      state.searchedForums = data;
+    },
 
     // Post Mutations
     SET_POSTS(state, data) {
@@ -73,7 +78,7 @@ export default new Vuex.Store({
       state.posts.push(post);
     },
     SET_ACTIVE_POST(state, postId) {
-      state.activePostId = postId;
+      state.activePostId = parseInt(postId);
     },
     SET_SEARCH_TERM(state, searchTerm) {
       state.searchTerm = searchTerm;
@@ -85,6 +90,12 @@ export default new Vuex.Store({
     // Reply Mutations
     SET_ACTIVE_REPLIES(state, data) {
       state.activeReplies = data;
+    },
+    SAVE_REPLY(state, reply) {
+      state.activeReplies.push(reply);
+    },
+    SET_ACTIVE_NESTED_REPLIES(state, data) {
+      state.activeNestedReplies = data;
     },
   },
 });

@@ -120,5 +120,27 @@ INSERT INTO replies (reply_to_id, user_from_id, post_id, text, media_link)
 INSERT INTO replies (reply_to_id, user_from_id, post_id, text, media_link)
 		   VALUES (null, 4, 1, 'I was there. The duck was truly scary',
 				   'https://dejpknyizje2n.cloudfront.net/svgcustom/clipart/preview/cute-terrified-emoji-sticker-29791-300x300.png');
+INSERT INTO replies (reply_to_id, user_from_id, post_id, text, media_link)
+		   VALUES (null, 5, 1, 'Where was this?',
+				   '');
+INSERT INTO replies (reply_to_id, user_from_id, post_id, text, media_link)
+		   VALUES (1, 5, 1, 'It wasnt that big I have seen worse lol',
+				   '');
+INSERT INTO replies (reply_to_id, user_from_id, post_id, text, media_link)
+		   VALUES (2, 3, 1, 'THis guy is tripping over a duck omg',
+				   '');
+INSERT INTO replies (reply_to_id, user_from_id, post_id, text, media_link)
+		   VALUES (2, 4, 1, 'guys I wasnt completely serious when I made that comment',
+				   '');
+INSERT INTO replies (reply_to_id, user_from_id, post_id, text, media_link)
+		   VALUES (2, 5, 1, 'Same, but I wouldnt call it scary haha',
+				   '');
+INSERT INTO replies (reply_to_id, user_from_id, post_id, text, media_link)
+		   VALUES (3, 4, 1, 'I believe it was Scandanavia, but I could be wrong',
+				   '');
+INSERT INTO replies (reply_to_id, user_from_id, post_id, text, media_link)
+		   VALUES (5, 4, 1, 'STOP MAKING FUN OF ME!!!',
+				   '');
+				   
 
 COMMIT TRANSACTION;
