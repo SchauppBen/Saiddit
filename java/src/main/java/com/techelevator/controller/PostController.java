@@ -44,10 +44,13 @@ public class PostController {
         }
     }
 
-
     @PutMapping(path = "/posts/{postId}")
-    public void editPost(@PathVariable int postId, @RequestBody Post post) {
-        postDao.editPost(postId, post);
+    public void editPost(@PathVariable int postId, @RequestBody Post post, Principal principal) {
+        if (principal != null && userDao.findIdByUsername(principal.getName()) == post.getUserId()) {
+            postDao.editPost(postId, post);
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @GetMapping(path = "/posts/search/{searchString}")

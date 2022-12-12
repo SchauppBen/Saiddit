@@ -12,6 +12,8 @@ public interface ReplyDao {
 
     void deleteReply(int id);
 
+    void editReply(int replyId, Reply newReply);
+
     List<Reply> listAllReplies();
 
     List<Reply> listRepliesByPost(int id);

@@ -25,23 +25,25 @@ export default {
         this.$store.commit("SET_FORUMS", response.data);
       });
     },
+    activeForums() {
+      forumService.getActiveForums().then((response) => {
+        this.$store.commit("SET_ACTIVE_FORUMS", response.data);
+      });
+    },
   },
   computed: {
     forums() {
-      return this.$store.state.forums;
+      return this.$store.state.activeForums;
     },
   },
   created() {
+    this.activeForums();
     this.getForums();
   },
 };
 </script>
 
 <style scoped>
-div {
-  margin: 0 5px 0 5px;
-  background-image: linear-gradient(pink, aquamarine);
-}
 h2 {
   text-align: center;
 }

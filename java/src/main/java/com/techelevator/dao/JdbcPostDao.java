@@ -33,11 +33,9 @@ public class JdbcPostDao implements PostDao {
         String sql = "SELECT * FROM posts;";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
 
-
         while(rowSet.next()) {
             getPosts.add(mapRowToPost(rowSet));
         }
-
 
         return getPosts;
     }
@@ -91,16 +89,21 @@ public class JdbcPostDao implements PostDao {
     // this method also functions as an addImageToPost() method without the redundancy of 2 edit methods
     @Override
     public void editPost(int postId, Post updatedPost) {
-        String sql = "UPDATE posts SET title = ?, text = ?, media_link = ? WHERE post_id = ?;";
-        jdbcTemplate.update(sql, updatedPost.getTitle(), updatedPost.getText(), updatedPost.getMediaLink(), postId);
+        if (postId == updatedPost.getPostId()) {
+            String sql = "UPDATE posts SET title = ?, text = ?, media_link = ? WHERE post_id = ?;";
+            jdbcTemplate.update(sql, updatedPost.getTitle(), updatedPost.getText(), updatedPost.getMediaLink(), postId);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         // is this returning void since it's not actually returning a new updated post?
+        // yes update in sql doesn't return anything
     }
 
     @Override
     public List<Post> searchPosts(String searchString) {
         List<Post> posts = new ArrayList<>();
-        String sql = "SELECT * FROM posts WHERE title ILIKE ?;";
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, "%" + searchString + "%");
+        String sql = "SELECT * FROM posts WHERE title ILIKE ? OR text ILIKE ?;";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, "%" + searchString + "%", "%" + searchString + "%");
         while(rowSet.next()) {
             posts.add(mapRowToPost(rowSet));
         }

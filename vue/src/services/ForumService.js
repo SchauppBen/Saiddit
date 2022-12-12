@@ -6,11 +6,19 @@ export default {
     return axios.get("/forums/");
   },
 
+  getActiveForums() {
+    return axios.get("/forums/home/");
+  },
+
   getForum(forumName) {
     return axios.get(`/${forumName}/`);
   },
 
   addForum(forum) {
     return axios.post("/forums/", forum);
+  },
+
+  searchForums(searchTerm) {
+    return axios.get(`/forums/search/${searchTerm}`)
   }
 };

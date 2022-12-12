@@ -27,9 +27,12 @@ export default new Vuex.Store({
     activeReplies: [],
     activeNestedReplies: [],
     activeForumName: "",
-
+    activeForums: [],
+    searchedForums: [],
     posts: [],
     forums: [],
+    searchTerm: "",
+    searchedPosts: []
   },
   mutations: {
     // Authentication Mutations
@@ -57,8 +60,14 @@ export default new Vuex.Store({
     SET_ACTIVE_FORUM(state, forumName) {
       state.activeForumName = forumName;
     },
+    SET_ACTIVE_FORUMS(state, data) {
+      state.activeForums = data;
+    },
     SAVE_FORUM(state, forum) {
       state.forums.push(forum);
+    },
+    SET_SEARCHED_FORUMS(state, data) {
+      state.searchedForums = data;
     },
 
     // Post Mutations
@@ -70,6 +79,12 @@ export default new Vuex.Store({
     },
     SET_ACTIVE_POST(state, postId) {
       state.activePostId = parseInt(postId);
+    },
+    SET_SEARCH_TERM(state, searchTerm) {
+      state.searchTerm = searchTerm;
+    },
+    SET_SEARCHED_POSTS(state, posts) {
+      state.searchedPosts = posts;
     },
 
     // Reply Mutations

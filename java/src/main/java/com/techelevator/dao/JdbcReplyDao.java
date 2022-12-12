@@ -66,6 +66,8 @@ public class JdbcReplyDao implements ReplyDao {
         return allReplies;
     }
 
+
+
     @Override
     public List<Reply> listRepliesByUser(int userId) {
         String sql = "select * from replies where user_from_id = ?;";
@@ -140,6 +142,17 @@ public class JdbcReplyDao implements ReplyDao {
         String sql = "delete from replies where reply_id = ?;";
 
         jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public void editReply(int replyId, Reply newReply) {
+        if (replyId == newReply.getReplyId())
+        try {
+            String sql = "UPDATE replies SET text = ?, media_link = ? WHERE reply_id = ?;";
+            jdbcTemplate.update(sql, newReply.getReplyText(), newReply.getMediaLink(), replyId);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     private Reply mapRowToReply(SqlRowSet rowSet) {

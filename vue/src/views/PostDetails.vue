@@ -16,6 +16,36 @@
     </div>
     <div>
         <button v-on:click="saveReply()">reply</button>
+  <div>
+    <h1 class="title">Post details</h1>
+    <div class="posts">
+      <h4>
+        Posted in
+        <router-link
+          class="highlighted"
+          :to="{ name: 'forum-view', params: { forumName: post.forumName } }"
+          >[{{ post.forumName }}]</router-link
+        >
+      </h4>
+      <h1 class="text">{{ post.title }}</h1>
+      <img id="detail-img" :src="post.mediaLink" v-show="post.mediaLink" />
+      <h3 class="text">{{ post.text }}</h3>
+      <h2 class="text">
+        Posted by:
+        <router-link
+          class="highlighted"
+          :to="{ name: 'user-posts', params: { username: post.username } }"
+          >{{ post.username }}</router-link
+        >
+      </h2>
+      <h3 class="text">{{ post.datetime }}</h3>
+
+      <label for="replyInput">Reply</label>
+      <input type="text" id="replyInput" name="replyInput" />
+
+      <div v-for="reply in replies" :key="reply.replyId">
+        <div>User {{ reply.userFrom }} : {{ reply.replyText }}</div>
+      </div>
     </div>
     <!-- v-if is required here to make sure when post details page is rendered, the replies passed in has been updated to a nonzero length rather than its default [] state with 0 elements. Without it here, the replies could be unaccessible the first time post-details page is rendered. -->
     <reply-section class="reply-section" v-if="this.replies.length" :replies = replies /> 
@@ -106,9 +136,20 @@ export default {
 #detail-img {
   width: 500px;
 }
-
+.text {
+  font-family: sans-serif;
+  color: royalblue;
+  font-size: 20px;
+}
 .posts {
   text-align: center;
+  color: #7e96a7;
+  background-color: #c5d6db;
+  border: groove;
+  border-width: 5px;
+  border-color: #ffd3d7;
+}
+.links {
   color: pink;
 }
 </style>

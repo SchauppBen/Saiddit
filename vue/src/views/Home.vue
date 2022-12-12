@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <div id="body">
+      <h1 id="home-title" class="title">Welcome to saiddit</h1>
       <posts id="post-list" />
-      <active-forums id="forums-list" />
     </div>
 
     <!-- ACTIVE FORUMS ON THE RIGHT SIDE -->
@@ -12,24 +12,16 @@
 </template>
 
 <script>
-import ActiveForums from "../components/ActiveForums.vue";
 import posts from "../components/Posts.vue";
 export default {
   name: "home",
-  components: { posts, ActiveForums },
+  components: { posts },
 };
 </script>
 
 <style scoped>
-#body {
-  display: flex;
-}
 #post-list {
   justify-content: center;
-  width: 85%;
-}
-#forums-list {
-  background-color: skyblue;
-  width: 200px;
+  width: 100%;
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="title">{{ this.$route.params.username }} posts</h1>
     <post
       class="allPosts"
       v-for="post in userPosts"
