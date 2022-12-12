@@ -1,6 +1,6 @@
 <template>
   <div class="post-container">
-    <h1 class="title">Post details</h1>
+    <h1 class="title pink-border">Post details</h1>
     <div class="posts">
       <h4>
         Posted in

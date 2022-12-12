@@ -1,5 +1,5 @@
 <template>
-  <div class="forumsTab">
+  <div class="forumsTab pink-border">
     <h2><em>Active Forums</em></h2>
     <ul>
       <li v-for="forum in forums" :key="forum.name">
