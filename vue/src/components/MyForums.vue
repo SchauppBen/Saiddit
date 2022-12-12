@@ -1,8 +1,8 @@
 <template>
   <div class="forumsTab">
-    <h2><em>Active Forums</em></h2>
+    <h2><em>My Forums</em></h2>
     <ul>
-      <li v-for="forum in forums" :key="forum.name">
+      <li v-for="forum in myForums" :key="forum.name">
         <router-link
           class="highlighted"
           :to="{ name: 'forum-view', params: { forumName: forum.name } }"
@@ -21,13 +21,13 @@ export default {
 
   methods: {
     getForums() {
-      forumService.getForums().then((response) => {
-        this.$store.commit("SET_FORUMS", response.data);
+      forumService.getForumUsers().then((response) => {
+        this.$store.commit("SET_FORUM_USERS", response.data);
       });
     },
-    activeForums() {
-      forumService.getActiveForums().then((response) => {
-        this.$store.commit("SET_ACTIVE_FORUMS", response.data);
+    myForums() {
+      return this.$store.state.forumUsers.filter((forum) => {
+        forum.username === this.$store.state.user;
       });
     },
   },
