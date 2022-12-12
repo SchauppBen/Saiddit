@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div id="body">
-      <h1 id="home-title" class="title">Welcome to saiddit</h1>
+      <h1 id="home-title" class="title pink-border">Welcome to saiddit</h1>
       <posts id="post-list" />
     </div>
 
