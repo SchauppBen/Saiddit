@@ -47,7 +47,7 @@
         </div>
       </h2>
       <h3 class="text">{{ post.datetime }}</h3>
-
+      <!-- Direct Reply Input -->
       <div class = "reply-input">
         <div>
           <label for="reply-input">Reply to This Post as {{this.$store.state.user.username}}</label>
@@ -109,6 +109,7 @@ export default {
       directReply.replyToReplyId = 0;
       directReply.postId = this.post.postId;
       directReply.userFrom = this.$store.state.user.id;
+      directReply.usernameFrom = this.$store.state.user.username;
       directReply.replyText = directReplyInput.replyText;
       directReply.mediaLink = directReplyInput.mediaLink;
       return directReply;
@@ -118,19 +119,15 @@ export default {
       replyService.addReply(this.directReply)
         .then(response => {
             if (response.status === 201) {
-                this.directReply = {
-                  replyToReplyId: 0,
-                  postId: this.$store.state.activePostId,
-                  userFrom: this.$store.state.user.id,
+                this.directReplyInput = {
                   replyText: "",
-                  mediaLink: "",
+                  mediaLink: ""
                 }
             }
         })
         .catch(error => {
             this.handleErrorResponse(error, "adding");
         });
-      this.getReplies();
     }
   },
   created() {
