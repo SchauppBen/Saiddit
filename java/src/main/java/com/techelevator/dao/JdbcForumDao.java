@@ -67,7 +67,7 @@ public class JdbcForumDao implements ForumDao {
     public List<Forum> getForumNamesForHomePage() {
         List<Forum> forumNames = new ArrayList<>();
 
-        String sql = "SELECT forum_id, name, description, time_created FROM forums JOIN posts USING (forum_id) ORDER BY posts.date_time LIMIT 5;";
+        String sql = "SELECT forum_id, name, description, time_created FROM (SELECT forum_id, name, description, time_created, ROW_NUMBER() OVER (PARTITION BY forums.name) FROM forums JOIN posts USING(forum_id) ORDER BY posts.date_time DESC) AS forumsForHomePage WHERE row_number = 1 LIMIT 5;";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
 

@@ -83,6 +83,9 @@ export default {
               text: "",
               mediaLink: "",
             };
+            forumService.getActiveForums().then((response) => {
+              this.$store.commit("SET_ACTIVE_FORUMS", response.data)
+            });
             this.$router.push("/");
           }
         })
