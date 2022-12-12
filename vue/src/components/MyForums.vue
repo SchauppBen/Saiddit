@@ -1,5 +1,5 @@
 <template>
-  <div class="forumsTab">
+  <div class="forumsTab scrollable">
     <h2><em>My Forums</em></h2>
     <ul>
       <li v-for="forum in myForums" :key="forum.name">
@@ -10,6 +10,7 @@
           <br />{{ forum.name }}</router-link
         >
       </li>
+      <li v-for="i in 30" :key="i">i</li>
     </ul>
   </div>
 </template>
@@ -27,7 +28,7 @@ export default {
     },
     myForums() {
       return this.$store.state.forumUsers.filter((forum) => {
-        forum.username === this.$store.state.user;
+        forum.username === this.$store.state.user.username;
       });
     },
   },
