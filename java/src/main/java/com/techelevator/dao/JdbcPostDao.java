@@ -30,7 +30,7 @@ public class JdbcPostDao implements PostDao {
     public List<Post> getPostsForHomePage() {
         List<Post> getPosts = new ArrayList<>();
 
-        String sql = "SELECT * FROM posts;";
+        String sql = "SELECT * FROM posts ORDER BY date_time DESC;";
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
 
         while(rowSet.next()) {

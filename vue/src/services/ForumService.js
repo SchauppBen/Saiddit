@@ -20,5 +20,9 @@ export default {
 
   searchForums(searchTerm) {
     return axios.get(`/forums/search/${searchTerm}`)
+  },
+
+  joinUserToForum(forumUser) {
+    return axios.post(`/forums/users`, forumUser);
   }
 };
