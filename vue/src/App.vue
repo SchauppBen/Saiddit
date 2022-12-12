@@ -20,6 +20,7 @@ export default {
   components: { Header, NavBar, ForumsSidebar },
 };
 </script>
+
 <style>
 .title {
   background-color: #ffd3d7;
@@ -38,6 +39,7 @@ export default {
 .highlighted:hover {
   color: #000000;
 }
+
 #container {
   display: flex;
   justify-content: center;
@@ -45,6 +47,7 @@ export default {
   border-radius: 10px;
   padding-top: 90px;
 }
+
 #app-header {
   display: flex;
   justify-content: space-between;
@@ -57,6 +60,24 @@ export default {
   left: 0;
   width: 100%;
 }
+
+#user {
+  padding: 0 2px 0 0;
+}
+
+.up-vote, .down-vote {
+  padding: 0 4px 0 4px;
+}
+
+.up-color {
+  color: rgb(76, 0, 255);
+  
+}
+
+.down-color {
+  color: rgb(255, 102, 0);
+}
+
 .forumsTab {
   background-color: #ffd3d7;
   width: 150px;
