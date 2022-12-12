@@ -6,18 +6,18 @@
     <div id="container">
       <nav-bar class="sidebar" id="nav-bar" />
       <router-view class="main-content" />
-      <active-forums class="sidebar" id="active-forums" />
+      <forums-sidebar class="sidebar" id="active-forums" />
     </div>
   </div>
 </template>
 
 <script>
-import ActiveForums from "./components/ActiveForums.vue";
+import ForumsSidebar from "./components/ForumsSidebar.vue";
 import Header from "./components/Header.vue";
 import NavBar from "./components/NavBar.vue";
 
 export default {
-  components: { Header, NavBar, ActiveForums },
+  components: { Header, NavBar, ForumsSidebar },
 };
 </script>
 <style>
