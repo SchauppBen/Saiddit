@@ -52,6 +52,21 @@ public class JdbcForumDao implements ForumDao {
     }
 
     @Override
+    public List<ForumsUsersDto> getForumsUsers() {
+        List<ForumsUsersDto> forumsUsersDtos = new ArrayList<>();
+        String sql = "SELECT * FROM forums_users;";
+        try {
+            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
+            while (rowSet.next()) {
+                forumsUsersDtos.add(mapRowSetToForumsUsersDto(rowSet));
+            }
+            return forumsUsersDtos;
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @Override
     public List<Forum> getAllForums() {
         List<Forum> allForums = new ArrayList<>();
 
@@ -67,7 +82,9 @@ public class JdbcForumDao implements ForumDao {
     public List<Forum> getForumNamesForHomePage() {
         List<Forum> forumNames = new ArrayList<>();
 
-        String sql = "SELECT forum_id, name, description, time_created FROM forums JOIN posts USING (forum_id) ORDER BY posts.date_time LIMIT 5;";
+        String sql = "SELECT forum_id, name, description, time_created FROM (SELECT forum_id, name, description, " +
+                "time_created, ROW_NUMBER() OVER (PARTITION BY forums.name) FROM forums JOIN posts USING(forum_id) " +
+                "ORDER BY posts.date_time DESC) AS forumsForHomePage WHERE row_number = 1 LIMIT 5;";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql);
 
@@ -169,5 +186,14 @@ public class JdbcForumDao implements ForumDao {
             forum.setDateCreated(rowSet.getDate("time_created").toLocalDate());
         }
         return forum;
+    }
+    public ForumsUsersDto mapRowSetToForumsUsersDto(SqlRowSet rowSet) {
+        ForumsUsersDto forumsUsersDto = new ForumsUsersDto();
+        forumsUsersDto.setForumId(rowSet.getInt("forum_id"));
+        forumsUsersDto.setForumName(getForumById(forumsUsersDto.getForumId()).getName());
+        forumsUsersDto.setUserId(rowSet.getInt("user_id"));
+        forumsUsersDto.setUsername(userDao.getUserById(forumsUsersDto.getUserId()).getUsername());
+        forumsUsersDto.setModerator(rowSet.getBoolean("is_moderator"));
+        return forumsUsersDto;
     }
 }

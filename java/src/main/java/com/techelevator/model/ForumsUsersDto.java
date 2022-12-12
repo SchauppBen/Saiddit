@@ -14,6 +14,8 @@ public class ForumsUsersDto {
         this.isModerator = isModerator;
     }
 
+    public ForumsUsersDto() {}
+
     public int getForumId() {
         return forumId;
     }

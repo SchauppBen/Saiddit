@@ -18,38 +18,39 @@
         <img id="post-image" :src="post.mediaLink" v-show="post.mediaLink" />
         <h3>{{ post.text }}</h3></router-link
       >
-      <h2>
-        <router-link
-          class="highlighted"
-          :to="{ name: 'user-posts', params: { username: post.username } }"
-          ><font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />  {{ post.username }}</router-link
-        >
-      </h2>
-      <h3>{{ post.datetime }}</h3>
-      <div id="votes">
-        <div class="up-vote" >
-          <a href="#" @mouseover="isActive=true" @mouseleave="isActive=false">
-            <i v-if="!isActive">
-              <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
-            </i>
-            <span v-else >
-              <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
-            </span>
-          </a>
-        </div>
-        <div class="down-vote" >
-          <a href="#" @mouseover="isActive=true" @mouseleave="isActive=false">
-            <i v-if="!isActive">
-              <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
-            </i>
-            <span v-else >
-              <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
-            </span>
-          </a>
+      <div class="inline">
+        <h2 id="user">
+          <router-link
+            class="highlighted"
+            :to="{ name: 'user-posts', params: { username: post.username } }"
+            ><font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />  {{ post.username }}</router-link
+          >
+        </h2>
+        <h3>{{ post.datetime }}</h3>
+        <div class="votes">
+          <div class="up-vote" >
+            <button @click.prevent @mouseover="isUpActive=true" @mouseleave="isUpActive=false">
+              <i v-if="!isUpActive">
+                <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
+              </i>
+              <span v-else >
+                <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
+              </span>
+            </button>
+          </div>
+          <div class="down-vote" >
+            <button @click.prevent @mouseover="isDownActive=true" @mouseleave="isDownActive=false">
+              <i v-if="!isDownActive">
+                <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
+              </i>
+              <span v-else >
+                <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 
@@ -65,28 +66,35 @@ export default {
         farIcon: ['far', 'circle-up'],
         fasIcon: ['fas', 'circle-up'],
       },      
-      isActive: false
+      isUpActive: false,
+      isDownActive: false
     }
   }
 };
 </script>
 
 <style scoped>
+button {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-size: 17px;
+}
+
 #post-image {
   width: 500px;
 }
 
-div #votes {
-  align-content: flex-start;
+.inline, .votes {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.up-color {
-  color: rgb(255, 102, 0);
-}
 
-.down-color {
-  color: rgb(76, 0, 255);
-}
 
 #post-container {
   border: groove;
