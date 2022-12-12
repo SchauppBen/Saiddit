@@ -6,18 +6,18 @@
     <div id="container">
       <nav-bar class="sidebar" id="nav-bar" />
       <router-view class="main-content" />
-      <active-forums class="sidebar" id="active-forums" />
+      <forums-sidebar id="active-forums" />
     </div>
   </div>
 </template>
 
 <script>
-import ActiveForums from "./components/ActiveForums.vue";
+import ForumsSidebar from "./components/ForumsSidebar.vue";
 import Header from "./components/Header.vue";
 import NavBar from "./components/NavBar.vue";
 
 export default {
-  components: { Header, NavBar, ActiveForums },
+  components: { Header, NavBar, ForumsSidebar },
 };
 </script>
 <style>
@@ -57,7 +57,17 @@ export default {
   left: 0;
   width: 100%;
 }
-
+.forumsTab {
+  background-color: #ffd3d7;
+  width: 150px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  height: calc(50vh - 70px);
+}
 .sidebar {
   background-color: #ffd3d7;
   width: 150px;
