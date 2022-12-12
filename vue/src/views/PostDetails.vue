@@ -15,31 +15,33 @@
       <h3 class="text">{{ post.text }}</h3>
       <h2 class="text">
         <div class="inline">
-          <router-link
+          <div id="user">
+            <router-link
             class="highlighted"
             :to="{ name: 'user-posts', params: { username: post.username } }"
             ><font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />  {{ post.username }}</router-link
           >
+          </div>
           <div class="votes">
             <div class="up-vote" >
-              <a href="#" @mouseover="isActive=true" @mouseleave="isActive=false">
-                <i v-if="!isActive">
+              <button @click.prevent @mouseover="isUpActive=true" @mouseleave="isUpActive=false">
+                <i v-if="!isUpActive">
                   <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
                 </i>
                 <span v-else >
                   <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
                 </span>
-              </a>
+              </button>
             </div>
             <div class="down-vote" >
-              <a href="#" @mouseover="isActive=true" @mouseleave="isActive=false">
-                <i v-if="!isActive">
+              <button @click.prevent @mouseover="isDownActive=true" @mouseleave="isDownActive=false">
+                <i v-if="!isDownActive">
                   <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
                 </i>
                 <span v-else >
                   <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
                 </span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -74,7 +76,9 @@ export default {
       directReplyInput: {
         replyText: "",
         mediaLink: ""
-      }
+      },
+      isUpActive: false,
+      isDownActive: false
     }
   },
   components: {replySection},
@@ -137,18 +141,20 @@ export default {
 </script>
 
 <style scoped>
+button {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-size: 17px;
+}
+
 .inline, .votes {
   display: flex;
   flex-direction: row;
   justify-content: center;
-}
-
-.up-color {
-  color: rgb(255, 102, 0);
-}
-
-.down-color {
-  color: rgb(76, 0, 255);
 }
 
 .title {
