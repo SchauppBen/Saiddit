@@ -7,5 +7,8 @@ export default {
   },
   addReply(reply) {
     return axios.post("/replies/", reply);
+  },
+  deleteReply(replyId) {
+    return axios.delete(`/replies/${replyId}`);
   }
 };
