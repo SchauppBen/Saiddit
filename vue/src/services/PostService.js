@@ -2,6 +2,7 @@ import axios from "axios";
 axios.defaults.baseURL = "http://localhost:9000";
 
 export default {
+  
   getPosts() {
     return axios.get("/posts/");
   },
@@ -17,9 +18,11 @@ export default {
   searchForPosts(searchTerm) {
     return axios.get(`/posts/search/${searchTerm}`);
   },
+
   getVotesByPost(postId) {
     return axios.get(`/posts/${postId}/votes`);
   },
+
   deletePost(postId) {
     return axios.delete(`/posts/${postId}`);
   }

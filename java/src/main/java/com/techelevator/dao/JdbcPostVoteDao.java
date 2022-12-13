@@ -71,7 +71,7 @@ public class JdbcPostVoteDao implements PostVoteDao {
         if(rowSet.next()) {
             return mapRowSetToVotesForPostDto(rowSet);
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        return new VotesForPostDto(postId, 0, 0);
     }
 
     @Override

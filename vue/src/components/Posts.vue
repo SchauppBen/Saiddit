@@ -45,7 +45,7 @@ export default {
     sortByMostPopular() {
       this.$store.state.posts.sort((post1, post2) => {
         const post1Votes = postService.getVotesByPost(post1.id);
-        const post2Votes = postService.getVotesBYPost(post2.id);
+        const post2Votes = postService.getVotesByPost(post2.id);
         if ((post1Votes.upvotes - post1Votes.downvotes) > (post2Votes.upvotes - post2Votes.downvotes)) {
           return 1;
         } else if ((post1Votes.upvotes - post1Votes.downvotes) < (post2Votes.upvotes - post2Votes.downvotes)) {
