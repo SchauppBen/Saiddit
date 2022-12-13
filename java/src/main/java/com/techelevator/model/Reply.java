@@ -1,6 +1,8 @@
 package com.techelevator.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Reply {
 
@@ -13,6 +15,7 @@ public class Reply {
     private String replyText;
     private String mediaLink;
     private LocalDate dateTime;
+    private final List<Reply> subReplies = new ArrayList<>();
 
     public Reply(int replyId, int userFrom, int replyToReplyId, int postId, String replyText, String mediaLink, LocalDate dateTime) {
         this.replyId = replyId;
@@ -94,4 +97,11 @@ public class Reply {
         this.dateTime = dateTime;
     }
 
+    public void addNewSubReply(Reply subReply) {
+        subReplies.add(subReply);
+    }
+
+    public List<Reply> getSubReplies() {
+        return subReplies;
+    }
 }

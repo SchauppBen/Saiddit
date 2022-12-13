@@ -100,6 +100,16 @@ public class JdbcPostDao implements PostDao {
     }
 
     @Override
+    public void deletePost(int id) {
+        String sql = "DELETE FROM replies WHERE post_id = ?;";
+        jdbcTemplate.update(sql, id);
+        sql = "DELETE FROM post_votes WHERE post_id = ?;";
+        jdbcTemplate.update(sql, id);
+        sql = "DELETE FROM posts WHERE post_id = ?;";
+        jdbcTemplate.update(sql, id);
+    }
+
+    @Override
     public List<Post> searchPosts(String searchString) {
         List<Post> posts = new ArrayList<>();
         String sql = "SELECT * FROM posts WHERE title ILIKE ? OR text ILIKE ?;";

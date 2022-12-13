@@ -16,6 +16,8 @@ public interface ReplyDao {
 
     List<Reply> listAllReplies();
 
+    List<Reply> tempListRepliesByPost(int id);
+
     List<Reply> listRepliesByPost(int id);
 
     List<Reply> listRepliesByUser(int id);

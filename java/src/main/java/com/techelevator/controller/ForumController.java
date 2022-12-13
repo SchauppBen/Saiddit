@@ -46,7 +46,9 @@ public class ForumController {
         return forumDao.getAllForums();
     }
 
-    @GetMapping(path = "/forums/users")
+
+
+    @GetMapping(path = "/forums/users/")
     public List<ForumsUsersDto> forumsUsersDtos() {
         return forumDao.getForumsUsers();
     }
