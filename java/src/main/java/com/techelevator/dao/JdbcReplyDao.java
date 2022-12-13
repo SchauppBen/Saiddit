@@ -224,6 +224,7 @@ public class JdbcReplyDao implements ReplyDao {
         reply.setPostId(rowSet.getInt("post_id"));
         reply.setReplyText(rowSet.getString("text"));
         reply.setMediaLink(rowSet.getString("media_link"));
+        reply.setDeleted(rowSet.getBoolean("is_deleted"));
         if (rowSet.getDate("date_time") != null) {
             reply.setDateTime(rowSet.getDate("date_time").toLocalDate());
         }
