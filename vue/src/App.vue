@@ -68,13 +68,13 @@ export default {
   padding: 0 2px 0 0;
 }
 
-.up-vote, .down-vote {
+.up-vote,
+.down-vote {
   padding: 0 4px 0 4px;
 }
 
 .up-color {
   color: rgb(0, 55, 206);
-  
 }
 
 .down-color {
