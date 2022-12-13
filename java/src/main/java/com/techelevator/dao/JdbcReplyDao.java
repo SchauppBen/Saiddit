@@ -159,8 +159,9 @@ public class JdbcReplyDao implements ReplyDao {
 
     @Override
     public void deleteReply(int id) {
-        String sql = "delete from replies where reply_id = ?;";
-
+        String sql = "delete from reply_votes where reply_id = ?;";
+        jdbcTemplate.update(sql, id);
+        sql = "UPDATE replies SET is_deleted = true WHERE reply_id = ?;";
         jdbcTemplate.update(sql, id);
     }
 
