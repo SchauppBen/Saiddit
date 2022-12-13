@@ -19,6 +19,8 @@
         <h3>{{ post.text }}</h3></router-link
       >
       <div class="inline">
+
+        <!-- Link to user profile -->
         <h2 id="user">
           <router-link
             class="highlighted"
@@ -28,6 +30,8 @@
           </router-link>
         </h2>
         <h3>{{ post.datetime }}</h3>
+
+        <!-- Up-vote & down-vote buttons -->
         <div class="votes">
           <div class="up-vote" >
             <button @click.prevent @click="downClick=true" @mouseover="isUpActive=true" @mouseleave="isUpActive=false">
@@ -50,12 +54,21 @@
             </button>
           </div>
         </div>
+
+        <!-- Delete post button -->
+        <div>
+          <button v-if="this.post.userId == this.$store.state.user.id" v-on:click="deletePost()">   Delete Post
+          </button>
+        </div>
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import postService from "../services/PostService.js";
+
 export default {
   name: 'Votes',
   props: {
@@ -71,6 +84,15 @@ export default {
       isDownActive: false,
       upClick: false,
       downClick: false,
+    }
+  },
+  methods: {
+    deletePost() {
+      this.$store.commit("DELETE_POST", this.post);
+      postService.deletePost(this.post.postId)
+      .catch((error) => {
+        this.handleErrorResponse(error, "deleting");
+      });
     }
   }
 };

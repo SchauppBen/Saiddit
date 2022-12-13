@@ -89,6 +89,13 @@ export default new Vuex.Store({
     SET_SEARCHED_POSTS(state, posts) {
       state.searchedPosts = posts;
     },
+    DELETE_POST(state, postToDelete) {
+      state.posts = state.posts.filter(
+        post => {
+          return post.postId != postToDelete.postId
+        }
+      );
+    },
 
     // Reply Mutations
     SET_ACTIVE_REPLIES(state, data) {
