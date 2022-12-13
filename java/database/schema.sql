@@ -29,7 +29,7 @@ CREATE TABLE banned_users (
 
 CREATE TABLE forums (
 	forum_id SERIAL PRIMARY KEY,
-	name varchar(50) NOT NULL,
+	name varchar(50) NOT NULL UNIQUE,
 	description varchar(500),
 	time_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -69,6 +69,7 @@ CREATE TABLE replies (
 	text varchar(1000),
 	media_link varchar(2048),
 	date_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	is_deleted boolean NOT NULL DEFAULT false,
 	CONSTRAINT fk_reply_to_id FOREIGN KEY (reply_to_id) REFERENCES replies(reply_id),
 	CONSTRAINT fk_user_from_id FOREIGN KEY (user_from_id) REFERENCES users(user_id),
 	CONSTRAINT fk_post_id FOREIGN KEY (post_id) REFERENCES posts(post_id)
