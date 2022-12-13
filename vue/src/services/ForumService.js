@@ -12,6 +12,9 @@ export default {
   getForumUsers() {
     return axios.get("/forums/users/");
   },
+  addUserToForum(forumUser) {
+    return axios.post("/forums/users/", forumUser);
+  },
 
   getForum(forumName) {
     return axios.get(`/${forumName}/`);

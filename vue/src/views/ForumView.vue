@@ -12,6 +12,7 @@
 
 <script>
 import Post from "../components/Post.vue";
+import ForumService from "../services/ForumService";
 
 export default {
   components: { Post },
@@ -28,11 +29,35 @@ export default {
         return post.forumName == this.thisForum.name;
       });
     },
+    forumUsers() {
+      return this.$store.state.forumUsers;
+    },
   },
   created() {
     this.$store.commit("SET_ACTIVE_FORUM", this.$route.params.forumName);
+    this.getForumUsers;
   },
-  methods: {},
+  methods: {
+    getForumUsers() {
+      ForumService.getForumUsers().then((response) => {
+        this.$store.commit("SET_FORUM_USERS", response.data);
+      });
+    },
+    joinForum() {
+      let joinedForum = {
+        forumId: this.thisforum.forumId,
+        userId: this.$store.state.user.userId,
+      };
+      ForumService.addUserToForum(joinedForum);
+
+      joinedForum.forumId = "";
+      joinedForum.userId = "";
+    },
+
+    isUser() {
+      return this.forumUsers.contains(this.$store.state.user.username);
+    },
+  },
 };
 </script>
 
