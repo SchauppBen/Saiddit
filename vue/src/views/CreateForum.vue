@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title">Create A Forum</h1>
+    <h1 class="title pink-border">Create A Forum</h1>
     <form class="create-forum" v-on:submit.prevent>
       <label for="name-input">Forum Name</label>
       <input id="name-input" type="text" v-model="forum.name" />

@@ -148,4 +148,7 @@ button {
 .post-container {
   padding: 10px;
 }
+#user {
+  text-decoration-line: underline;
+}
 </style>

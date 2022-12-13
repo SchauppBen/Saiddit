@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1 class="title">{{ this.$route.params.username }} posts</h1>
+    <h1 class="title pink-border">@{{ this.$route.params.username }}</h1>
     <post
-      class="allPosts"
+      class="post"
       v-for="post in userPosts"
       :key="post.postId"
       :post="post"
@@ -28,4 +28,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.post {
+  margin: 34px 10px 0px 10px;
+}
+</style>
