@@ -23,27 +23,28 @@
           <router-link
             class="highlighted"
             :to="{ name: 'user-posts', params: { username: post.username } }"
-            ><font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />  {{ post.username }}</router-link
-          >
+            >
+            <font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />  {{ post.username }}
+          </router-link>
         </h2>
         <h3>{{ post.datetime }}</h3>
         <div class="votes">
           <div class="up-vote" >
-            <button @click.prevent @mouseover="isUpActive=true" @mouseleave="isUpActive=false">
-              <i v-if="!isUpActive">
+            <button @click.prevent @click="downClick=true" @mouseover="isUpActive=true" @mouseleave="isUpActive=false">
+              <i v-if="!isUpActive && upClick">
                 <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
               </i>
-              <span v-else >
+              <span v-else-if="upClick=true">
                 <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
               </span>
             </button>
           </div>
           <div class="down-vote" >
-            <button @click.prevent @mouseover="isDownActive=true" @mouseleave="isDownActive=false">
-              <i v-if="!isDownActive">
+            <button @click.prevent @click="downClick=true" @mouseover="isDownActive=true" @mouseleave="isDownActive=false">
+              <i v-if="!isDownActive && downClick">
                 <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
               </i>
-              <span v-else >
+              <span v-else-if="downClick=true" >
                 <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
               </span>
             </button>
@@ -67,13 +68,18 @@ export default {
         fasIcon: ['fas', 'circle-up'],
       },      
       isUpActive: false,
-      isDownActive: false
+      isDownActive: false,
+      upClick: false,
+      downClick: false,
     }
   }
 };
 </script>
 
 <style scoped>
+.highlighted {
+  text-decoration-line: underline;
+}
 button {
     background-color: transparent;
     background-repeat: no-repeat;

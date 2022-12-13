@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title">Create A Post</h1>
+    <h1 class="title pink-border">Create A Post</h1>
     <form class="create-post" v-on:submit.prevent>
       <select v-model="selectedForum">
         <option v-for="forum in forums" :key="forum.name" :value="forum">
