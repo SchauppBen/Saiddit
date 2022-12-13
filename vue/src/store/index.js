@@ -71,6 +71,9 @@ export default new Vuex.Store({
     SAVE_FORUM(state, forum) {
       state.forums.push(forum);
     },
+    ADD_FORUM_USER(state, forumUser) {
+      state.forumUsers.push(forumUser);
+    },
     SET_SEARCHED_FORUMS(state, data) {
       state.searchedForums = data;
     },
@@ -118,11 +121,9 @@ export default new Vuex.Store({
       state.searchedPosts = posts;
     },
     DELETE_POST(state, postToDelete) {
-      state.posts = state.posts.filter(
-        post => {
-          return post.postId != postToDelete.postId
-        }
-      );
+      state.posts = state.posts.filter((post) => {
+        return post.postId != postToDelete.postId;
+      });
     },
 
     // Reply Mutations
