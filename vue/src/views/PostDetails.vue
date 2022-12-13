@@ -48,18 +48,8 @@
       </h2>
       <h3 class="text">{{ post.datetime }}</h3>
 
-      <div class = "reply-input">
-        <div>
-          <label for="reply-input">Reply to This Post as {{this.$store.state.user.username}}</label>
-        </div>
-        <div>
-          <input type="text" id="reply-input" name="replyInput" v-model="directReplyInput.replyText"/>
-        </div>
-      </div>
-      <div>
-        <button v-on:click="saveReply()">reply</button>
-      </div>
     </div>
+    <reply-input class="reply-input" :postId="this.post.postId" :isDirectReply="true" />
     <!-- v-if is required here to make sure when post details page is rendered, the replies passed in has been updated to a nonzero length rather than its default [] state with 0 elements. Without it here, the replies could be unaccessible the first time post-details page is rendered. -->
     <reply-section class="reply-section" v-if="this.replies.length" :replies="this.replies"/> 
   </div>
@@ -67,21 +57,18 @@
 
 <script>
 import replyService from "../services/ReplyService.js";
-import replySection from "../components/ReplySection.vue"
+import replySection from "../components/ReplySection.vue";
+import replyInput from "../components/ReplyInput.vue";
 
 export default {
   name: "post-details",
   data() {
     return {
-      directReplyInput: {
-        replyText: "",
-        mediaLink: ""
-      },
       isUpActive: false,
       isDownActive: false
     }
   },
-  components: {replySection},
+  components: {replyInput, replySection},
   computed: {
     post() {
       return this.$store.state.posts.find((post) => {
@@ -90,9 +77,6 @@ export default {
     },
     replies() {
       return this.$store.state.activeReplies;
-    },
-    directReply() {
-      return this.createDirectReply(this.directReplyInput);
     }
   },
   methods: {
@@ -104,34 +88,6 @@ export default {
           this.$store.commit("SET_ACTIVE_REPLIES", response.data);
         });
     },
-    createDirectReply(directReplyInput) {
-      const directReply = {};
-      directReply.replyToReplyId = 0;
-      directReply.postId = this.post.postId;
-      directReply.userFrom = this.$store.state.user.id;
-      directReply.replyText = directReplyInput.replyText;
-      directReply.mediaLink = directReplyInput.mediaLink;
-      return directReply;
-    },
-    saveReply() {
-      this.$store.commit("SAVE_REPLY", this.directReply);
-      replyService.addReply(this.directReply)
-        .then(response => {
-            if (response.status === 201) {
-                this.directReply = {
-                  replyToReplyId: 0,
-                  postId: this.$store.state.activePostId,
-                  userFrom: this.$store.state.user.id,
-                  replyText: "",
-                  mediaLink: "",
-                }
-            }
-        })
-        .catch(error => {
-            this.handleErrorResponse(error, "adding");
-        });
-      this.getReplies();
-    }
   },
   created() {
     this.$store.commit("SET_ACTIVE_POST", this.$route.params.postId);
@@ -162,17 +118,6 @@ button {
   margin-right: 0px;
   margin-bottom: 34px;
   margin-left: 0px;
-}
-
-.reply-input {
-  text-indent: 10%;
-  text-align: left;
-}
-
-#reply-input {
-  display: inline-block;
-  width: 50%;
-  padding:50px 10px;
 }
 
 .reply-section {
