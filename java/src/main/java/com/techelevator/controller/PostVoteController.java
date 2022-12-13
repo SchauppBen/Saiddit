@@ -40,7 +40,7 @@ public class PostVoteController {
         return postVoteDao.getPostVotesByUser(userId);
     }
 
-    @GetMapping(path = "/posts/{postId}/votes/")
+    @GetMapping(path = "/posts/{postId}/votes")
     public VotesForPostDto getPostVotesByPost(@PathVariable int postId) {
         return postVoteDao.getPostVotesByPost(postId);
     }

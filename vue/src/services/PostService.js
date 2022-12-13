@@ -15,5 +15,8 @@ export default {
   },
   searchForPosts(searchTerm) {
     return axios.get(`/posts/search/${searchTerm}`);
+  },
+  getVotesByPost(postId) {
+    return axios.get(`/posts/${postId}/votes`);
   }
 };
