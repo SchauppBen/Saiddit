@@ -1,8 +1,6 @@
 <template>
   <div class="posts">
-    <h1 class="title">Posts in {{ thisForum.name }} forum</h1>
-    <div v-if="isUser">Member</div>
-    <div v-else>Join Forum</div>
+    <h1 class="title pink-border">Posts in {{ thisForum.name }} forum</h1>
     <post
       class="allPosts"
       v-for="post in forumPosts"
@@ -66,5 +64,11 @@ export default {
 <style scoped>
 #forum-posts {
   align-content: center;
+}
+.title {
+  margin-top: -10px;
+  margin-right: 0px;
+  margin-bottom: 34px;
+  margin-left: 0px;
 }
 </style>

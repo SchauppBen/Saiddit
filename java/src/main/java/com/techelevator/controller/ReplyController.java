@@ -32,6 +32,11 @@ public class ReplyController {
     }
 
     @GetMapping(path = "/posts/replies/{postId}")
+    public List<Reply> tempGetRepliesByPost(@PathVariable("postId") int id) {
+        return replyDao.tempListRepliesByPost(id);
+    }
+
+    @GetMapping(path = "/posts/replies/{postId}/test")
     public List<Reply> getRepliesByPost(@PathVariable("postId") int id) {
         return replyDao.listRepliesByPost(id);
     }
@@ -56,6 +61,7 @@ public class ReplyController {
         }
         return null;
     }
+
 
     @PutMapping(path="/replies/{replyId}")
     public void editReply(@PathVariable int replyId, @Valid @RequestBody Reply newReply, Principal principal) {

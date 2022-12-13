@@ -53,17 +53,37 @@ public class JdbcReplyDao implements ReplyDao {
     }
 
     @Override
-    public List<Reply> listRepliesByPost(int postId) {
+    public List<Reply> tempListRepliesByPost(int id) {
         String sql = "select * from replies where post_id = ?;";
         List<Reply> allReplies = new ArrayList<>();
 
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, postId);
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
 
         while (rowSet.next()) {
             allReplies.add(mapRowToReply(rowSet));
         }
 
         return allReplies;
+    }
+
+    @Override
+    public List<Reply> listRepliesByPost(int postId) {
+        String sql = "select * from replies where post_id = ? AND reply_to_id IS NULL;";
+        List<Reply> originalReplies = new ArrayList<>();
+        List<Reply> subReplies = new ArrayList<>();
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, postId);
+
+        while (rowSet.next()) {
+            originalReplies.add(mapRowToReply(rowSet));
+        }
+        sql = "SELECT * FROM replies WHERE post_id = ? AND reply_to_id IS NOT NULL;";
+        rowSet = jdbcTemplate.queryForRowSet(sql, postId);
+        while(rowSet.next()) {
+            subReplies.add(mapRowToReply(rowSet));
+        }
+
+        return createNestedReplies(originalReplies, subReplies);
     }
 
 
@@ -139,8 +159,9 @@ public class JdbcReplyDao implements ReplyDao {
 
     @Override
     public void deleteReply(int id) {
-        String sql = "delete from replies where reply_id = ?;";
-
+        String sql = "delete from reply_votes where reply_id = ?;";
+        jdbcTemplate.update(sql, id);
+        sql = "UPDATE replies SET is_deleted = true WHERE reply_id = ?;";
         jdbcTemplate.update(sql, id);
     }
 
@@ -153,6 +174,41 @@ public class JdbcReplyDao implements ReplyDao {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    private List<Reply> createNestedReplies(List<Reply> originalReplies, List<Reply> subReplies) {
+        int subReplyIndex = 0;
+        int count = 0;
+        while(subReplies.size() > 0 && count < subReplies.size() * 100) {
+            Reply subReply = subReplies.get(subReplyIndex);
+            boolean aggregationResult = aggregate(subReply, originalReplies);
+            if (aggregationResult) {
+                subReplies.remove(subReplyIndex);
+            }
+            if (!aggregationResult && (subReplyIndex + 1) < subReplies.size()) {
+                subReplyIndex++;
+            }
+            if (subReplyIndex == subReplies.size() - 1) {
+                subReplyIndex = 0;
+            }
+            count++;
+        }
+        return originalReplies;
+    }
+
+    private boolean aggregate(Reply replyObjectToAdd, List<Reply> repliesList) {
+        boolean replyAdded = false;
+        for(Reply reply : repliesList) {
+            if (reply.getReplyId() == replyObjectToAdd.getReplyToReplyId()) {
+                reply.addNewSubReply(replyObjectToAdd);
+                replyAdded = true;
+            } else if (!replyObjectToAdd.getSubReplies().isEmpty()){
+                if(aggregate(replyObjectToAdd, repliesList)) {
+                    replyAdded = true;
+                }
+            }
+        }
+        return replyAdded;
     }
 
     private Reply mapRowToReply(SqlRowSet rowSet) {
