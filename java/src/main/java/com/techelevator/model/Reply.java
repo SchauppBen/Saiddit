@@ -14,6 +14,8 @@ public class Reply {
     private String usernameTo;
     private String replyText;
     private String mediaLink;
+    private boolean isDeleted;
+
     private LocalDate dateTime;
     private final List<Reply> subReplies = new ArrayList<>();
 
@@ -103,5 +105,13 @@ public class Reply {
 
     public List<Reply> getSubReplies() {
         return subReplies;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

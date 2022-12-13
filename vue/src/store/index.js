@@ -93,8 +93,8 @@ export default new Vuex.Store({
     }, 
     SORT_POSTS_MOST_POPULAR(state) {
       state.posts.sort((post1, post2) => {
-        const post1Votes = postService.getVotesByPost(post1.id);
-        const post2Votes = postService.getVotesByPost(post2.id);
+        const post1Votes = postService.getVotesByPost(post1.postId);
+        const post2Votes = postService.getVotesByPost(post2.postId);
         if ((post1Votes.upvotes - post1Votes.downvotes) > (post2Votes.upvotes - post2Votes.downvotes)) {
           return 1;
         } else if ((post1Votes.upvotes - post1Votes.downvotes) < (post2Votes.upvotes - post2Votes.downvotes)) {
