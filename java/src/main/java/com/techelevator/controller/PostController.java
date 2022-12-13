@@ -63,4 +63,10 @@ public class PostController {
         return postDao.getPostsByForum(forumName);
     }
 
+    @DeleteMapping(path = "posts/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePostById(@PathVariable int id) {
+        postDao.deletePost(id);
+    }
+
 }
