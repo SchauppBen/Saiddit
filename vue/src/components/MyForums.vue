@@ -25,19 +25,21 @@ export default {
         this.$store.commit("SET_FORUM_USERS", response.data);
       });
     },
-    myForums() {
-      return this.$store.state.forumUsers.filter((forum) => {
-        forum.username === this.$store.state.user.username;
-      });
-    },
   },
   computed: {
     forums() {
       return this.$store.state.forumUsers;
     },
+    myForums() {
+      return this.forums.filter((forum) => {
+        return forum.username == this.currentUser;
+      });
+    },
+    currentUser() {
+      return this.$store.state.user.username;
+    },
   },
   created() {
-    this.activeForums();
     this.getForumUsers();
   },
 };
