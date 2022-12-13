@@ -1,57 +1,18 @@
 <template>
   <div class="post-container">
     <h1 class="title pink-border">Post details</h1>
-    <div class="posts">
-      <h4>
-        Posted in
-        <router-link
-          class="highlighted"
-          :to="{ name: 'forum-view', params: { forumName: post.forumName } }"
-          >[{{ post.forumName }}]</router-link
-        >
-      </h4>
-      <h1 class="text">{{ post.title }}</h1>
-      <img id="detail-img" :src="post.mediaLink" v-show="post.mediaLink" />
-      <h3 class="text">{{ post.text }}</h3>
-      <h2 class="text">
-        <div class="inline">
-          <div id="user">
-            <router-link
-            class="highlighted"
-            :to="{ name: 'user-posts', params: { username: post.username } }"
-            ><font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />  {{ post.username }}</router-link
-          >
-          </div>
-          <div class="votes">
-            <div class="up-vote" >
-              <button @click.prevent @mouseover="isUpActive=true" @mouseleave="isUpActive=false">
-                <i v-if="!isUpActive">
-                  <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
-                </i>
-                <span v-else >
-                  <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
-                </span>
-              </button>
-            </div>
-            <div class="down-vote" >
-              <button @click.prevent @mouseover="isDownActive=true" @mouseleave="isDownActive=false">
-                <i v-if="!isDownActive">
-                  <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
-                </i>
-                <span v-else >
-                  <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </h2>
-      <h3 class="text">{{ post.datetime }}</h3>
-
-    </div>
-    <reply-input class="reply-input" :postId="this.post.postId" :isDirectReply="true" />
+    <Post :post="post" />
+    <reply-input
+      class="reply-input"
+      :postId="this.post.postId"
+      :isDirectReply="true"
+    />
     <!-- v-if is required here to make sure when post details page is rendered, the replies passed in has been updated to a nonzero length rather than its default [] state with 0 elements. Without it here, the replies could be unaccessible the first time post-details page is rendered. -->
-    <reply-section class="reply-section" v-if="this.replies.length" :replies="this.replies"/> 
+    <reply-section
+      class="reply-section"
+      v-if="this.replies.length"
+      :replies="this.replies"
+    />
   </div>
 </template>
 
@@ -59,16 +20,17 @@
 import replyService from "../services/ReplyService.js";
 import replySection from "../components/ReplySection.vue";
 import replyInput from "../components/ReplyInput.vue";
+import Post from "../components/Post.vue";
 
 export default {
   name: "post-details",
   data() {
     return {
       isUpActive: false,
-      isDownActive: false
-    }
+      isDownActive: false,
+    };
   },
-  components: {replyInput, replySection},
+  components: { Post, replyInput, replySection },
   computed: {
     post() {
       return this.$store.state.posts.find((post) => {
@@ -77,7 +39,7 @@ export default {
     },
     replies() {
       return this.$store.state.activeReplies;
-    }
+    },
   },
   methods: {
     // update currently active replies in $store
@@ -97,22 +59,6 @@ export default {
 </script>
 
 <style scoped>
-button {
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-    font-size: 17px;
-}
-
-.inline, .votes {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 .title {
   margin-top: -10px;
   margin-right: 0px;
@@ -122,7 +68,7 @@ button {
 
 .reply-section {
   margin-top: 15px;
-  padding-top:15x;
+  padding-top: 15x;
 }
 
 #detail-img {
@@ -132,7 +78,6 @@ button {
   font-family: sans-serif;
   color: royalblue;
   font-size: 20px;
-  
 }
 .posts {
   text-align: center;

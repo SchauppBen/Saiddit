@@ -1,5 +1,5 @@
 <template>
-  <div class="forumsTab pink-border">
+  <div class="forumsTab pink-border scrollable">
     <h2><em>My Forums</em></h2>
     <ul>
       <li v-for="forum in myForums" :key="forum.forumName">
