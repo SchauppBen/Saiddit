@@ -92,6 +92,7 @@ export default {
   border-radius: 10px;
   height: calc(50vh - 70px);
 }
+
 .sidebar {
   background-color: #ffd3d7;
   width: 150px;
@@ -130,5 +131,8 @@ export default {
 .posts {
   padding: 10px;
   border-radius: 10px;
+}
+.scrollable {
+  overflow-y: auto;
 }
 </style>

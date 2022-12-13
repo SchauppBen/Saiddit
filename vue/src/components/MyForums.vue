@@ -2,12 +2,12 @@
   <div class="forumsTab pink-border">
     <h2><em>My Forums</em></h2>
     <ul>
-      <li v-for="forum in myForums" :key="forum.name">
+      <li v-for="forum in myForums" :key="forum.forumName">
         <router-link
           class="highlighted"
-          :to="{ name: 'forum-view', params: { forumName: forum.name } }"
+          :to="{ name: 'forum-view', params: { forumName: forum.forumName } }"
         >
-          <br />{{ forum.name }}</router-link
+          <br />{{ forum.forumName }}</router-link
         >
       </li>
     </ul>
@@ -20,25 +20,27 @@ export default {
   name: "active-forums",
 
   methods: {
-    getForums() {
+    getForumUsers() {
       forumService.getForumUsers().then((response) => {
         this.$store.commit("SET_FORUM_USERS", response.data);
-      });
-    },
-    myForums() {
-      return this.$store.state.forumUsers.filter((forum) => {
-        forum.username === this.$store.state.user;
       });
     },
   },
   computed: {
     forums() {
-      return this.$store.state.activeForums;
+      return this.$store.state.forumUsers;
+    },
+    myForums() {
+      return this.forums.filter((forum) => {
+        return forum.username == this.currentUser;
+      });
+    },
+    currentUser() {
+      return this.$store.state.user.username;
     },
   },
   created() {
-    this.activeForums();
-    this.getForums();
+    this.getForumUsers();
   },
 };
 </script>
