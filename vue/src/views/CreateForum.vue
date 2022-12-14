@@ -24,11 +24,25 @@ export default {
       },
     };
   },
+  computed: {
+    newForumUser() {
+      return this.createNewForumUser();
+    }
+  },
   created() {
     this.$store.commit("SET_ACTIVE_FORUM", "");
   },
   methods: {
+    createNewForumUser() {
+      const newForumUser = {};
+      newForumUser.forumName = this.forum.name;
+      newForumUser.moderator = true;
+      newForumUser.userId = this.$store.state.user.id;
+      newForumUser.username = this.$store.state.user.username;
+      return newForumUser;
+    },
     saveForum() {
+      this.$store.commit("ADD_FORUM_USER", this.newForumUser);
       this.$store.commit("SAVE_FORUM", this.forum);
       forumService
         .addForum(this.forum)
