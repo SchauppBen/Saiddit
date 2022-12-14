@@ -1,5 +1,5 @@
 <template>
-  <div class="forumsTab pink-border scrollable">
+  <div v-show="onForumPage" class="forumsTab pink-border scrollable">
     <h2>
       <em>{{ forum }} Users</em>
     </h2>
@@ -42,6 +42,9 @@ export default {
     },
     currentUser() {
       return this.$store.state.user.username;
+    },
+    onForumPage() {
+      return this.$route.name === "forum-view";
     },
   },
   created() {
