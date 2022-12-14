@@ -54,6 +54,7 @@ export default {
   created() {
     this.$store.commit("SET_ACTIVE_POST", this.$route.params.postId);
     this.getReplies();
+    this.$store.commit("SET_ACTIVE_FORUM", "");
   },
 };
 </script>

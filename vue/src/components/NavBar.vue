@@ -1,5 +1,5 @@
 <template>
-  <nav class="pink-border">
+  <nav class="forumsTab pink-border">
     <h1 id="nav-title"><em>Navigation</em></h1>
     <ul>
       <li>
