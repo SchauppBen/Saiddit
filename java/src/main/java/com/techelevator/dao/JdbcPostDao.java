@@ -18,11 +18,13 @@ public class JdbcPostDao implements PostDao {
     private final JdbcTemplate jdbcTemplate;
     private final ForumDao forumDao;
     private final UserDao userDao;
+    private final PostVoteDao postVoteDao;
 
-    public JdbcPostDao(JdbcTemplate jdbcTemplate, ForumDao forumDao, UserDao userDao) {
+    public JdbcPostDao(JdbcTemplate jdbcTemplate, ForumDao forumDao, UserDao userDao, PostVoteDao postVoteDao) {
         this.jdbcTemplate = jdbcTemplate;
         this.forumDao = forumDao;
         this.userDao = userDao;
+        this.postVoteDao = postVoteDao;
     }
 
 
@@ -132,7 +134,9 @@ public class JdbcPostDao implements PostDao {
         post.setMediaLink(rowSet.getString("media_link"));
         if (rowSet.getDate("date_time") != null) {
             post.setDateTime(rowSet.getDate("date_time").toLocalDate());
+            post.setTimeInMillis(rowSet.getDate("date_time").getTime());
         }
+        post.setVotes(postVoteDao.getPostVotesByPost(post.getPostId()).getVotes());
         return post;
     }
 }

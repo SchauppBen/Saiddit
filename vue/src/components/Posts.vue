@@ -1,6 +1,6 @@
 <template>
   <div class="posts">
-    <h3 @click="sortPosts">{{sortByMostRecent ? "Sort by most popular posts." : "Sort by most recent posts"}}</h3>
+    <h3 @click="sortPosts">{{this.$store.state.sortByMostRecent ? "Sort by most popular posts." : "Sort by most recent posts"}}</h3>
     <post class="allPosts" v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
@@ -12,11 +12,6 @@ import postService from "../services/PostService.js";
 export default {
   name: "posts-list",
   components: { Post },
-  data() {
-    return {
-      sortByMostRecent: true
-    }
-  },
   methods: {
     getPosts() {
       postService.getPosts().then((response) => {
@@ -24,36 +19,38 @@ export default {
       });
     },
     sortPosts() {
-      if (this.sortByMostRecent) {
+      if (this.$store.state.sortByMostRecent) {
         this.sortByMostPopular();
       } else {
-        this.sortByRecent();
+        this.sortByMostRecent();
       }
-      this.sortByMostRecent = !this.sortByMostRecent;
     },
-    sortByRecent() {
-      this.$store.state.posts.sort((post1, post2) => {
-        if (post1.dateTime > post2.dateTime) {
-          return 1;
-        } else if (post1.dateTime < post2.dateTime) {
+    sortByMostRecent() {
+      const currentPosts = this.$store.state.posts;
+      currentPosts.sort((post1, post2) => {
+        if (post1.timeInMillis > post2.timeInMillis) {
           return -1;
+        } else if (post1.timeInMillis < post2.timeInMillis) {
+          return 1;
         } else {
           return 0;
         }
       });
+      this.$store.commit("TOGGLE_SORTED_POSTS");
     },
     sortByMostPopular() {
-      this.$store.state.posts.sort((post1, post2) => {
-        const post1Votes = postService.getVotesByPost(post1.id);
-        const post2Votes = postService.getVotesByPost(post2.id);
-        if ((post1Votes.upvotes - post1Votes.downvotes) > (post2Votes.upvotes - post2Votes.downvotes)) {
-          return 1;
-        } else if ((post1Votes.upvotes - post1Votes.downvotes) < (post2Votes.upvotes - post2Votes.downvotes)) {
+      let currentPosts = this.$store.state.posts;
+      currentPosts = currentPosts.sort((post1, post2) => {
+        if (post1.votes > post2.votes) {
           return -1;
+        } else if (post1.votes < post2.votes) {
+          return 1;
         } else {
           return 0;
         }
       });
+      this.$store.commit("SET_POSTS", currentPosts);
+      this.$store.commit("TOGGLE_SORTED_POSTS");
     }
   },
   computed: {

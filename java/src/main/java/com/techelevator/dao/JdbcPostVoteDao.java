@@ -64,14 +64,16 @@ public class JdbcPostVoteDao implements PostVoteDao {
     @Override
     public VotesForPostDto getPostVotesByPost(int postId) {
 
-        String sql = "SELECT post_id, COUNT(*) FILTER(WHERE is_upvote) AS upvotes, COUNT(*) FILTER(WHERE NOT is_upvote) AS downvotes FROM post_votes WHERE post_id = ? GROUP BY post_id";
+        String sql = "SELECT post_id, COUNT(*) FILTER(WHERE is_upvote) AS upvotes, COUNT(*) FILTER(WHERE NOT is_upvote) " +
+                "AS downvotes, (COUNT(*) FILTER(WHERE is_upvote) - COUNT(*) FILTER(WHERE NOT is_upvote)) AS votes " +
+                "FROM post_votes WHERE post_id = ? GROUP BY post_id";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, postId);
 
         if(rowSet.next()) {
             return mapRowSetToVotesForPostDto(rowSet);
         }
-        return new VotesForPostDto(postId, 0, 0);
+        return new VotesForPostDto(postId, 0, 0, 0);
     }
 
     @Override
@@ -146,6 +148,7 @@ public class JdbcPostVoteDao implements PostVoteDao {
         votesForPostDto.setPostId(rowSet.getInt("post_id"));
         votesForPostDto.setUpvotes(rowSet.getInt("upvotes"));
         votesForPostDto.setDownvotes(rowSet.getInt("downvotes"));
+        votesForPostDto.setVotes(rowSet.getInt("votes"));
         return votesForPostDto;
     }
 

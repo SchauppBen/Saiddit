@@ -5,11 +5,13 @@ public class VotesForPostDto {
     private int postId;
     private int upvotes;
     private int downvotes;
+    private int votes;
 
-    public VotesForPostDto(int postId, int upvotes, int downvotes) {
+    public VotesForPostDto(int postId, int upvotes, int downvotes, int votes) {
         this.postId = postId;
         this.upvotes = upvotes;
         this.downvotes = downvotes;
+        this.votes = votes;
     }
 
     public VotesForPostDto() {}
@@ -36,5 +38,13 @@ public class VotesForPostDto {
 
     public void setDownvotes(int downvotes) {
         this.downvotes = downvotes;
+    }
+
+    public int getVotes() {
+        return votes;
+    }
+
+    public void setVotes(int votes) {
+        this.votes = votes;
     }
 }
