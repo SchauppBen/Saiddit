@@ -112,5 +112,14 @@ export default new Vuex.Store({
     SET_ACTIVE_NESTED_REPLIES(state, data) {
       state.activeNestedReplies = data;
     },
+    DELETE_REPLY(state, replyToDelete) {
+      state.activeReplies.forEach(
+        reply => {
+          if(reply.replyId == replyToDelete.replyId) {
+            reply.deleted = true;
+          }
+        }
+      );
+    },
   },
 });
