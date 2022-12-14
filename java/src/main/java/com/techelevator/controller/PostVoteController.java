@@ -4,9 +4,9 @@ import com.techelevator.dao.PostVoteDao;
 import com.techelevator.model.PostVote;
 import com.techelevator.model.VotesForPostDto;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -35,6 +35,7 @@ public class PostVoteController {
     public List<PostVote> getAllPostVotes() {
         return postVoteDao.getAllPostVotes();
     }
+
     @GetMapping(path = "/posts/votes/{userId}")
     public List<PostVote> getPostVotesByUser(@PathVariable int userId) {
         return postVoteDao.getPostVotesByUser(userId);
@@ -65,4 +66,18 @@ public class PostVoteController {
         return postVoteDao.getDownVotesByPost(postId);
     }
 
+    @GetMapping(path = "/posts/{postId}/votes/{userId}")
+    public boolean HasUserVotedOnPost(@PathVariable int postId, @PathVariable int userId) {
+        return postVoteDao.hasUserVotedOnPost(postId, userId);
+    }
+
+    @PutMapping(path = "/posts/vote")
+    public void updateVote(@Valid @RequestBody PostVote postVote) {
+        postVoteDao.updatePostVote(postVote);
+    }
+
+    @DeleteMapping(path = "/posts/votes/{postId}/{userId}")
+    public void deleteVote(@PathVariable int postId, @PathVariable int userId) {
+        postVoteDao.deletePostVote(postId, userId);
+    }
 }

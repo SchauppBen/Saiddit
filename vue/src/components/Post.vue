@@ -40,6 +40,7 @@
               @click="
                 upClick = !upClick;
                 downClick = false;
+                upVote();
               "
               class="ui button toggle"
             >
@@ -66,6 +67,7 @@
               @click="
                 downClick = !downClick;
                 upClick = false;
+                downVote();
               "
               class="ui button toggle"
             >
@@ -115,6 +117,10 @@ export default {
       isDownActive: false,
       upClick: false,
       downClick: false,
+      vote: {
+        postId: this.post.postId,
+        userId: this.$store.state.user.id,
+      },
     };
   },
   methods: {
@@ -137,12 +143,30 @@ export default {
       }
     },
     upVote() {
-      this.upClick = true;
-      this.$store.commit("UP_VOTE", (this.upClick = true));
+      if (this.$store.state.userUpVotes.includes(this.vote.postId)) {
+        postService.deleteVote(this.vote.postId, this.vote.userId);
+        this.$store.commit("REMOVE_UPVOTED_POST", this.vote.postId);
+      } else if (this.$store.state.userDownVotes.includes(this.vote.postId)) {
+        postService.updateVote(this.vote);
+        this.$store.commit("REMOVE_DOWNVOTED_POST", this.vote.postId);
+        this.$store.commit("ADD_UPVOTED_POSTS", this.vote.postId);
+      } else {
+        postService.upvotePost(this.vote);
+        this.$store.commit("ADD_UPVOTED_POSTS", this.vote.postId);
+      }
     },
     downVote() {
-      this.downClick = true;
-      this.$store.commit("DOWN_VOTE", (this.downClick = true));
+      if (this.$store.state.userDownVotes.includes(this.vote.postId)) {
+        postService.deleteVote(this.vote.postId, this.vote.userId);
+        this.$store.commit("REMOVE_DOWNVOTED_POST", this.vote.postId);
+      } else if (this.$store.state.userUpVotes.includes(this.vote.postId)) {
+        postService.updateVote(this.vote);
+        this.$store.commit("REMOVE_UPVOTED_POST", this.vote.postId);
+        this.$store.commit("ADD_DOWNVOTED_POSTS", this.vote.postId);
+      } else {
+        postService.downvotePost(this.vote);
+        this.$store.commit("ADD_DOWNVOTED_POSTS", this.vote.postId);
+      }
     },
     deletePost() {
       this.$store.commit("DELETE_POST", this.post);
@@ -150,6 +174,22 @@ export default {
         this.handleErrorResponse(error, "deleting");
       });
     },
+    setVotedPosts() {
+      postService
+        .getAllVotesByUser(this.$store.state.user.id)
+        .then((response) => {
+          response.data.forEach((vote) => {
+            if (vote.isUpvote) {
+              this.$store.commit("ADD_UPVOTED_POSTS", vote.postId);
+            } else {
+              this.$store.commit("ADD_DOWNVOTED_POSTS", vote.postId);
+            }
+          });
+        });
+    },
+  },
+  created() {
+    this.setVotedPosts();
   },
 };
 </script>
