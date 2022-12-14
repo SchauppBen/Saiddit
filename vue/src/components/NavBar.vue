@@ -3,15 +3,24 @@
     <h1 id="nav-title"><em>Navigation</em></h1>
     <ul>
       <li>
+        <br />
         <router-link class="highlighted" :to="{ name: 'create-post' }">
-          +
+          Create Post
         </router-link>
       </li>
+      <br />
       <li>
         <router-link class="highlighted" :to="{ name: 'create-forum' }">
           Create Forum
         </router-link>
       </li>
+      <br />
+      <li>
+        <router-link class="highlighted" :to="{ name: 'search-forums' }">
+          Browse All Forums
+        </router-link>
+      </li>
+      <br />
     </ul>
   </nav>
 </template>
