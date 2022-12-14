@@ -27,12 +27,12 @@ export default {
     },
   },
   computed: {
-    forums() {
+    forumUsers() {
       return this.$store.state.forumUsers;
     },
     myForums() {
-      return this.forums.filter((forum) => {
-        return forum.userId == this.$store.state.user.id;
+      return this.forumUsers.filter((forumUser) => {
+        return forumUser.userId == this.$store.state.user.id;
       });
     },
     currentUser() {
