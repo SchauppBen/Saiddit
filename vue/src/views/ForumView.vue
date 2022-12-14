@@ -62,7 +62,6 @@ export default {
   created() {
     this.$store.commit("SET_ACTIVE_FORUM", this.$route.params.forumName);
     this.getForumUsers;
-    this.getPosts;
   },
   methods: {
     getForumUsers() {
