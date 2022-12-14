@@ -132,13 +132,33 @@ public class JdbcPostVoteDao implements PostVoteDao {
         return postVotes;
     }
 
+    @Override
+    public boolean hasUserVotedOnPost(int postId, int userId) {
+        String sql = "SELECT * FROM post_votes WHERE post_id = ? AND user_id = ?;";
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, postId, userId);
+        return rowSet.next();
+    }
+
+    @Override
+    public void updatePostVote(PostVote postVote) {
+        String sql = "UPDATE post_votes SET is_upvote = NOT is_upvote WHERE post_id = ? AND user_id = ?";
+        jdbcTemplate.update(sql, postVote.getPostId(), postVote.getUserId());
+    }
+
+    @Override
+    public void deletePostVote(int postId, int userId) {
+        String sql = "DELETE FROM post_votes WHERE post_id = ? AND user_id = ?";
+        jdbcTemplate.update(sql, postId, userId);
+    }
+
     private PostVote mapRowSetToPostVote(SqlRowSet rowSet) {
         PostVote postVote = new PostVote();
         postVote.setPostId(rowSet.getInt("post_id"));
         postVote.setUserId(rowSet.getInt("user_id"));
-        postVote.setUpvote(rowSet.getBoolean("is_moderator"));
-        if (rowSet.getDate("time_date") != null) {
-            postVote.setTimeDate(rowSet.getDate("time_date").toLocalDate());
+        postVote.setUpvote(rowSet.getBoolean("is_upvote"));
+        if (rowSet.getDate("date_time") != null) {
+            postVote.setTimeDate(rowSet.getDate("date_time").toLocalDate());
         }
         return postVote;
     }

@@ -40,6 +40,8 @@ export default new Vuex.Store({
     searchTerm: "",
     searchedPosts: [],
     sortByMostRecent: true,
+    userUpVotes: [],
+    userDownVotes: []
   },
   mutations: {
     // Authentication Mutations
@@ -112,6 +114,20 @@ export default new Vuex.Store({
     },
     TOGGLE_SORTED_POSTS(state) {
       state.sortByMostRecent = !state.sortByMostRecent;
+    },
+    ADD_UPVOTED_POSTS(state, data) {
+      state.userUpVotes.push(data);
+    },
+    ADD_DOWNVOTED_POSTS(state, data) {
+      state.userDownVotes.push(data);
+    },
+
+    REMOVE_UPVOTED_POST(state, data) {
+      state.userUpVotes.splice(state.userUpVotes.indexOf(data), 1);
+    },
+
+    REMOVE_DOWNVOTED_POST(state, data) {
+      state.userDownVotes.splice(state.userUpVotes.indexOf(data), 1);
     },
 
     // Reply Mutations
