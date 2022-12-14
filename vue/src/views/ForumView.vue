@@ -55,6 +55,17 @@ export default {
       return forumUser;
     },
   },
+  watch: {
+    '$route.params.forumName': { 
+      handler: function(newForumName) {
+        console.log("function triggered");
+        this.$store.commit("SET_ACTIVE_FORUM", newForumName);
+        this.getForumUsers();
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   created() {
     this.$store.commit("SET_ACTIVE_FORUM", this.$route.params.forumName);
     this.getForumUsers;
@@ -73,6 +84,7 @@ export default {
       this.$store.commit("REMOVE_FORUM_USER", this.thisForumUser);
     },
   },
+
 };
 </script>
 
