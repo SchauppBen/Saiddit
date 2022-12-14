@@ -26,15 +26,14 @@ export default {
         return forum.name == this.$store.state.activeForumName;
       });
     },
-
     forumPosts() {
       return this.$store.state.posts.filter((post) => {
         return post.forumName == this.thisForum.name;
       });
     },
     forumUsers() {
-      return this.$store.state.forumUsers.filter((forum) => {
-        return forum.forumName === this.thisForum.name;
+      return this.$store.state.forumUsers.filter((forumUser) => {
+        return forumUser.forumId === this.thisForum.forumId;
       });
     },
     thisUser() {
@@ -42,13 +41,15 @@ export default {
     },
     isAMember() {
       return this.forumUsers.some((element) => {
-        return element.username === this.$store.state.user.username;
+        return element.userId === this.$store.state.user.id;
       });
     },
     thisForumUser() {
       const forumUser = {
         forumId: this.thisForum.forumId,
+        forumName: this.thisForum.name,
         userId: this.$store.state.user.id,
+        username: this.$store.state.user.username,
         isModerator: false,
       };
       return forumUser;
@@ -68,7 +69,10 @@ export default {
       this.$store.commit("ADD_FORUM_USER", this.thisForumUser);
       ForumService.addUserToForum(this.thisForumUser);
     },
-  }
+    leaveForum() {
+      this.$store.commit("REMOVE_FORUM_USER", this.thisForumUser);
+    },
+  },
 };
 </script>
 

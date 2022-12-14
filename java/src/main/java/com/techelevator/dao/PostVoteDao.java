@@ -24,4 +24,10 @@ public interface PostVoteDao {
     List<PostVote> getUpVotesByPost(int postId);
 
     List<PostVote> getDownVotesByPost(int postId);
+
+    boolean hasUserVotedOnPost(int postId, int userId);
+
+    void updatePostVote(PostVote postVote);
+
+    void deletePostVote(int postId, int userId);
 }

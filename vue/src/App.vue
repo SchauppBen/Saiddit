@@ -4,7 +4,7 @@
       <Header id="app-header" />
     </div>
     <div id="container">
-      <nav-bar class="sidebar" id="nav-bar" />
+      <nav-sidebar id="nav-bar" />
       <router-view class="main-content" />
       <forums-sidebar id="active-forums" />
     </div>
@@ -14,10 +14,10 @@
 <script>
 import ForumsSidebar from "./components/ForumsSidebar.vue";
 import Header from "./components/Header.vue";
-import NavBar from "./components/NavBar.vue";
+import NavSidebar from "./components/NavSidebar.vue";
 
 export default {
-  components: { Header, NavBar, ForumsSidebar },
+  components: { Header, NavSidebar, ForumsSidebar },
 };
 </script>
 

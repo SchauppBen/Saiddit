@@ -1,14 +1,16 @@
 <template>
-  <div class="forumsTab pink-border scrollable">
-    <h2><em>My Forums</em></h2>
+  <div v-show="onForumPage" class="forumsTab pink-border scrollable">
+    <h2>
+      <em>{{ forum }} Users</em>
+    </h2>
     <ul>
-      <li v-for="forum in myForums" :key="forum.forumName">
+      <li v-for="forum in forumUsers" :key="forum.userId">
         <router-link
           class="highlighted"
-          :to="{ name: 'forum-view', params: { forumName: forum.forumName } }"
+          :to="{ name: 'user-posts', params: { username: forum.username } }"
         >
-          <br />{{ forum.forumName }}</router-link
-        >
+          <br />{{ forum.username }}</router-link
+        ><img v-if="forum.moderator" id="mod-logo" src="../assets/spider.png" />
       </li>
     </ul>
   </div>
@@ -17,7 +19,7 @@
 <script>
 import forumService from "../services/ForumService.js";
 export default {
-  name: "active-forums",
+  name: "forum-users",
 
   methods: {
     getForumUsers() {
@@ -27,16 +29,22 @@ export default {
     },
   },
   computed: {
-    forumUsers() {
+    forums() {
       return this.$store.state.forumUsers;
     },
-    myForums() {
-      return this.forumUsers.filter((forumUser) => {
-        return forumUser.userId == this.$store.state.user.id;
+    forum() {
+      return this.$store.state.activeForumName;
+    },
+    forumUsers() {
+      return this.forums.filter((forum) => {
+        return forum.forumName == this.forum;
       });
     },
     currentUser() {
       return this.$store.state.user.username;
+    },
+    onForumPage() {
+      return this.$route.name === "forum-view";
     },
   },
   created() {
@@ -53,5 +61,8 @@ ul {
   list-style: none;
   text-align: center;
   font-family: monospace;
+}
+#mod-logo {
+  height: 20px;
 }
 </style>

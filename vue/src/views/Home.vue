@@ -16,6 +16,10 @@ import posts from "../components/Posts.vue";
 export default {
   name: "home",
   components: { posts },
+
+  created() {
+    this.$store.commit("SET_ACTIVE_FORUM", "");
+  },
 };
 </script>
 

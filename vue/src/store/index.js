@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
@@ -17,6 +18,11 @@ if (currentToken != null) {
 }
 
 export default new Vuex.Store({
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage,
+    }),
+  ],
   state: {
     token: currentToken || "",
     user: currentUser || {},
@@ -33,7 +39,9 @@ export default new Vuex.Store({
     forums: [],
     searchTerm: "",
     searchedPosts: [],
-    sortByMostRecent: true
+    sortByMostRecent: true,
+    userUpVotes: [],
+    userDownVotes: []
   },
   mutations: {
     // Authentication Mutations
@@ -73,6 +81,10 @@ export default new Vuex.Store({
     ADD_FORUM_USER(state, forumUser) {
       state.forumUsers.push(forumUser);
     },
+    REMOVE_FORUM_USER(state, forumUser) {
+      let index = state.forumUsers.indexOf(forumUser.userId);
+      state.forumUsers.splice(index, 1);
+    },
     SET_SEARCHED_FORUMS(state, data) {
       state.searchedForums = data;
     },
@@ -107,6 +119,20 @@ export default new Vuex.Store({
     TOGGLE_SORTED_POSTS(state) {
       state.sortByMostRecent = !state.sortByMostRecent;
     },
+    ADD_UPVOTED_POSTS(state, data) {
+      state.userUpVotes.push(data);
+    },
+    ADD_DOWNVOTED_POSTS(state, data) {
+      state.userDownVotes.push(data);
+    },
+
+    REMOVE_UPVOTED_POST(state, data) {
+      state.userUpVotes.splice(state.userUpVotes.indexOf(data), 1);
+    },
+
+    REMOVE_DOWNVOTED_POST(state, data) {
+      state.userDownVotes.splice(state.userDownVotes.indexOf(data), 1);
+    },
 
     // Reply Mutations
     SET_ACTIVE_REPLIES(state, data) {
@@ -119,13 +145,11 @@ export default new Vuex.Store({
       state.activeNestedReplies = data;
     },
     DELETE_REPLY(state, replyToDelete) {
-      state.activeReplies.forEach(
-        reply => {
-          if(reply.replyId == replyToDelete.replyId) {
-            reply.deleted = true;
-          }
+      state.activeReplies.forEach((reply) => {
+        if (reply.replyId == replyToDelete.replyId) {
+          reply.deleted = true;
         }
-      );
+      });
     },
   },
 });
