@@ -36,8 +36,8 @@ export default {
       });
     },
     forumUsers() {
-      return this.$store.state.forumUsers.filter((forum) => {
-        return forum.forumName === this.thisForum.name;
+      return this.$store.state.forumUsers.filter((forumUser) => {
+        return forumUser.forumId === this.thisForum.forumId;
       });
     },
     thisUser() {
@@ -45,7 +45,7 @@ export default {
     },
     isAMember() {
       return this.forumUsers.some((element) => {
-        return element.username === this.$store.state.user.username;
+        return element.userId === this.$store.state.user.id;
       });
     },
     thisForumUser() {
