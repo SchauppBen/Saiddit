@@ -47,7 +47,9 @@ export default {
     thisForumUser() {
       const forumUser = {
         forumId: this.thisForum.forumId,
+        forumName: this.thisForum.name,
         userId: this.$store.state.user.id,
+        username: this.$store.state.user.username,
         isModerator: false,
       };
       return forumUser;

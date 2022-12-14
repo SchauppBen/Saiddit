@@ -4,7 +4,7 @@
       <em>{{ forum }} Users</em>
     </h2>
     <ul>
-      <li v-for="forum in forumUsers" :key="forum.username">
+      <li v-for="forum in forumUsers" :key="forum.userId">
         <router-link
           class="highlighted"
           :to="{ name: 'user-posts', params: { username: forum.username } }"
