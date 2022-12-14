@@ -36,11 +36,12 @@ export default {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   color: #7c9eb7;
+  width: 100%;
   margin: 0 10px 0 10px;
 }
 
 .highlighted:hover {
-  color: #000000;
+  color: #293daf;
 }
 
 #container {
@@ -79,6 +80,25 @@ export default {
 
 .down-color {
   color: rgb(214, 0, 0);
+}
+
+.delete-color:hover {
+  color: rgb(214, 0, 0);
+}
+
+.delete-btn {
+  padding: 0.5em 1em;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  color: rgb(24, 24, 24);
+  font-weight: bold;
+  font-size: 16px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.forum-name {
+  font-weight: bold;
 }
 
 .forumsTab {
@@ -131,6 +151,9 @@ export default {
 .posts {
   padding: 10px;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .scrollable {
   overflow-y: auto;

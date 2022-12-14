@@ -31,5 +31,8 @@ export default {
 <style>
 .post {
   margin: 34px 10px 0px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
