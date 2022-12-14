@@ -1,17 +1,19 @@
 <template>
   <div class="search">
-      <div id="body">
-          <searched-posts id="post-list" />
-      </div>
+    <div id="body">
+      <searched-posts id="post-list" />
+    </div>
   </div>
 </template>
 
 <script>
-import SearchedPosts from '../components/SearchedPosts.vue'
+import SearchedPosts from "../components/SearchedPosts.vue";
 export default {
-    components: { SearchedPosts },
-
-}
+  components: { SearchedPosts },
+  created() {
+    this.$store.commit("SET_ACTIVE_FORUM", "");
+  },
+};
 </script>
 
 <style scoped>

@@ -67,8 +67,9 @@ export default {
     joinForum() {
       this.$store.commit("ADD_FORUM_USER", this.thisForumUser);
       ForumService.addUserToForum(this.thisForumUser);
+      this.getForumUsers();
     },
-  }
+  },
 };
 </script>
 

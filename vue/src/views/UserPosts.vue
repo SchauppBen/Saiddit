@@ -18,6 +18,9 @@ export default {
   props: {
     post: Object,
   },
+  created() {
+    this.$store.commit("SET_ACTIVE_FORUM", "");
+  },
   computed: {
     userPosts() {
       return this.$store.state.posts.filter((element) => {
