@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
@@ -17,6 +18,11 @@ if (currentToken != null) {
 }
 
 export default new Vuex.Store({
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage,
+    }),
+  ],
   state: {
     token: currentToken || "",
     user: currentUser || {},
@@ -33,7 +39,7 @@ export default new Vuex.Store({
     forums: [],
     searchTerm: "",
     searchedPosts: [],
-    sortByMostRecent: true
+    sortByMostRecent: true,
   },
   mutations: {
     // Authentication Mutations
@@ -119,13 +125,11 @@ export default new Vuex.Store({
       state.activeNestedReplies = data;
     },
     DELETE_REPLY(state, replyToDelete) {
-      state.activeReplies.forEach(
-        reply => {
-          if(reply.replyId == replyToDelete.replyId) {
-            reply.deleted = true;
-          }
+      state.activeReplies.forEach((reply) => {
+        if (reply.replyId == replyToDelete.replyId) {
+          reply.deleted = true;
         }
-      );
+      });
     },
   },
 });

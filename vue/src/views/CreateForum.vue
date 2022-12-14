@@ -24,6 +24,9 @@ export default {
       },
     };
   },
+  created() {
+    this.$store.commit("SET_ACTIVE_FORUM", "");
+  },
   methods: {
     saveForum() {
       this.$store.commit("SAVE_FORUM", this.forum);
