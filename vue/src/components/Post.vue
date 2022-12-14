@@ -59,7 +59,7 @@
                 />
               </span>
             </button>
-            {{upVotes}}
+            {{getUpVotes}}
           </div>
           <div class="down-vote">
             <button
@@ -87,7 +87,7 @@
                 />
               </span>
             </button>
-            {{downVotes}}
+            {{getDownVotes}}
           </div>
         </div>
 
