@@ -93,6 +93,12 @@ export default new Vuex.Store({
     SET_SEARCHED_POSTS(state, posts) {
       state.searchedPosts = posts;
     },
+    UP_VOTE(state, vote) {
+      state.posts = vote;
+    },
+    DOWN_VOTE(state, vote) {
+      state.posts = vote;
+    },
     DELETE_POST(state, postToDelete) {
       state.posts = state.posts.filter((post) => {
         return post.postId != postToDelete.postId;
