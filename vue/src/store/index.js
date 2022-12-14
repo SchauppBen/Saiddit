@@ -131,7 +131,7 @@ export default new Vuex.Store({
     },
 
     REMOVE_DOWNVOTED_POST(state, data) {
-      state.userDownVotes.splice(state.userUpVotes.indexOf(data), 1);
+      state.userDownVotes.splice(state.userDownVotes.indexOf(data), 1);
     },
 
     // Reply Mutations

@@ -59,6 +59,7 @@
                 />
               </span>
             </button>
+            {{getUpVotes}}
           </div>
           <div class="down-vote">
             <button
@@ -86,6 +87,7 @@
                 />
               </span>
             </button>
+            {{getDownVotes}}
           </div>
         </div>
 
@@ -119,9 +121,14 @@ export default {
       downClick: false,
       vote: {
         postId: this.post.postId,
-        userId: this.$store.state.user.id,
+        userId: this.$store.state.user.id
       },
-    };
+      upVotes: 0,
+      downVotes: 0,
+      userUpVoted: 0,
+      userDownVoted: 0,
+      userId: this.$store.state.user.id
+    }
   },
   methods: {
     toggleUp(clicked) {
@@ -146,26 +153,34 @@ export default {
       if (this.$store.state.userUpVotes.includes(this.vote.postId)) {
         postService.deleteVote(this.vote.postId, this.vote.userId);
         this.$store.commit("REMOVE_UPVOTED_POST", this.vote.postId);
+        this.userUpVoted--;
       } else if (this.$store.state.userDownVotes.includes(this.vote.postId)) {
         postService.updateVote(this.vote);
         this.$store.commit("REMOVE_DOWNVOTED_POST", this.vote.postId);
         this.$store.commit("ADD_UPVOTED_POSTS", this.vote.postId);
+        this.userDownVoted--;
+        this.userUpVoted++;
       } else {
         postService.upvotePost(this.vote);
         this.$store.commit("ADD_UPVOTED_POSTS", this.vote.postId);
+        this.userUpVoted++;
       }
     },
     downVote() {
       if (this.$store.state.userDownVotes.includes(this.vote.postId)) {
         postService.deleteVote(this.vote.postId, this.vote.userId);
         this.$store.commit("REMOVE_DOWNVOTED_POST", this.vote.postId);
-      } else if (this.$store.state.userUpVotes.includes(this.vote.postId)) {
+        this.userDownVoted--;
+      } else if (this.$store.state.userUpVotes.includes(this.vote.postId)){
         postService.updateVote(this.vote);
         this.$store.commit("REMOVE_UPVOTED_POST", this.vote.postId);
         this.$store.commit("ADD_DOWNVOTED_POSTS", this.vote.postId);
+        this.userUpVoted--;
+        this.userDownVoted++;
       } else {
         postService.downvotePost(this.vote);
         this.$store.commit("ADD_DOWNVOTED_POSTS", this.vote.postId);
+        this.userDownVoted++;
       }
     },
     deletePost() {
@@ -190,7 +205,19 @@ export default {
   },
   created() {
     this.setVotedPosts();
+    postService.getVotesByPost(this.post.postId).then((response) => {
+      this.upVotes = response.data.upvotes;
+      this.downVotes = response.data.downvotes;
+    });
   },
+  computed: {
+    getUpVotes() {
+      return this.upVotes + this.userUpVoted;
+    },
+    getDownVotes() {
+      return this.downVotes + this.userDownVoted;
+    }
+  }
 };
 </script>
 
