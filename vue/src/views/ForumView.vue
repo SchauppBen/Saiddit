@@ -27,6 +27,9 @@ export default {
       });
     },
 
+    posts() {
+      return this.$store.state.posts;
+    },
     forumPosts() {
       return this.$store.state.posts.filter((post) => {
         return post.forumName == this.thisForum.name;
@@ -57,6 +60,7 @@ export default {
   created() {
     this.$store.commit("SET_ACTIVE_FORUM", this.$route.params.forumName);
     this.getForumUsers;
+    this.getPosts;
   },
   methods: {
     getForumUsers() {
