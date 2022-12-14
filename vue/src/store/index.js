@@ -89,6 +89,12 @@ export default new Vuex.Store({
     SET_SEARCHED_POSTS(state, posts) {
       state.searchedPosts = posts;
     },
+    UP_VOTE(state, vote) {
+      state.posts = vote;
+    },
+    DOWN_VOTE(state, vote) {
+      state.posts = vote;
+    },
 
     // Reply Mutations
     SET_ACTIVE_REPLIES(state, data) {
