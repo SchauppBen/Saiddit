@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-import postService from "../services/PostService";
 
 Vue.use(Vuex);
 
@@ -82,32 +81,6 @@ export default new Vuex.Store({
     SET_POSTS(state, data) {
       state.posts = data;
     },
-    SORT_POSTS_MOST_RECENT(state) {
-      state.posts.sort((post1, post2) => {
-        if (post1.dateTime > post2.dateTime) {
-          return 1;
-        } else if (post1.dateTime < post2.dateTime) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-      state.sortByMostRecent = true;
-    }, 
-    SORT_POSTS_MOST_POPULAR(state) {
-      state.posts.sort((post1, post2) => {
-        const post1Votes = postService.getVotesByPost(post1.postId);
-        const post2Votes = postService.getVotesByPost(post2.postId);
-        if ((post1Votes.upvotes - post1Votes.downvotes) > (post2Votes.upvotes - post2Votes.downvotes)) {
-          return 1;
-        } else if ((post1Votes.upvotes - post1Votes.downvotes) < (post2Votes.upvotes - post2Votes.downvotes)) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-      state.sortByMostRecent = false;
-    },
     SAVE_POST(state, post) {
       state.posts.push(post);
     },
@@ -124,6 +97,9 @@ export default new Vuex.Store({
       state.posts = state.posts.filter((post) => {
         return post.postId != postToDelete.postId;
       });
+    },
+    TOGGLE_SORTED_POSTS(state) {
+      state.sortByMostRecent = !state.sortByMostRecent;
     },
 
     // Reply Mutations
