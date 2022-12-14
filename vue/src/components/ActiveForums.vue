@@ -7,7 +7,7 @@
           class="highlighted"
           :to="{ name: 'forum-view', params: { forumName: forum.name } }"
         >
-          <br />{{ forum.name }}</router-link
+          {{ forum.name }}</router-link
         >
       </li>
     </ul>
@@ -48,8 +48,13 @@ h2 {
   text-align: center;
 }
 ul {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-evenly;
   list-style: none;
   text-align: center;
   font-family: monospace;
+  height: calc(100% - 20px);
 }
 </style>

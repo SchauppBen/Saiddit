@@ -3,7 +3,10 @@
       <div class = "reply-input">
         <div>
           <label v-if="this.isDirectReply" for="reply-input">Reply to This Post</label>
-          <label v-else for="reply-input">Reply to {{this.targetReply.usernameFrom}}</label>
+          <div v-else >
+            <label v-if="!this.targetReply.deleted" for="reply-input">Reply to {{this.targetReply.  usernameFrom}}</label>
+            <label v-else for="reply-input">Reply to deleted reply</label>
+          </div>
         </div>
         <div>
           <input type="text" id="reply-input" name="replyInput" v-model="replyInput.replyText"/>

@@ -159,8 +159,9 @@ public class JdbcReplyDao implements ReplyDao {
 
     @Override
     public void deleteReply(int id) {
-        String sql = "delete from replies where reply_id = ?;";
-
+        String sql = "delete from reply_votes where reply_id = ?;";
+        jdbcTemplate.update(sql, id);
+        sql = "UPDATE replies SET is_deleted = true WHERE reply_id = ?;";
         jdbcTemplate.update(sql, id);
     }
 
@@ -223,6 +224,7 @@ public class JdbcReplyDao implements ReplyDao {
         reply.setPostId(rowSet.getInt("post_id"));
         reply.setReplyText(rowSet.getString("text"));
         reply.setMediaLink(rowSet.getString("media_link"));
+        reply.setDeleted(rowSet.getBoolean("is_deleted"));
         if (rowSet.getDate("date_time") != null) {
             reply.setDateTime(rowSet.getDate("date_time").toLocalDate());
         }

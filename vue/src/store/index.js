@@ -33,6 +33,7 @@ export default new Vuex.Store({
     forums: [],
     searchTerm: "",
     searchedPosts: [],
+    sortByMostRecent: true
   },
   mutations: {
     // Authentication Mutations
@@ -69,6 +70,9 @@ export default new Vuex.Store({
     SAVE_FORUM(state, forum) {
       state.forums.push(forum);
     },
+    ADD_FORUM_USER(state, forumUser) {
+      state.forumUsers.push(forumUser);
+    },
     SET_SEARCHED_FORUMS(state, data) {
       state.searchedForums = data;
     },
@@ -95,6 +99,14 @@ export default new Vuex.Store({
     DOWN_VOTE(state, vote) {
       state.posts = vote;
     },
+    DELETE_POST(state, postToDelete) {
+      state.posts = state.posts.filter((post) => {
+        return post.postId != postToDelete.postId;
+      });
+    },
+    TOGGLE_SORTED_POSTS(state) {
+      state.sortByMostRecent = !state.sortByMostRecent;
+    },
 
     // Reply Mutations
     SET_ACTIVE_REPLIES(state, data) {
@@ -105,6 +117,15 @@ export default new Vuex.Store({
     },
     SET_ACTIVE_NESTED_REPLIES(state, data) {
       state.activeNestedReplies = data;
+    },
+    DELETE_REPLY(state, replyToDelete) {
+      state.activeReplies.forEach(
+        reply => {
+          if(reply.replyId == replyToDelete.replyId) {
+            reply.deleted = true;
+          }
+        }
+      );
     },
   },
 });

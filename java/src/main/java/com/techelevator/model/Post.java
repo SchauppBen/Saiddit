@@ -13,6 +13,8 @@ public class Post {
     private String text;
     private String mediaLink;
     private LocalDate dateTime;
+    private long timeInMillis;
+    private int votes;
 
     public Post(int postId, int userId, int forumId, String title, String text, String mediaLink) {
         this.postId = postId;
@@ -93,7 +95,23 @@ public class Post {
         return dateTime;
     }
 
+    public long getTimeInMillis() {
+        return timeInMillis;
+    }
+
+    public void setTimeInMillis(long timeInMillis) {
+        this.timeInMillis = timeInMillis;
+    }
+
     public void setDateTime(LocalDate dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public int getVotes() {
+        return votes;
+    }
+
+    public void setVotes(int votes) {
+        this.votes = votes;
     }
 }

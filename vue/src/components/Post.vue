@@ -14,20 +14,24 @@
           params: { forumName: post.forumName, postId: post.postId },
         }"
       >
-        <h1>{{ post.title }}</h1>
+        <h1 class="text">{{ post.title }}</h1>
         <img id="post-image" :src="post.mediaLink" v-show="post.mediaLink" />
-        <h3>{{ post.text }}</h3></router-link
+        <h3 class="text">{{ post.text }}</h3></router-link
       >
       <div class="inline">
+        <!-- Link to user profile -->
         <h2 id="user">
           <router-link
             class="highlighted"
             :to="{ name: 'user-posts', params: { username: post.username } }"
-            >
-            <font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />  {{ post.username }}
+          >
+            <font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />
+            {{ post.username }}
           </router-link>
         </h2>
         <h3>{{ post.datetime }}</h3>
+
+        <!-- Up-vote & down-vote buttons -->
         <div class="votes">
           <div class="up-vote" >
             <button @mouseover="isUpActive=true" @mouseleave="isUpActive=false" @click="upClick=!upClick; downClick=false" class="ui button toggle" >
@@ -50,12 +54,24 @@
             </button>
           </div>
         </div>
+
+        <!-- Delete post button -->
+        <div>
+          <button
+            v-if="this.post.userId == this.$store.state.user.id"
+            v-on:click="deletePost()"
+          >
+            Delete Post
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import postService from "../services/PostService.js";
+
 export default {
   name: 'post',
   props: {
@@ -95,9 +111,16 @@ export default {
     downVote() {
       this.downClick = true;
       this.$store.commit("DOWN_VOTE", this.downClick=true);
+    },
+    deletePost() {
+      this.$store.commit("DELETE_POST", this.post);
+      postService.deletePost(this.post.postId).catch((error) => {
+        this.handleErrorResponse(error, "deleting");
+      });
     }
   }
 };
+
 </script>
 
 <style scoped>
@@ -120,13 +143,12 @@ button {
   width: 500px;
 }
 
-.inline, .votes {
+.inline,
+.votes {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
-
-
 
 #post-container {
   border: groove;
