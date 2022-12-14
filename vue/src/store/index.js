@@ -40,6 +40,8 @@ export default new Vuex.Store({
     searchTerm: "",
     searchedPosts: [],
     sortByMostRecent: true,
+    userUpVotes: [],
+    userDownVotes: []
   },
   mutations: {
     // Authentication Mutations
@@ -79,6 +81,10 @@ export default new Vuex.Store({
     ADD_FORUM_USER(state, forumUser) {
       state.forumUsers.push(forumUser);
     },
+    REMOVE_FORUM_USER(state, forumUser) {
+      let index = state.forumUsers.indexOf(forumUser.userId);
+      state.forumUsers.splice(index, 1);
+    },
     SET_SEARCHED_FORUMS(state, data) {
       state.searchedForums = data;
     },
@@ -112,6 +118,20 @@ export default new Vuex.Store({
     },
     TOGGLE_SORTED_POSTS(state) {
       state.sortByMostRecent = !state.sortByMostRecent;
+    },
+    ADD_UPVOTED_POSTS(state, data) {
+      state.userUpVotes.push(data);
+    },
+    ADD_DOWNVOTED_POSTS(state, data) {
+      state.userDownVotes.push(data);
+    },
+
+    REMOVE_UPVOTED_POST(state, data) {
+      state.userUpVotes.splice(state.userUpVotes.indexOf(data), 1);
+    },
+
+    REMOVE_DOWNVOTED_POST(state, data) {
+      state.userDownVotes.splice(state.userDownVotes.indexOf(data), 1);
     },
 
     // Reply Mutations
