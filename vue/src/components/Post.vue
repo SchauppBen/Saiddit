@@ -29,27 +29,61 @@
             {{ post.username }}
           </router-link>
         </h2>
-        <h3>{{ post.datetime }}</h3>
+        <h3>&nbsp;&nbsp;{{ post.dateTime }}</h3>
 
         <!-- Up-vote & down-vote buttons -->
         <div class="votes">
-          <div class="up-vote" >
-            <button @mouseover="isUpActive=true" @mouseleave="isUpActive=false" @click="upClick=!upClick; downClick=false; upVote()" class="ui button toggle" >
-              <i v-if="toggleUp(upClick) == false && isUpActive == false" >
-                <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
+          <div class="up-vote">
+            <button
+              @mouseover="isUpActive = true"
+              @mouseleave="isUpActive = false"
+              @click="
+                upClick = !upClick;
+                downClick = false;
+                upVote();
+              "
+              class="ui button toggle"
+            >
+              <i v-if="toggleUp(upClick) == false && isUpActive == false">
+                <font-awesome-icon
+                  :icon="['far', 'circle-up']"
+                  size="lg"
+                  class="up-color"
+                />
               </i>
               <span v-else>
-                <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
+                <font-awesome-icon
+                  :icon="['fas', 'circle-up']"
+                  size="lg"
+                  class="up-color"
+                />
               </span>
             </button>
           </div>
-          <div class="down-vote" >
-            <button @mouseover="isDownActive=true" @mouseleave="isDownActive=false" @click="downClick=!downClick; upClick=false; downVote()" class="ui button toggle" >
-              <i v-if="toggleDown(downClick) == false && isDownActive == false" >
-                <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
+          <div class="down-vote">
+            <button
+              @mouseover="isDownActive = true"
+              @mouseleave="isDownActive = false"
+              @click="
+                downClick = !downClick;
+                upClick = false;
+                downVote();
+              "
+              class="ui button toggle"
+            >
+              <i v-if="toggleDown(downClick) == false && isDownActive == false">
+                <font-awesome-icon
+                  :icon="['far', 'circle-down']"
+                  size="lg"
+                  class="down-color"
+                />
               </i>
               <span v-else>
-                <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
+                <font-awesome-icon
+                  :icon="['fas', 'circle-down']"
+                  size="lg"
+                  class="down-color"
+                />
               </span>
             </button>
           </div>
@@ -73,7 +107,7 @@
 import postService from "../services/PostService.js";
 
 export default {
-  name: 'post',
+  name: "post",
   props: {
     post: Object,
   },
@@ -85,9 +119,9 @@ export default {
       downClick: false,
       vote: {
         postId: this.post.postId,
-        userId: this.$store.state.user.id
-      }
-    }
+        userId: this.$store.state.user.id,
+      },
+    };
   },
   methods: {
     toggleUp(clicked) {
@@ -95,16 +129,16 @@ export default {
         clicked = true;
         return clicked;
       } else {
-        clicked = false
+        clicked = false;
         return clicked;
       }
     },
     toggleDown(clicked) {
-      if (this.downClick == true) { 
+      if (this.downClick == true) {
         clicked = true;
         return clicked;
       } else {
-        clicked = false
+        clicked = false;
         return clicked;
       }
     },
@@ -125,7 +159,7 @@ export default {
       if (this.$store.state.userDownVotes.includes(this.vote.postId)) {
         postService.deleteVote(this.vote.postId, this.vote.userId);
         this.$store.commit("REMOVE_DOWNVOTED_POST", this.vote.postId);
-      } else if (this.$store.state.userUpVotes.includes(this.vote.postId)){
+      } else if (this.$store.state.userUpVotes.includes(this.vote.postId)) {
         postService.updateVote(this.vote);
         this.$store.commit("REMOVE_UPVOTED_POST", this.vote.postId);
         this.$store.commit("ADD_DOWNVOTED_POSTS", this.vote.postId);
@@ -141,22 +175,23 @@ export default {
       });
     },
     setVotedPosts() {
-      postService.getAllVotesByUser(this.$store.state.user.id).then((response) => {
-        response.data.forEach((vote) => {
-          if (vote.isUpvote) {
-            this.$store.commit("ADD_UPVOTED_POSTS", vote.postId);
-          } else {
-            this.$store.commit("ADD_DOWNVOTED_POSTS", vote.postId);
-          }
+      postService
+        .getAllVotesByUser(this.$store.state.user.id)
+        .then((response) => {
+          response.data.forEach((vote) => {
+            if (vote.isUpvote) {
+              this.$store.commit("ADD_UPVOTED_POSTS", vote.postId);
+            } else {
+              this.$store.commit("ADD_DOWNVOTED_POSTS", vote.postId);
+            }
+          });
         });
-      });
-    }
+    },
   },
   created() {
     this.setVotedPosts();
-  }
+  },
 };
-
 </script>
 
 <style scoped>
@@ -164,15 +199,15 @@ export default {
   text-decoration-line: underline;
 }
 button {
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-    font-size: 17px;
-    width: 40%;
-    height: 70%;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  font-size: 17px;
+  width: 40%;
+  height: 70%;
 }
 
 #post-image {

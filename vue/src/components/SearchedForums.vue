@@ -15,26 +15,35 @@
 </template>
 
 <script>
-import forumService from '../services/ForumService';
+import forumService from "../services/ForumService";
 export default {
-    name: "searched-forums",
-    methods: {
-        getForums(searchTerm) {
-            forumService.searchForums(searchTerm).then((response) => {
-                this.$store.commit("SET_SEARCHED_FORUMS", response.data);
-            })
-        }
+  name: "searched-forums",
+  methods: {
+    getForums(searchTerm) {
+      if (searchTerm === "") {
+        forumService.getForums.then((response) => {
+          this.$store.commit("SET_SEARCHED_FORUMS", response.data);
+        });
+      } else {
+        forumService.searchForums(searchTerm).then((response) => {
+          this.$store.commit("SET_SEARCHED_FORUMS", response.data);
+        });
+      }
     },
-    computed: {
-        searchedForums() {
+  },
+  computed: {
+    searchedForums() {
+      if (this.$store.state.searchTerm === "") {
+        return this.$store.state.forums;
+      } else {
         return this.$store.state.searchedForums;
+      }
     },
   },
 
   created() {
-      this.getForums(this.$store.state.searchTerm);
-  }
-
+    this.getForums(this.$store.state.searchTerm);
+  },
 };
 </script>
 
