@@ -32,7 +32,7 @@ export default {
     },
     myForums() {
       return this.forums.filter((forum) => {
-        return forum.username == this.currentUser;
+        return forum.userId == this.$store.state.user.id;
       });
     },
     currentUser() {
