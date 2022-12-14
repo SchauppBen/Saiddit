@@ -79,6 +79,10 @@ export default new Vuex.Store({
     ADD_FORUM_USER(state, forumUser) {
       state.forumUsers.push(forumUser);
     },
+    REMOVE_FORUM_USER(state, forumUser) {
+      let index = state.forumUsers.indexOf(forumUser.userId);
+      state.forumUsers.splice(index, 1);
+    },
     SET_SEARCHED_FORUMS(state, data) {
       state.searchedForums = data;
     },
