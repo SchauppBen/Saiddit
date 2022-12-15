@@ -3,6 +3,7 @@
     <h1 class="title pink-border">Posts in {{ thisForum.name }} forum</h1>
     <h3 v-if="isAMember">You are a member</h3>
     <button type="submit" v-on:click="joinForum()" v-else>Join Forum!</button>
+    <h3 @click="sortPosts">{{this.$store.state.sortByMostRecent ? "Sort by most popular posts." : "Sort by most recent posts"}}</h3>
     <post
       class="allPosts"
       v-for="post in forumPosts"
@@ -55,6 +56,17 @@ export default {
       return forumUser;
     },
   },
+  watch: {
+    '$route.params.forumName': { 
+      handler: function(newForumName) {
+        console.log("function triggered");
+        this.$store.commit("SET_ACTIVE_FORUM", newForumName);
+        this.getForumUsers();
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   created() {
     this.$store.commit("SET_ACTIVE_FORUM", this.$route.params.forumName);
     this.getForumUsers;
@@ -72,7 +84,42 @@ export default {
     leaveForum() {
       this.$store.commit("REMOVE_FORUM_USER", this.thisForumUser);
     },
+    sortPosts() {
+      if (this.$store.state.sortByMostRecent) {
+        this.sortByMostPopular();
+      } else {
+        this.sortByMostRecent();
+      }
+    },
+    sortByMostRecent() {
+      const currentPosts = this.$store.state.posts;
+      currentPosts.sort((post1, post2) => {
+        if (post1.timeInMillis > post2.timeInMillis) {
+          return -1;
+        } else if (post1.timeInMillis < post2.timeInMillis) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      this.$store.commit("TOGGLE_SORTED_POSTS");
+    },
+    sortByMostPopular() {
+      let currentPosts = this.$store.state.posts;
+      currentPosts = currentPosts.sort((post1, post2) => {
+        if (post1.votes > post2.votes) {
+          return -1;
+        } else if (post1.votes < post2.votes) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      this.$store.commit("SET_POSTS", currentPosts);
+      this.$store.commit("TOGGLE_SORTED_POSTS");
+    }
   },
+
 };
 </script>
 
