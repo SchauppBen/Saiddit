@@ -1,16 +1,28 @@
 <template>
-  <div v-show="onForumPage" class="forumsTab pink-border scrollable">
+  <div v-show="onForumPage" class="forumsTab pink-border" id="forum-users">
     <h2>
       <em>{{ forum }} Users</em>
     </h2>
-    <ul>
-      <li v-for="forum in forumUsers" :key="forum.userId">
+    <ul class="scrollable">
+      <li v-for="element in forumUsers" :key="element.userId">
         <router-link
           class="highlighted"
-          :to="{ name: 'user-posts', params: { username: forum.username } }"
+          :to="{ name: 'user-posts', params: { username: element.username } }"
         >
-          <br />{{ forum.username }}</router-link
-        ><img v-if="forum.moderator" id="mod-logo" src="../assets/spider.png" />
+          <br />{{ element.username }}</router-link
+        >
+        <img
+          v-if="element.moderator"
+          id="mod-logo"
+          src="../assets/spider.png"
+        />
+        <button
+          type="submit"
+          v-if="!element.moderator && userIsModerator"
+          v-on:click="promoteToModerator(element)"
+        >
+          Promote
+        </button>
       </li>
     </ul>
   </div>
@@ -27,6 +39,21 @@ export default {
         this.$store.commit("SET_FORUM_USERS", response.data);
       });
     },
+    promoteToModerator(forum) {
+      let forumUser = {
+        forumId: forum.forumId,
+        userId: forum.userId,
+      };
+      let fullForumUser = {
+        forumId: forum.forumId,
+        forumName: forum.forumName,
+        moderator: true,
+        userId: forum.userId,
+        username: forum.username,
+      };
+      this.$store.commit("PROMOTE_USER_TO_MODERATOR", fullForumUser);
+      forumService.promoteToModerator(forumUser);
+    },
   },
   computed: {
     forums() {
@@ -36,8 +63,8 @@ export default {
       return this.$store.state.activeForumName;
     },
     forumUsers() {
-      return this.forums.filter((forum) => {
-        return forum.forumName == this.forum;
+      return this.forums.filter((element) => {
+        return element.forumName == this.forum;
       });
     },
     currentUser() {
@@ -45,6 +72,14 @@ export default {
     },
     onForumPage() {
       return this.$route.name === "forum-view";
+    },
+    userIsModerator() {
+      let obj = this.forumUsers.find((forum) => {
+        return this.currentUser === forum.username;
+      });
+      if (obj != undefined) {
+        return obj.moderator;
+      } else return false;
     },
   },
   created() {
@@ -57,7 +92,16 @@ export default {
 h2 {
   text-align: center;
 }
+#forum-users {
+  display: flex;
+  flex-direction: column;
+}
 ul {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-evenly;
   list-style: none;
   text-align: center;
   font-family: monospace;

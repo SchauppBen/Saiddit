@@ -41,7 +41,7 @@ export default new Vuex.Store({
     searchedPosts: [],
     sortByMostRecent: true,
     userUpVotes: [],
-    userDownVotes: []
+    userDownVotes: [],
   },
   mutations: {
     // Authentication Mutations
@@ -87,6 +87,15 @@ export default new Vuex.Store({
     },
     SET_SEARCHED_FORUMS(state, data) {
       state.searchedForums = data;
+    },
+    PROMOTE_USER_TO_MODERATOR(state, forumUser) {
+      let index = state.forumUsers.findIndex((element) => {
+        return (
+          element.forumId === forumUser.forumId &&
+          element.userId === forumUser.userId
+        );
+      });
+      state.forumUsers[index]["moderator"] = true;
     },
 
     // Post Mutations
