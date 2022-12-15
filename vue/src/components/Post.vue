@@ -185,8 +185,11 @@ export default {
     },
     deletePost() {
       this.$store.commit("DELETE_POST", this.post);
-      postService.deletePost(this.post.postId).catch((error) => {
+      postService.deletePost(this.post.postId).then(() => {
+        this.$router.push("/")
+      }).catch((error) => {
         this.handleErrorResponse(error, "deleting");
+        
       });
     },
     setVotedPosts() {
