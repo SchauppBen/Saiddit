@@ -16,6 +16,10 @@ export default {
     return axios.post("/forums/users/", forumUser);
   },
 
+  promoteToModerator(forumUser) {
+    return axios.put("/forums/addModerator", forumUser);
+  },
+
   getForum(forumName) {
     return axios.get(`/${forumName}/`);
   },
