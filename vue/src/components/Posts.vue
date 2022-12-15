@@ -15,7 +15,9 @@ export default {
   methods: {
     getPosts() {
       postService.getPosts().then((response) => {
+        this.$store.commit("SET_SORTED_POSTS_MOST_RECENT");
         this.$store.commit("SET_POSTS", response.data);
+        this.sortPosts();
       });
     },
     sortPosts() {
@@ -58,7 +60,7 @@ export default {
       return this.$store.state.posts;
     },
   },
-  created() {
+  mounted() {
     this.getPosts();
   },
 };

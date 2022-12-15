@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Forum;
 import com.techelevator.model.Post;
+import com.techelevator.model.VotesForPostDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -136,7 +137,10 @@ public class JdbcPostDao implements PostDao {
             post.setDateTime(rowSet.getDate("date_time").toLocalDate());
             post.setTimeInMillis(rowSet.getDate("date_time").getTime());
         }
-        post.setVotes(postVoteDao.getPostVotesByPost(post.getPostId()).getVotes());
+        VotesForPostDto dto = postVoteDao.getPostVotesByPost(post.getPostId());
+        post.setUpvotes(dto.getUpvotes());
+        post.setDownvotes(dto.getDownvotes());
+        post.setVotes(dto.getVotes());
         return post;
     }
 }
