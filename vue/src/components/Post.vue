@@ -59,7 +59,7 @@
                 />
               </span>
             </button>
-            {{getUpVotes}}
+            {{ getUpVotes }}
           </div>
           <div class="down-vote">
             <button
@@ -87,14 +87,16 @@
                 />
               </span>
             </button>
-            {{getDownVotes}}
+            {{ getDownVotes }}
           </div>
         </div>
 
         <!-- Delete post button -->
         <div>
           <button
-            v-if="this.post.userId == this.$store.state.user.id"
+            v-if="
+              this.post.userId == this.$store.state.user.id || userIsModerator()
+            "
             v-on:click="deletePost()"
           >
             Delete Post
@@ -121,7 +123,7 @@ export default {
       downClick: false,
       vote: {
         postId: this.post.postId,
-        userId: this.$store.state.user.id
+        userId: this.$store.state.user.id,
       },
       upVotes: 0,
       downVotes: 0,
@@ -129,8 +131,8 @@ export default {
       userDownVoted: 0,
       userInitiallyUpvoted: false,
       userInitiallyDownvoted: false,
-      userId: this.$store.state.user.id
-    }
+      userId: this.$store.state.user.id,
+    };
   },
   methods: {
     toggleUp(clicked) {
@@ -150,6 +152,18 @@ export default {
         clicked = false;
         return clicked;
       }
+    },
+    userIsModerator() {
+      let array = this.$store.state.forumUsers.filter((element) => {
+        return element.forumId == this.post.forumId;
+      });
+
+      let index = array.findIndex((element) => {
+        return element.userId == this.$store.state.user.id;
+      });
+      if (index > 0) {
+        return array[index]["moderator"];
+      } else return false;
     },
     upVote() {
       if (this.userId === undefined) {
@@ -193,9 +207,14 @@ export default {
     },
     deletePost() {
       this.$store.commit("DELETE_POST", this.post);
-      postService.deletePost(this.post.postId).catch((error) => {
-        this.handleErrorResponse(error, "deleting");
-      });
+      postService
+        .deletePost(this.post.postId)
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          this.handleErrorResponse(error, "deleting");
+        });
     },
     setVotedPosts() {
       if (this.userId !== undefined) {
@@ -265,24 +284,24 @@ export default {
       } else {
         return this.post.upvotes;
       }
-    }
+    },
   },
   watch: {
     userUpVoted(newValue, oldValue) {
       if (newValue > oldValue) {
-        this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);   
+        this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);
       } else {
-        this.$store.commit("SUBTRACT_VOTE_COUNT_FOR_POST", this.post.postId); 
+        this.$store.commit("SUBTRACT_VOTE_COUNT_FOR_POST", this.post.postId);
       }
     },
     userDownVoted(newValue, oldValue) {
       if (newValue > oldValue) {
-        this.$store.commit("SUBTRACT_VOTE_COUNT_FOR_POST", this.post.postId);    
+        this.$store.commit("SUBTRACT_VOTE_COUNT_FOR_POST", this.post.postId);
       } else {
         this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
