@@ -146,7 +146,8 @@ export default {
 }
 
 #app {
-  background-image: linear-gradient(#e69d00, #ffc20c);
+  
+  background-color: rgb(255, 211, 67);
   height: 100%;
 }
 .posts {
