@@ -5,17 +5,18 @@
     </h2>
     <ul class="scrollable">
       <li v-for="element in forumUsers" :key="element.userId">
+        <br /><img
+          v-if="element.moderator"
+          class="mod-logo"
+          src="../assets/duckie.png"
+        />
         <router-link
           class="highlighted"
           :to="{ name: 'user-posts', params: { username: element.username } }"
         >
-          <br />{{ element.username }}</router-link
-        >
-        <img
-          v-if="element.moderator"
-          id="mod-logo"
-          src="../assets/duckie.png"
-        />
+          {{ element.username }}
+        </router-link>
+
         <button
           type="submit"
           v-if="!element.moderator && userIsModerator"
@@ -106,7 +107,7 @@ ul {
   text-align: center;
   font-family: monospace;
 }
-#mod-logo {
+.mod-logo {
   height: 20px;
 }
 </style>
