@@ -4,7 +4,7 @@
       <img id="pageLogo" src="../assets/duckie.png"/>
       <p id="saiddit" class="highlighted">saiddit</p>
       </router-link>
-    <search-bar />
+    <search-bar class="search-bar" />
     <chat-logo />
     <div v-if="$store.state.token != ''">
       <font-awesome-icon icon="fa-solid fa-user" size="lg" />   {{ $store.state.user.username }}
@@ -31,6 +31,11 @@ export default {
   border-bottom-style: groove;
   border-bottom-width: 5px;
   border-bottom-color: #ffaeb5;
+  box-shadow: 0 0 5px black;
+}
+.search-bar {
+  margin-top: 10px;
+  margin-bottom: -10px;
 }
 #header {
   display: flex;
