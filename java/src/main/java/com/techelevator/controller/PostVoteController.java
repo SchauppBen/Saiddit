@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -21,14 +22,18 @@ public class PostVoteController {
 
     @PostMapping(path = "posts/upvote")
     @ResponseStatus(HttpStatus.CREATED)
-    public void upVotePost(@RequestBody PostVote postVote) {
-        postVoteDao.upVotePost(postVote);
+    public void upVotePost(@RequestBody PostVote postVote, Principal principal) {
+        if (principal != null) {
+            postVoteDao.upVotePost(postVote);
+        }
     }
 
     @PostMapping(path = "/posts/downvote")
     @ResponseStatus(HttpStatus.CREATED)
-    public void downVotePost(@RequestBody PostVote postVote) {
-        postVoteDao.downVotePost(postVote);
+    public void downVotePost(@RequestBody PostVote postVote, Principal principal) {
+        if (principal != null) {
+            postVoteDao.downVotePost(postVote);
+        }
     }
 
     @GetMapping(path = "/posts/votes")
