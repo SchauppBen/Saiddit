@@ -13,14 +13,12 @@
         </div>
       </div>
       <div>
-        <button v-on:click="saveReply()">reply</button>
+        <button :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">reply</button>
       </div>
   </div>
 </template>
-
 <script>
 import replyService from "../services/ReplyService.js";
-
 export default {
     name: 'reply-input',
     data() {
@@ -76,16 +74,13 @@ export default {
           });
         }
     }
-
 }
 </script>
-
 <style>
     .reply-input {
     text-indent: 10%;
     text-align: left;
     }
-
     #reply-input {
     display: inline-block;
     width: 50%;

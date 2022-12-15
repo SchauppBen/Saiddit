@@ -110,6 +110,7 @@ export default {
 
 <style>
     .replies {
+        margin-left: 15%;
         text-indent: 10%;
         text-align: left;
     }
