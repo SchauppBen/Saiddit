@@ -51,7 +51,6 @@ public class ReplyController {
     public Reply reply(@Valid @RequestBody Reply newReply, Principal principal) {
         if (principal != null) {
             try {
-                newReply.setUserFrom(userDao.findIdByUsername(principal.getName()));
                 return replyDao.reply(newReply);
             } catch (NullPointerException e) {
                 System.out.println(e.getMessage());
