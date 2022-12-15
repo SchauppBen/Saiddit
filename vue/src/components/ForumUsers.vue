@@ -14,7 +14,7 @@
         <img
           v-if="element.moderator"
           id="mod-logo"
-          src="../assets/spider.png"
+          src="../assets/duckie.png"
         />
         <button
           type="submit"
