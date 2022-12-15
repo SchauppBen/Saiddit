@@ -93,6 +93,11 @@ export default new Vuex.Store({
     SET_POSTS(state, data) {
       state.posts = data;
     },
+
+    CLEAR_POSTS(state) {
+      state.posts = [];
+    },
+
     SAVE_POST(state, post) {
       state.posts.push(post);
     },

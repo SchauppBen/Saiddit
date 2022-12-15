@@ -155,11 +155,11 @@ export default {
       if (this.userId === undefined) {
         this.$router.push("/login");
       }
-      if (this.$store.state.userUpVotes.includes(this.vote.postId)) {
+      if (this.userUpVoted) {
         postService.deleteVote(this.vote.postId, this.vote.userId);
         this.$store.commit("REMOVE_UPVOTED_POST", this.vote.postId);
         this.userUpVoted--;
-      } else if (this.$store.state.userDownVotes.includes(this.vote.postId)) {
+      } else if (this.userDownVoted) {
         postService.updateVote(this.vote);
         this.$store.commit("REMOVE_DOWNVOTED_POST", this.vote.postId);
         this.$store.commit("ADD_UPVOTED_POSTS", this.vote.postId);
@@ -175,11 +175,11 @@ export default {
       if (this.userId === undefined) {
         this.$router.push("/login");
       }
-      if (this.$store.state.userDownVotes.includes(this.vote.postId)) {
+      if (this.userDownVoted) {
         postService.deleteVote(this.vote.postId, this.vote.userId);
         this.$store.commit("REMOVE_DOWNVOTED_POST", this.vote.postId);
         this.userDownVoted--;
-      } else if (this.$store.state.userUpVotes.includes(this.vote.postId)){
+      } else if (this.userUpVoted){
         postService.updateVote(this.vote);
         this.$store.commit("REMOVE_UPVOTED_POST", this.vote.postId);
         this.$store.commit("ADD_DOWNVOTED_POSTS", this.vote.postId);
@@ -203,13 +203,15 @@ export default {
           .getAllVotesByUser(this.userId)
           .then((response) => {
            response.data.forEach((vote) => {
-            if (vote.upvote) {
+            if (vote.upvote && vote.postId === this.post.postId) {
+              console.log(vote.upvote);
               this.$store.commit("ADD_UPVOTED_POSTS", vote.postId);
             } else {
+              console.log(vote.upvote);
               this.$store.commit("ADD_DOWNVOTED_POSTS", vote.postId);
             }
-            this.hasUserVotedOnPost();
           });
+          this.hasUserVotedOnPost();
         });
       }
     },
@@ -221,10 +223,12 @@ export default {
               if (vote.upvote) {
                 this.userUpVoted++;
                 this.userInitiallyUpvoted = true;
+                this.userInitiallyDownvoted = false;
                 this.$store.commit("SUBTRACT_VOTE_COUNT_FOR_POST", this.post.postId);
               } else {
                 this.userDownVoted++;
                 this.userInitiallyDownvoted = true;
+                this.userInitiallyUpvoted = false;
                 this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);
               }
             }

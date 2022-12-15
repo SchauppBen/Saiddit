@@ -1,6 +1,6 @@
 <template>
   <div class="posts">
-    <h3 @click="sortPosts">{{this.$store.state.sortByMostRecent ? "Sort by most popular posts." : "Sort by most recent posts"}}</h3>
+    <h3 @click="sortPosts(); changeSortType()">{{this.$store.state.sortByMostRecent ? "Sort by most popular posts." : "Sort by most recent posts"}}</h3>
     <post class="allPosts" v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
@@ -15,7 +15,6 @@ export default {
   methods: {
     getPosts() {
       postService.getPosts().then((response) => {
-        this.$store.commit("SET_SORTED_POSTS_MOST_RECENT");
         this.$store.commit("SET_POSTS", response.data);
         this.sortPosts();
       });
@@ -38,6 +37,10 @@ export default {
           return 0;
         }
       });
+      this.$store.commit("CLEAR_POSTS");
+      this.$store.commit("SET_POSTS", currentPosts);
+    },
+    changeSortType() {
       this.$store.commit("TOGGLE_SORTED_POSTS");
     },
     sortByMostPopular() {
@@ -51,8 +54,8 @@ export default {
           return 0;
         }
       });
+      this.$store.commit("CLEAR_POSTS");
       this.$store.commit("SET_POSTS", currentPosts);
-      this.$store.commit("TOGGLE_SORTED_POSTS");
     }
   },
   computed: {
