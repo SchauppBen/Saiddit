@@ -56,10 +56,9 @@ export default {
       },
     };
   },
-  watch: {
-    selectedForum(newSelectedForum) {
-      this.post.forumId = newSelectedForum.forumId;
-      this.post.forumName = newSelectedForum.name;
+  computed: {
+    forums() {
+      return this.$store.state.forums;
     },
   },
   methods: {
@@ -94,11 +93,13 @@ export default {
         });
     },
   },
-  computed: {
-    forums() {
-      return this.$store.state.forums;
+  watch: {
+    selectedForum(newSelectedForum) {
+      this.post.forumId = newSelectedForum.forumId;
+      this.post.forumName = newSelectedForum.name;
     },
   },
+
   created() {
     this.getForums();
     this.$store.commit("SET_ACTIVE_FORUM", "");
