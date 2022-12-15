@@ -1,9 +1,28 @@
 <template>
   <div class="posts">
-    <h1 class="title pink-border">Posts in {{ thisForum.name }} forum</h1>
-    <h3 v-if="isAMember">You are a member</h3>
-    <button type="submit" v-on:click="joinForum()" v-else>Join Forum!</button>
-    <h3 @click="sortPosts">{{this.$store.state.sortByMostRecent ? "Sort by most popular posts." : "Sort by most recent posts"}}</h3>
+    <h1 class="title pink-border">
+      Posts in {{ thisForum.name }} forum
+      <img v-if="isAMember" id="check" src="../assets/check.png" /><button
+        class="blue-border"
+        id="join-forum"
+        type="submit"
+        v-on:click="joinForum()"
+        v-else
+      >
+        Join Forum!
+      </button>
+      <div id="description">
+        {{ thisForum.description }}
+      </div>
+    </h1>
+
+    <h3 @click="sortPosts">
+      {{
+        this.$store.state.sortByMostRecent
+          ? "Sort by most popular posts."
+          : "Sort by most recent posts"
+      }}
+    </h3>
     <post
       class="allPosts"
       v-for="post in forumPosts"
@@ -57,15 +76,15 @@ export default {
     },
   },
   watch: {
-    '$route.params.forumName': { 
-      handler: function(newForumName) {
+    "$route.params.forumName": {
+      handler: function (newForumName) {
         console.log("function triggered");
         this.$store.commit("SET_ACTIVE_FORUM", newForumName);
         this.getForumUsers();
       },
       deep: true,
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   created() {
     this.$store.commit("SET_ACTIVE_FORUM", this.$route.params.forumName);
@@ -117,17 +136,37 @@ export default {
       });
       this.$store.commit("SET_POSTS", currentPosts);
       this.$store.commit("TOGGLE_SORTED_POSTS");
-    }
+    },
   },
-
 };
 </script>
 
 <style scoped>
+#description {
+  background-color: #ffd3d7;
+  width: 100%;
+  padding: 10px;
+  font-size: 20px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
 #forum-posts {
   align-content: center;
 }
-.title {
+#check {
+  height: 20px;
+}
+#join-forum {
+  background-color: #7c9eb7;
+  width: 100px;
+  border-radius: 10px;
+  border-color: navy;
+  color: navy;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-style: oblique;
+}
+h3 .title {
   margin-top: -10px;
   margin-right: 0px;
   margin-bottom: 34px;
