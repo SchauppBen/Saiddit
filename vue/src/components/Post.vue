@@ -23,7 +23,7 @@
       </div>
       <div class="posts">
         <router-link
-        class="link-color"
+        style="color:navy;"
         :to="{
           name: 'post-details',
           params: { forumName: post.forumName, postId: post.postId },
@@ -34,30 +34,8 @@
         <h3 class="text">{{ post.text }}</h3>
       </router-link>
       <div class="inline">
-        <!-- Up-vote & down-vote buttons -->
-        <!-- <div class="votes">
-          <div class="up-vote" >
-              <button @mouseover="isUpActive=true" @mouseleave="isUpActive=false" @click="upClick=!upClick; downClick=false" class="ui button toggle" >
-                  <i v-if="toggleUp(upClick) == false && isUpActive == false" >
-                      <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
-                  </i>
-                  <span v-else>
-                      <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
-                  </span>
-              </button>
-          </div>
-          <div class="down-vote" >
-              <button @mouseover="isDownActive=true" @mouseleave="isDownActive=false" @click="downClick=!downClick; upClick=false" class="ui button toggle" >
-                  <i v-if="toggleDown(downClick) == false && isDownActive == false" >
-                      <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
-                  </i>
-                  <span v-else>
-                      <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
-                  </span>
-              </button>
-              </div> -->
         <!-- Link to user profile -->
-        <h2 id="user">
+        <!-- <h2 id="user">
           <router-link
             class="highlighted"
             :to="{ name: 'user-posts', params: { username: post.username } }"
@@ -65,66 +43,30 @@
             <font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />
             {{ post.username }}
           </router-link>
-        </h2>
+        </h2> -->
         <h3>&nbsp;&nbsp;{{ post.dateTime }}</h3>
 
         <!-- Up-vote & down-vote buttons -->
         <div class="votes">
           <div class="up-vote">
-            <button
-              @mouseover="isUpActive = true"
-              @mouseleave="isUpActive = false"
-              @click="
-                upClick = !upClick;
-                downClick = false;
-                upVote();
-              "
-              class="ui button toggle"
-            >
-              <i v-if="toggleUp(upClick) == false && isUpActive == false">
-                <font-awesome-icon
-                  :icon="['far', 'circle-up']"
-                  size="lg"
-                  class="up-color"
-                />
+            <button @mouseover="isUpActive=true" @mouseleave="isUpActive=false" @click="upClick=!upClick; downClick=false" class="ui button toggle" >
+              <i v-if="toggleUp(upClick) == false && isUpActive == false" >
+                  <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
               </i>
               <span v-else>
-                <font-awesome-icon
-                  :icon="['fas', 'circle-up']"
-                  size="lg"
-                  class="up-color"
-                />
+                  <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
               </span>
-            </button>
-            {{getUpVotes}}
+            </button>{{getUpVotes}}
           </div>
           <div class="down-vote">
-            <button
-              @mouseover="isDownActive = true"
-              @mouseleave="isDownActive = false"
-              @click="
-                downClick = !downClick;
-                upClick = false;
-                downVote();
-              "
-              class="ui button toggle"
-            >
-              <i v-if="toggleDown(downClick) == false && isDownActive == false">
-                <font-awesome-icon
-                  :icon="['far', 'circle-down']"
-                  size="lg"
-                  class="down-color"
-                />
-              </i>
-              <span v-else>
-                <font-awesome-icon
-                  :icon="['fas', 'circle-down']"
-                  size="lg"
-                  class="down-color"
-                />
-              </span>
-            </button>
-            {{getDownVotes}}
+            <button @mouseover="isDownActive=true" @mouseleave="isDownActive=false" @click="downClick=!downClick; upClick=false" class="ui button toggle" >
+                <i v-if="toggleDown(downClick) == false && isDownActive == false" >
+                  <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
+                </i>
+                <span v-else>
+                  <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
+                </span>
+              </button>{{getDownVotes}}
           </div>
 
         <!-- Delete post button -->
@@ -135,7 +77,7 @@
           <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
         </div>
       </div>
-
+      </div>
       </div>
     </div>
   </div>
@@ -238,7 +180,6 @@ export default {
       // If you throw an error, the method will terminate here unless you surround it wil try/catch
       if (ok) {
         this.deletePost();
-        alert('You have successfully delete this post.');
       }
     },
     setVotedPosts() {
