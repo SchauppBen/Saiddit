@@ -120,13 +120,16 @@ public class JdbcReplyDao implements ReplyDao {
         String sql = "";
         Integer newReplyId = null;
         try {
-            if (newReply.getReplyToReplyId() == 0) { // if reply_to_id = null
-                sql = "insert into replies (user_from_id, post_id, text, media_link) " +
-                        "values (?, ?, ?, ?) returning reply_id;";
+            if (newReply.getMediaLink() == null && newReply.getReplyText() == null) { // if media_link && text = null
+                return null;
+            }
+            else if (newReply.getReplyToReplyId() == 0 && newReply.getReplyText() == null) { // if reply_to_id = null
+                sql = "insert into replies (user_from_id, post_id, media_link) " +
+                        "values (?, ?, ?) returning reply_id;";
                 newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(),
                         newReply.getPostId(), newReply.getReplyText(), newReply.getMediaLink());
-            } else if (newReply.getMediaLink() == null) { // if media_link = null
-                sql = "insert into replies (user_from_id, reply_to_id, post_id, text) values (?, ?, ?, ?) returning reply_id;";
+            } else if (newReply.getReplyToReplyId() == 0 && newReply.getMediaLink() == null) { // if media_link = null
+                sql = "insert into replies (user_from_id, post_id, text) values (?, ?, ?) returning reply_id;";
                 newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(),
                         newReply.getReplyToReplyId(), newReply.getPostId(), newReply.getReplyText());
             } else if (newReply.getReplyText() == null) { // if text = null
@@ -134,9 +137,11 @@ public class JdbcReplyDao implements ReplyDao {
                         "values (?, ?, ?, ?) returning reply_id;";
                 newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(),
                         newReply.getReplyToReplyId(), newReply.getPostId(), newReply.getMediaLink());
+            } else if (newReply.getMediaLink() == null) {
+                sql = "INSERT INTO replies (user_from_id, reply_to_id, post_id, text) VALUES (?, ?, ?, ?) returning reply_id;";
+                newReplyId = jdbcTemplate.queryForObject(sql, Integer.class, newReply.getUserFrom(), newReply.getReplyToReplyId()
+                        , newReply.getPostId(), newReply.getReplyText());
             } else if (newReply.getPostId() == 0) { // if post_id = null
-                return null;
-            } else if (newReply.getMediaLink() == null && newReply.getReplyText() == null) { // if media_link && text = null
                 return null;
             } else { // if all values != null
                 sql = "insert into replies (user_from_id, reply_to_id, post_id, text, media_link) " +
