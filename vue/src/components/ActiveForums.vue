@@ -1,7 +1,7 @@
 <template>
-  <div class="forumsTab pink-border">
+  <div class="forumsTab pink-border" id="active">
     <h2><em>Active Forums</em></h2>
-    <ul>
+    <ul class="scrollable">
       <li v-for="forum in forums" :key="forum.name">
         <router-link
           class="highlighted"
@@ -44,10 +44,16 @@ export default {
 </script>
 
 <style scoped>
+#active {
+  display: flex;
+  flex-direction: column;
+}
+
 h2 {
   text-align: center;
 }
 ul {
+  position: relative;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -55,6 +61,5 @@ ul {
   list-style: none;
   text-align: center;
   font-family: monospace;
-  height: calc(100% - 20px);
 }
 </style>

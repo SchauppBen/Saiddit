@@ -1,7 +1,7 @@
 <template>
-  <div class="forumsTab pink-border scrollable">
+  <div class="forumsTab pink-border">
     <h2><em>My Forums</em></h2>
-    <ul>
+    <ul class="scrollable">
       <li v-for="forum in myForums" :key="forum.forumName">
         <router-link
           class="highlighted"
@@ -53,5 +53,6 @@ ul {
   list-style: none;
   text-align: center;
   font-family: monospace;
+  height: calc(100% - 15px);
 }
 </style>

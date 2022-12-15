@@ -1,7 +1,7 @@
 <template>
   <nav class="forumsTab pink-border">
     <h1 id="nav-title"><em>Navigation</em></h1>
-    <ul>
+    <ul class="scrollable">
       <li>
         <br />
         <router-link class="highlighted" :to="{ name: 'create-post' }">
@@ -31,6 +31,7 @@ export default {};
 
 <style scoped>
 ul {
+  height: calc(100% - 15px);
   list-style: none;
 }
 ul li {
