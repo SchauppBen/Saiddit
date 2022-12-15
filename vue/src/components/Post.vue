@@ -190,20 +190,23 @@ export default {
       });
     },
     setVotedPosts() {
-      postService
-        .getAllVotesByUser(this.$store.state.user.id)
-        .then((response) => {
-          response.data.forEach((vote) => {
-            if (vote.isUpvote) {
+      if (this.userId !== undefined) {
+        postService
+          .getAllVotesByUser(this.userId)
+          .then((response) => {
+           response.data.forEach((vote) => {
+            if (vote.upvote) {
               this.$store.commit("ADD_UPVOTED_POSTS", vote.postId);
             } else {
               this.$store.commit("ADD_DOWNVOTED_POSTS", vote.postId);
             }
           });
         });
+      }
     },
   },
-  created() {
+  mounted() {
+    this.$store.commit("CLEAR_VOTE_ARRAYS");
     this.setVotedPosts();
     postService.getVotesByPost(this.post.postId).then((response) => {
       this.upVotes = response.data.upvotes;
@@ -212,10 +215,10 @@ export default {
   },
   computed: {
     getUpVotes() {
-      return this.upVotes + this.userUpVoted;
+      return this.post.upvotes + this.userUpVoted;
     },
     getDownVotes() {
-      return this.downVotes + this.userDownVoted;
+      return this.post.downvotes + this.userDownVoted;
     }
   }
 };

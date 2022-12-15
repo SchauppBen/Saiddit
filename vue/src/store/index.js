@@ -119,11 +119,20 @@ export default new Vuex.Store({
     TOGGLE_SORTED_POSTS(state) {
       state.sortByMostRecent = !state.sortByMostRecent;
     },
+
+    SET_SORTED_POSTS_MOST_RECENT(state) {
+      state.sortByMostRecent = true;
+    },
+
     ADD_UPVOTED_POSTS(state, data) {
-      state.userUpVotes.push(data);
+      if (!state.userUpVotes.includes(data)) {
+        state.userUpVotes.push(data);
+      }
     },
     ADD_DOWNVOTED_POSTS(state, data) {
-      state.userDownVotes.push(data);
+      if (!state.userDownVotes.includes(data)) {
+        state.userDownVotes.push(data);
+      }
     },
 
     REMOVE_UPVOTED_POST(state, data) {
@@ -132,6 +141,11 @@ export default new Vuex.Store({
 
     REMOVE_DOWNVOTED_POST(state, data) {
       state.userDownVotes.splice(state.userDownVotes.indexOf(data), 1);
+    },
+
+    CLEAR_VOTE_ARRAYS(state) {
+      state.userUpVotes = [];
+      state.userDownVotes = [];
     },
 
     // Reply Mutations
