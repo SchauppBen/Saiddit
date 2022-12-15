@@ -14,6 +14,8 @@ public class Post {
     private String mediaLink;
     private LocalDate dateTime;
     private long timeInMillis;
+    private int upvotes;
+    private int downvotes;
     private int votes;
 
     public Post(int postId, int userId, int forumId, String title, String text, String mediaLink) {
@@ -105,6 +107,22 @@ public class Post {
 
     public void setDateTime(LocalDate dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public int getUpvotes() {
+        return upvotes;
+    }
+
+    public void setUpvotes(int upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    public int getDownvotes() {
+        return downvotes;
+    }
+
+    public void setDownvotes(int downvotes) {
+        this.downvotes = downvotes;
     }
 
     public int getVotes() {
