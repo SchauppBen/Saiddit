@@ -111,6 +111,7 @@ export default {
   margin-bottom: 20px;
   border-radius: 10px;
   height: calc(50vh - 70px);
+  box-shadow: 0 0 5px black;
 }
 
 .sidebar {

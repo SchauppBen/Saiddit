@@ -13,26 +13,27 @@
         </h2>
         <h2> in </h2>
         <h3>{{ post.datetime }}</h3>
-      <h4>
-        <router-link
-          class="highlighted forum-name"
-          :to="{ name: 'forum-view', params: { forumName: post.forumName } }"
-          >[{{ post.forumName }}]</router-link
-        >
-      </h4>
+        <h4>
+          <router-link
+            class="highlighted forum-name"
+            :to="{ name: 'forum-view', params: { forumName: post.forumName } }"
+            >[{{ post.forumName }}]</router-link
+          >
+        </h4>
+        <h3>&nbsp;&nbsp;{{ post.dateTime }}</h3>
       </div>
       <div class="posts">
         <router-link
-        style="color:navy;"
-        :to="{
-          name: 'post-details',
-          params: { forumName: post.forumName, postId: post.postId },
-        }"
-      >
-        <h1 class="post-title">{{ post.title }}</h1>
-        <img id="post-image" :src="post.mediaLink" v-show="post.mediaLink" />
-        <h3 class="text">{{ post.text }}</h3>
-      </router-link>
+          style="color:navy;"
+          :to="{
+            name: 'post-details',
+            params: { forumName: post.forumName, postId: post.postId },
+          }"
+        >
+          <h1 class="post-title">{{ post.title }}</h1>
+          <img id="post-image" :src="post.mediaLink" v-show="post.mediaLink" />
+          <h3 class="text">{{ post.text }}</h3>
+        </router-link>
       <div class="inline">
         <!-- Link to user profile -->
         <!-- <h2 id="user">
@@ -44,22 +45,22 @@
             {{ post.username }}
           </router-link>
         </h2> -->
-        <h3>&nbsp;&nbsp;{{ post.dateTime }}</h3>
+        
 
         <!-- Up-vote & down-vote buttons -->
-        <div class="votes">
-          <div class="up-vote">
-            <button @mouseover="isUpActive=true" @mouseleave="isUpActive=false" @click="upClick=!upClick; downClick=false" class="ui button toggle" >
-              <i v-if="toggleUp(upClick) == false && isUpActive == false" >
-                  <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
-              </i>
-              <span v-else>
-                  <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
-              </span>
-            </button>{{getUpVotes}}
-          </div>
-          <div class="down-vote">
-            <button @mouseover="isDownActive=true" @mouseleave="isDownActive=false" @click="downClick=!downClick; upClick=false" class="ui button toggle" >
+          <div class="votes">
+            <div class="up-vote">
+              <button @mouseover="isUpActive=true" @mouseleave="isUpActive=false" @click="upClick=!upClick; downClick=false" class="ui button toggle" >
+                <i v-if="toggleUp(upClick) == false && isUpActive == false" >
+                    <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
+                </i>
+                <span v-else>
+                    <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
+                </span>
+              </button>{{getUpVotes}}
+            </div>
+            <div class="down-vote">
+              <button @mouseover="isDownActive=true" @mouseleave="isDownActive=false" @click="downClick=!downClick; upClick=false" class="ui button toggle" >
                 <i v-if="toggleDown(downClick) == false && isDownActive == false" >
                   <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
                 </i>
@@ -67,17 +68,17 @@
                   <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
                 </span>
               </button>{{getDownVotes}}
-          </div>
+            </div>
 
-        <!-- Delete post button -->
-        <div>
-          <button class="delete-btn" v-if="this.post.userId == this.$store.state.user.id" @click="doDelete()">
-            <font-awesome-icon class="delete-color" :icon="['fas', 'trash-can']" size="lg" />
-          </button>
-          <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+            <!-- Delete post button -->
+            <div>
+              <button class="delete-btn" v-if="this.post.userId == this.$store.state.user.id" @click="doDelete()">
+                <font-awesome-icon class="delete-color" :icon="['fas', 'trash-can']" size="lg" />
+              </button>
+              <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+            </div>
+          </div>
         </div>
-      </div>
-      </div>
       </div>
     </div>
   </div>
@@ -328,6 +329,7 @@ button {
   margin-bottom: 10px;
   border-radius: 10px;
   width: 70%;
+  box-shadow: 0 0 5px black;
 }
 
 #forum-name {
