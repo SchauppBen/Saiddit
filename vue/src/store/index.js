@@ -130,7 +130,7 @@ export default new Vuex.Store({
     },
 
     SET_SORTED_POSTS_MOST_RECENT(state) {
-      state.sortByMostRecent = true;
+      state.sortByMostRecent = false;
     },
 
     ADD_UPVOTED_POSTS(state, data) {
@@ -142,6 +142,22 @@ export default new Vuex.Store({
       if (!state.userDownVotes.includes(data)) {
         state.userDownVotes.push(data);
       }
+    },
+
+    ADD_VOTE_COUNT_FOR_POST(state, data) {
+      state.posts.forEach((post) => {
+        if (post.postId === data) {
+          post.votes++;
+        }
+      });
+    },
+
+    SUBTRACT_VOTE_COUNT_FOR_POST(state, data) {
+      state.posts.forEach((post) => {
+        if (post.postId === data) {
+          post.votes--;
+        }
+      })
     },
 
     REMOVE_UPVOTED_POST(state, data) {
