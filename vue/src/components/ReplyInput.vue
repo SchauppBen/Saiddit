@@ -27,8 +27,8 @@
         </div>
       </div>
       <div>
-        <button v-if="this.isDirectReply" id="direct-reply-button" :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">reply</button>
-        <button v-else id="sub-reply-button" :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">reply</button>
+        <button v-if="this.isDirectReply" id="direct-reply-button" :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">Reply</button>
+        <button v-else id="sub-reply-button" :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">Reply</button>
       </div>
   </div>
 </template>
@@ -149,6 +149,7 @@ export default {
   font-family: "Inter";
   text-decoration-line: underline;
   font-weight: bold;
+  font-size: 15px;
 }
 .reply-input {
   font-family: "Inter";
@@ -156,10 +157,18 @@ export default {
   text-align: left;
 }
 #reply-text {
+  border-radius: 5px;
+  height: 85px;
   font-family: "Inter";
   display: inline-block;
   width: 50%;
-  padding:50px 10px;
+  font-size: 15px;
+  padding: 2px 0 0 2px;
+	background-color: rgba(46, 46, 46, 0.2);
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25) inset;
+	color: rgb(0, 0, 0);
 }
     /* .reply-input {
       text-indent: 10%;

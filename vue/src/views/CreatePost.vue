@@ -125,7 +125,7 @@ label {
   border-radius: 5px;
   font-size: 18px;
   height: 37px;
-   width: 100%;
+  width: 100%;
 	padding: 5px;
 	font-size: 18px;
 	background-color: rgba(46, 46, 46, 0.2);
@@ -144,7 +144,7 @@ label {
 }
 
 .title-input, .media-input, .text-input {
-  width: 100%;
+  width: 500px;
 	padding: 5px;
 	font-size: 18px;
 	background-color: rgba(46, 46, 46, 0.2);
