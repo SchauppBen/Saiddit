@@ -250,15 +250,15 @@ export default {
     },
     setVotedPosts() {
       if (this.userId !== undefined) {
-          this.$store.state.allUserVotes.forEach((vote) => {
-            if (vote.upvote) {
-              this.$store.commit("ADD_UPVOTED_POSTS", vote.postId);
-            } else {
-              this.$store.commit("ADD_DOWNVOTED_POSTS", vote.postId);
-            }
-            this.hasUserVotedOnPost();
-          });
-        }
+        this.$store.state.allUserVotes.forEach((vote) => {
+          if (vote.upvote) {
+            this.$store.commit("ADD_UPVOTED_POSTS", vote.postId);
+          } else {
+            this.$store.commit("ADD_DOWNVOTED_POSTS", vote.postId);
+          }
+          this.hasUserVotedOnPost();
+        });
+      }
     },
     hasUserVotedOnPost() {
       if (this.userId !== undefined) {
@@ -266,8 +266,7 @@ export default {
           this.userUpVoted = true;
           this.userInitiallyUpvoted = true;
           this.$store.commit("SUBTRACT_VOTE_COUNT_FOR_POST", this.post.postId);
-        }
-         else if (this.$store.state.userDownVotes.includes(this.post.postId)) {
+        } else if (this.$store.state.userDownVotes.includes(this.post.postId)) {
           this.userDownVoted = true;
           this.userInitiallyDownvoted = true;
           this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);

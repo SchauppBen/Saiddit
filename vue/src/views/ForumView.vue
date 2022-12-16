@@ -157,6 +157,12 @@ export default {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
+.inline {
+  display: inline-block;
+}
+#forum-name {
+  font-style: italic;
+}
 #forum-posts {
   align-content: center;
 }

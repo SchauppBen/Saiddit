@@ -26,14 +26,14 @@
       />
       <input
         type="password"
-        id="confirmPassword"
+        id="confirm-pw"
         class="form-control"
         placeholder="Confirm Password"
         v-model="user.confirmPassword"
         required
       />
-      <router-link :to="{ name: 'login' }">Have an account?</router-link>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">
+      <router-link class="prompt" :to="{ name: 'login' }">Have an account?</router-link>
+      <button id="create-acc" class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
     </form>
@@ -93,4 +93,55 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.form-register {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  width: 20%;
+  margin-left: 10px;
+}
+
+.alert-danger, .alert-success {
+  font-family: "inter";
+  width: 200%;
+  padding: 10px 0 5px 0;
+}
+
+.prompt {
+  font-family: "inter";
+  font-size: 18px;
+  padding: 20px 0 0 0;
+  width: 120%;
+}
+
+label {
+  font-family: "inter";
+  font-size: 18px;
+  width: 120%;
+}
+
+.form-control {
+  margin: 0 0 10px 0;
+  width: 130%;
+	padding: 5px;
+	font-size: 18px;
+	background-color: rgba(46, 46, 46, 0.2);
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25) inset;
+	color: rgb(0, 0, 0);
+}
+
+#create-acc {
+  height: 40px;
+  border-radius: 5px;
+  background-color: rgb(66, 116, 209);
+  box-shadow: 0 0 10px 2px rgb(144, 183, 255) inset;
+  border-color: rgb(46, 46, 46);
+  color: rgb(206, 231, 255);
+  font-family: "inter";
+  font-weight: bold;
+  font-size: 20px;
+}
+</style>

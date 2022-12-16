@@ -18,6 +18,7 @@
 
 <script>
 import SearchBar from "../components/SearchBar.vue";
+
 export default {
   components: { SearchBar },
 };
@@ -56,14 +57,13 @@ div {
 }
 #saiddit {
   font-weight: bold;
-  font-size: 30px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 40px;
   height: 100%;
 }
 p {
   font-size: 25px;
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: "Poppins";
   color: #7c9eb7;
-  font-style: italic;
+  font-weight: bold;
 }
 </style>
