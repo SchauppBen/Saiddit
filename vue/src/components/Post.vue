@@ -102,8 +102,7 @@
                 class="delete-btn"
                 v-if="
                   this.post.userId == this.$store.state.user.id ||
-                  userIsModerator() ||
-                  this.$store.state.user.username === 'admin'
+                  userIsModerator()
                 "
                 @click="doDelete()"
               >
@@ -174,6 +173,9 @@ export default {
       }
     },
     userIsModerator() {
+      if (this.$store.state.user.username == 'admin') {
+        return true;
+      }
       let array = this.$store.state.forumUsers.filter((element) => {
         return element.forumId == this.post.forumId;
       });
