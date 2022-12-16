@@ -35,7 +35,7 @@
           <h3 class="text">{{ post.text }}</h3>
         </router-link>
       <div class="inline">
-        
+
         <!-- Up-vote & down-vote buttons -->
           <div class="votes">
             <div class="up-vote">
@@ -297,6 +297,7 @@ button {
   font-size: 17px;
   width: 80%;
   height: 90%;
+  position: static;
 }
 
 .head-banner {
