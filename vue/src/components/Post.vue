@@ -39,7 +39,7 @@
         <!-- Up-vote & down-vote buttons -->
           <div class="votes">
             <div class="up-vote">
-              <button @mouseover="isUpActive=true" @mouseleave="isUpActive=false" @click="upClick=!upClick; downClick=false" class="ui button toggle" >
+              <button @mouseover="isUpActive=true" @mouseleave="isUpActive=false" @click="upClick=!upClick; downClick=false; upVote()" class="ui button toggle" >
                 <i v-if="toggleUp(upClick) == false && isUpActive == false" >
                     <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
                 </i>
@@ -47,10 +47,9 @@
                     <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
                 </span>
               </button>{{getUpVotes}}
-              <span v-if="hasUpVoted">Upvoted!</span> 
             </div>
             <div class="down-vote">
-              <button @mouseover="isDownActive=true" @mouseleave="isDownActive=false" @click="downClick=!downClick; upClick=false" class="ui button toggle" >
+              <button @mouseover="isDownActive=true" @mouseleave="isDownActive=false" @click="downClick=!downClick; upClick=false; downVote()" class="ui button toggle" >
                 <i v-if="toggleDown(downClick) == false && isDownActive == false" >
                   <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
                 </i>
@@ -58,7 +57,6 @@
                   <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
                 </span>
               </button>{{getDownVotes}}
-              <span v-if="hasDownVoted">Downvoted!</span>
             </div>
 
             <!-- Delete post button -->
@@ -99,9 +97,11 @@ export default {
       },
       upVotes: 0,
       downVotes: 0,
+      userUpVoted: 0,
+      userDownVoted: 0,
+      userInitiallyUpvoted: false,
+      userInitiallyDownvoted: false,
       userId: this.$store.state.user.id,
-      upVoted: false,
-      downVoted: false
     };
   },
   methods: {
@@ -139,38 +139,40 @@ export default {
       if (this.userId === undefined) {
         this.$router.push("/login");
       }
-      if (this.upVoted) {
+      if (this.$store.state.userUpVotes.includes(this.vote.postId)) {
         postService.deleteVote(this.vote.postId, this.vote.userId);
         this.$store.commit("REMOVE_UPVOTED_POST", this.vote.postId);
-        this.upVoted = false;
-      } else if (this.downVoted) {
+        this.userUpVoted--;
+      } else if (this.$store.state.userDownVotes.includes(this.vote.postId)) {
         postService.updateVote(this.vote);
         this.$store.commit("REMOVE_DOWNVOTED_POST", this.vote.postId);
         this.$store.commit("ADD_UPVOTED_POSTS", this.vote.postId);
-        this.upVoted = true;
+        this.userDownVoted--;
+        this.userUpVoted++;
       } else {
         postService.upvotePost(this.vote);
         this.$store.commit("ADD_UPVOTED_POSTS", this.vote.postId);
-        this.upVoted = true;
+        this.userUpVoted++;
       }
     },
     downVote() {
       if (this.userId === undefined) {
         this.$router.push("/login");
       }
-      if (this.downVoted) {
+      if (this.$store.state.userDownVotes.includes(this.vote.postId)) {
         postService.deleteVote(this.vote.postId, this.vote.userId);
         this.$store.commit("REMOVE_DOWNVOTED_POST", this.vote.postId);
-        this.downVoted = false;
-      } else if (this.upVoted){
+        this.userDownVoted--;
+      } else if (this.$store.state.userUpVotes.includes(this.vote.postId)) {
         postService.updateVote(this.vote);
         this.$store.commit("REMOVE_UPVOTED_POST", this.vote.postId);
         this.$store.commit("ADD_DOWNVOTED_POSTS", this.vote.postId);
-        this.downVoted = true;
+        this.userUpVoted--;
+        this.userDownVoted++;
       } else {
         postService.downvotePost(this.vote);
         this.$store.commit("ADD_DOWNVOTED_POSTS", this.vote.postId);
-        this.downVoted = true;
+        this.userDownVoted++;
       }
     },
     deletePost() {
@@ -197,16 +199,35 @@ export default {
     },
     setVotedPosts() {
       if (this.userId !== undefined) {
-        postService
-          .getAllVotesByUser(this.userId)
-          .then((response) => {
-           response.data.forEach((vote) => {
-            if (vote.upvote && vote.postId === this.post.postId) {
-              console.log(vote.upvote);
+        postService.getAllVotesByUser(this.userId).then((response) => {
+          response.data.forEach((vote) => {
+            if (vote.upvote) {
               this.$store.commit("ADD_UPVOTED_POSTS", vote.postId);
             } else {
-              console.log(vote.upvote);
               this.$store.commit("ADD_DOWNVOTED_POSTS", vote.postId);
+            }
+            this.hasUserVotedOnPost();
+          });
+        });
+      }
+    },
+    hasUserVotedOnPost() {
+      if (this.userId !== undefined) {
+        postService.getVotesByUser(this.userId).then((response) => {
+          response.data.forEach((vote) => {
+            if (vote.postId === this.post.postId) {
+              if (vote.upvote) {
+                this.userUpVoted++;
+                this.userInitiallyUpvoted = true;
+                this.$store.commit(
+                  "SUBTRACT_VOTE_COUNT_FOR_POST",
+                  this.post.postId
+                );
+              } else {
+                this.userDownVoted++;
+                this.userInitiallyDownvoted = true;
+                this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);
+              }
             }
           });
         });
@@ -223,18 +244,42 @@ export default {
   },
   computed: {
     getUpVotes() {
-      return this.upVotes;
+      return this.initialUpVotes + this.userUpVoted;
     },
     getDownVotes() {
-      return this.downVotes;
+      return this.initialDownVotes + this.userDownVoted;
     },
-    hasUpVoted() {
-      return this.upVoted;
+    initialDownVotes() {
+      if (this.userInitiallyDownvoted) {
+        return this.post.downvotes - 1;
+      } else {
+        return this.post.downvotes;
+      }
     },
-    hasDownVoted() {
-      return this.downVoted;
-    }
-  }
+    initialUpVotes() {
+      if (this.userInitiallyUpvoted) {
+        return this.post.upvotes - 1;
+      } else {
+        return this.post.upvotes;
+      }
+    },
+  },
+  watch: {
+    userUpVoted(newValue, oldValue) {
+      if (newValue > oldValue) {
+        this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);
+      } else {
+        this.$store.commit("SUBTRACT_VOTE_COUNT_FOR_POST", this.post.postId);
+      }
+    },
+    userDownVoted(newValue, oldValue) {
+      if (newValue > oldValue) {
+        this.$store.commit("SUBTRACT_VOTE_COUNT_FOR_POST", this.post.postId);
+      } else {
+        this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);
+      }
+    },
+  },
 };
 </script>
 

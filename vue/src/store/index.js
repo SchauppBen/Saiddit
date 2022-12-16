@@ -36,8 +36,6 @@ export default new Vuex.Store({
     forumUsers: [],
     searchedForums: [],
     posts: [],
-    mostRecentPosts: [],
-    mostPopularPosts: [],
     forums: [],
     searchTerm: "",
     searchedPosts: [],
@@ -104,19 +102,6 @@ export default new Vuex.Store({
     SET_POSTS(state, data) {
       state.posts = data;
     },
-
-    SET_MOST_RECENT_POSTS(state, data) {
-      state.mostRecentPosts = data;
-    },
-
-    SET_MOST_POPULAR_POSTS(state, data) {
-      state.mostPopularPosts = data;
-    },
-
-    CLEAR_POSTS(state) {
-      state.posts = [];
-    },
-
     SAVE_POST(state, post) {
       state.posts.push(post);
     },
