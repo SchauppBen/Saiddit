@@ -39,7 +39,7 @@
         <!-- Up-vote & down-vote buttons -->
           <div class="votes">
             <div class="up-vote">
-              <button @mouseover="isUpActive=true" @mouseleave="isUpActive=false" @click="upClick=!upClick; downClick=false" class="ui button toggle" >
+              <button @mouseover="isUpActive=true" @mouseleave="isUpActive=false" @click="upClick=!upClick; downClick=false; upVote()" class="ui button toggle" >
                 <i v-if="toggleUp(upClick) == false && isUpActive == false" >
                     <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
                 </i>
@@ -49,7 +49,7 @@
               </button>{{getUpVotes}}
             </div>
             <div class="down-vote">
-              <button @mouseover="isDownActive=true" @mouseleave="isDownActive=false" @click="downClick=!downClick; upClick=false" class="ui button toggle" >
+              <button @mouseover="isDownActive=true" @mouseleave="isDownActive=false" @click="downClick=!downClick; upClick=false; downVote()" class="ui button toggle" >
                 <i v-if="toggleDown(downClick) == false && isDownActive == false" >
                   <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
                 </i>
