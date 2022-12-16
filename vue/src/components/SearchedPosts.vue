@@ -16,6 +16,7 @@ export default {
           this.$store.commit("SET_SEARCHED_POSTS", response.data);
         });
     },
+    
   },
   computed: {
       searchedPosts() {
