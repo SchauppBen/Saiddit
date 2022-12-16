@@ -75,6 +75,10 @@ export default {
       return this.$route.name === "forum-view";
     },
     userIsModerator() {
+
+      if (this.$store.state.user.username == 'admin') {
+        return true;
+      }
       let obj = this.forumUsers.find((forum) => {
         return this.currentUser === forum.username;
       });
