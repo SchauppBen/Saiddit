@@ -35,18 +35,7 @@
           <h3 class="text">{{ post.text }}</h3>
         </router-link>
       <div class="inline">
-        <!-- Link to user profile -->
-        <!-- <h2 id="user">
-          <router-link
-            class="highlighted"
-            :to="{ name: 'user-posts', params: { username: post.username } }"
-          >
-            <font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />
-            {{ post.username }}
-          </router-link>
-        </h2> -->
         
-
         <!-- Up-vote & down-vote buttons -->
           <div class="votes">
             <div class="up-vote">
