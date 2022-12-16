@@ -2,7 +2,6 @@ import axios from "axios";
 axios.defaults.baseURL = "http://localhost:9000";
 
 export default {
-
   getPosts() {
     return axios.get("/posts/");
   },
@@ -21,6 +20,10 @@ export default {
 
   getVotesByPost(postId) {
     return axios.get(`/posts/${postId}/votes`);
+  },
+
+  getAllPostVotes() {
+    return axios.get("/posts/votes");
   },
 
   deletePost(postId) {
@@ -53,5 +56,5 @@ export default {
 
   deleteVote(postId, userId) {
     return axios.delete(`/posts/votes/${postId}/${userId}`);
-  }
+  },
 };

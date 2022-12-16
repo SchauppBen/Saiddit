@@ -1,13 +1,13 @@
 <template>
   <div id="header" class="border">
-      <router-link v-bind:to="{ name: 'home' }" id="logo">
-      <img id="pageLogo" src="../assets/duckie.png"/>
+    <router-link v-bind:to="{ name: 'home' }" id="logo">
+      <img id="pageLogo" src="../assets/duckie.png" />
       <p id="saiddit" class="highlighted">saiddit</p>
-      </router-link>
+    </router-link>
     <search-bar class="search-bar" />
-    <chat-logo />
     <div v-if="$store.state.token != ''">
-      <font-awesome-icon icon="fa-solid fa-user" size="lg" />   {{ $store.state.user.username }}
+      <font-awesome-icon icon="fa-solid fa-user" size="lg" />
+      {{ $store.state.user.username }}
     </div>
     <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">
       Logout
@@ -17,10 +17,9 @@
 </template>
 
 <script>
-import ChatLogo from "../components/ChatLogo.vue";
 import SearchBar from "../components/SearchBar.vue";
 export default {
-  components: { SearchBar, ChatLogo },
+  components: { SearchBar },
 };
 </script>
 

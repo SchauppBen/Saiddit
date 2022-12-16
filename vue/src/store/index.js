@@ -42,6 +42,7 @@ export default new Vuex.Store({
     sortByMostRecent: true,
     userUpVotes: [],
     userDownVotes: [],
+    postVotes: [],
   },
   mutations: {
     // Authentication Mutations
@@ -120,6 +121,24 @@ export default new Vuex.Store({
     DOWN_VOTE(state, vote) {
       state.posts = vote;
     },
+    SWITCH_VOTE(state, vote) {
+      let index = state.postVotes.findIndex((element) => {
+        return element.postId === vote.postId && element.userId === vote.userId;
+      });
+      state.postVotes[index].upvote = vote.upvote;
+    },
+    DELETE_VOTE(state, vote) {
+      let index = state.postVotes.findIndex((element) => {
+        return element.postId === vote.postId && element.userId === vote.userId;
+      });
+      state.postVotes.splice(index, 1);
+    },
+    ADD_VOTE(state, vote) {
+      state.postVotes.push(vote);
+    },
+    SET_POST_VOTES(state, data) {
+      state.postVotes = data;
+    },
     DELETE_POST(state, postToDelete) {
       state.posts = state.posts.filter((post) => {
         return post.postId != postToDelete.postId;
@@ -157,7 +176,7 @@ export default new Vuex.Store({
         if (post.postId === data) {
           post.votes--;
         }
-      })
+      });
     },
 
     REMOVE_UPVOTED_POST(state, data) {

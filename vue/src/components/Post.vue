@@ -38,7 +38,7 @@
         <div class="inline">
           <!-- Up-vote & down-vote buttons -->
           <div class="votes">
-            <div class="up-vote">
+            <!-- <div class="up-vote">
               <button
                 @mouseover="isUpActive = true"
                 @mouseleave="isUpActive = false"
@@ -93,15 +93,17 @@
                   />
                 </span></button
               >{{ getDownVotes }}
-            </div>
+            </div> -->
 
             <!-- Delete post button -->
-            <div>
+            <VoteTest :post="post" id="voteTest" />
+            <div id="votes-and-delete">
               <button
                 class="delete-btn"
                 v-if="
                   this.post.userId == this.$store.state.user.id ||
-                  userIsModerator()
+                  userIsModerator() ||
+                  this.$store.state.user.username === 'admin'
                 "
                 @click="doDelete()"
               >
@@ -123,10 +125,11 @@
 <script>
 import postService from "../services/PostService.js";
 import ConfirmDialogue from "../components/ConfirmDialogue.vue";
+import VoteTest from "./VoteTest.vue";
 // import Votes from './Votes.vue'
 
 export default {
-  components: { ConfirmDialogue },
+  components: { ConfirmDialogue, VoteTest },
   name: "post",
   props: {
     post: Object,
@@ -335,6 +338,17 @@ export default {
 </script>
 
 <style scoped>
+#up-votes {
+  display: flex;
+}
+#votes-and-delete {
+  display: flex;
+  flex: 1;
+}
+#voteTest {
+  display: flex;
+  flex: 1;
+}
 .link-color {
   text-decoration-color: none;
 }
@@ -371,6 +385,14 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+.up-vote {
+  display: flex;
+  align-items: center;
+}
+.down-vote {
+  display: flex;
+  align-items: center;
 }
 
 .highlighted {
