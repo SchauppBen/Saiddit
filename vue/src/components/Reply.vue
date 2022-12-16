@@ -6,10 +6,7 @@
       <span class="reply">: {{ reply.replyText }}</span>
       <!-- Delete reply button -->
       <button
-        v-if="
-          this.reply.userFrom == this.$store.state.user.id ||
-          this.$store.state.user.username === 'admin'
-        "
+        v-if="this.reply.userFrom == this.$store.state.user.id"
         v-on:click="deleteReply()"
       >
         delete reply
