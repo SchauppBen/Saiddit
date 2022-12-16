@@ -97,8 +97,8 @@ export default {
       },
       upVotes: 0,
       downVotes: 0,
-      userUpVoted: 0,
-      userDownVoted: 0,
+      userUpVoted: false,
+      userDownVoted: false,
       userInitiallyUpvoted: false,
       userInitiallyDownvoted: false,
       userId: this.$store.state.user.id,
@@ -142,17 +142,17 @@ export default {
       if (this.$store.state.userUpVotes.includes(this.vote.postId)) {
         postService.deleteVote(this.vote.postId, this.vote.userId);
         this.$store.commit("REMOVE_UPVOTED_POST", this.vote.postId);
-        this.userUpVoted--;
+        this.userUpVoted = false;
       } else if (this.$store.state.userDownVotes.includes(this.vote.postId)) {
         postService.updateVote(this.vote);
         this.$store.commit("REMOVE_DOWNVOTED_POST", this.vote.postId);
         this.$store.commit("ADD_UPVOTED_POSTS", this.vote.postId);
-        this.userDownVoted--;
-        this.userUpVoted++;
+        this.userDownVoted = false;
+        this.userUpVoted = true;
       } else {
         postService.upvotePost(this.vote);
         this.$store.commit("ADD_UPVOTED_POSTS", this.vote.postId);
-        this.userUpVoted++;
+        this.userUpVoted = true;
       }
     },
     downVote() {
@@ -162,17 +162,17 @@ export default {
       if (this.$store.state.userDownVotes.includes(this.vote.postId)) {
         postService.deleteVote(this.vote.postId, this.vote.userId);
         this.$store.commit("REMOVE_DOWNVOTED_POST", this.vote.postId);
-        this.userDownVoted--;
+        this.userDownVoted = false;
       } else if (this.$store.state.userUpVotes.includes(this.vote.postId)) {
         postService.updateVote(this.vote);
         this.$store.commit("REMOVE_UPVOTED_POST", this.vote.postId);
         this.$store.commit("ADD_DOWNVOTED_POSTS", this.vote.postId);
-        this.userUpVoted--;
-        this.userDownVoted++;
+        this.userUpVoted = false;
+        this.userDownVoted = true;
       } else {
         postService.downvotePost(this.vote);
         this.$store.commit("ADD_DOWNVOTED_POSTS", this.vote.postId);
-        this.userDownVoted++;
+        this.userDownVoted = true;
       }
     },
     deletePost() {
@@ -199,8 +199,7 @@ export default {
     },
     setVotedPosts() {
       if (this.userId !== undefined) {
-        postService.getAllVotesByUser(this.userId).then((response) => {
-          response.data.forEach((vote) => {
+          this.$store.state.allUserVotes.forEach((vote) => {
             if (vote.upvote) {
               this.$store.commit("ADD_UPVOTED_POSTS", vote.postId);
             } else {
@@ -208,29 +207,20 @@ export default {
             }
             this.hasUserVotedOnPost();
           });
-        });
-      }
+        }
     },
     hasUserVotedOnPost() {
       if (this.userId !== undefined) {
-        postService.getVotesByUser(this.userId).then((response) => {
-          response.data.forEach((vote) => {
-            if (vote.postId === this.post.postId) {
-              if (vote.upvote) {
-                this.userUpVoted++;
-                this.userInitiallyUpvoted = true;
-                this.$store.commit(
-                  "SUBTRACT_VOTE_COUNT_FOR_POST",
-                  this.post.postId
-                );
-              } else {
-                this.userDownVoted++;
-                this.userInitiallyDownvoted = true;
-                this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);
-              }
-            }
-          });
-        });
+        if (this.$store.state.userUpVotes.includes(this.post.postId)) {
+          this.userUpVoted = true;
+          this.userInitiallyUpvoted = true;
+          this.$store.commit("SUBTRACT_VOTE_COUNT_FOR_POST", this.post.postId);
+        }
+         else if (this.$store.state.userDownVotes.includes(this.post.postId)) {
+          this.userDownVoted = true;
+          this.userInitiallyDownvoted = true;
+          this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);
+        }
       }
     },
   },
@@ -244,10 +234,18 @@ export default {
   },
   computed: {
     getUpVotes() {
-      return this.initialUpVotes + this.userUpVoted;
+      if (this.userUpVoted) {
+        return this.initialUpVotes + 1;
+      } else {
+        return this.initialUpVotes;
+      }
     },
     getDownVotes() {
-      return this.initialDownVotes + this.userDownVoted;
+      if (this.userDownVoted) {
+        return this.initialDownVotes + 1;
+      } else {
+        return this.initialDownVotes;
+      }
     },
     initialDownVotes() {
       if (this.userInitiallyDownvoted) {
@@ -265,15 +263,15 @@ export default {
     },
   },
   watch: {
-    userUpVoted(newValue, oldValue) {
-      if (newValue > oldValue) {
+    userUpVoted(newValue) {
+      if (newValue) {
         this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);
       } else {
         this.$store.commit("SUBTRACT_VOTE_COUNT_FOR_POST", this.post.postId);
       }
     },
-    userDownVoted(newValue, oldValue) {
-      if (newValue > oldValue) {
+    userDownVoted(newValue) {
+      if (newValue) {
         this.$store.commit("SUBTRACT_VOTE_COUNT_FOR_POST", this.post.postId);
       } else {
         this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);
