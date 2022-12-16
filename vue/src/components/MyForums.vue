@@ -1,6 +1,6 @@
 <template>
   <div class="forumsTab pink-border">
-    <h2><em>My Forums</em></h2>
+    <h2><em id="my-forums">My Forums</em></h2>
     <ul class="scrollable">
       <li v-for="forum in myForums" :key="forum.forumName">
         <router-link
@@ -46,13 +46,19 @@ export default {
 </script>
 
 <style scoped>
+#my-forums {
+  font-family: "poppins";
+  font-weight: bold;
+  color: #7c9eb7;
+  font-size: 18px;
+}
 h2 {
   text-align: center;
 }
 ul {
   list-style: none;
   text-align: center;
-  font-family: monospace;
+  font-family: "inter";
   height: calc(100% - 15px);
 }
 </style>

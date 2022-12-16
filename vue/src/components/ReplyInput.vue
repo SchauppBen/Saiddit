@@ -1,8 +1,20 @@
 <template>
   <div>
-      <div class = "reply-input">
+      <div class="reply-input">
         <div>
-          <label v-if="this.isDirectReply" class="direct-reply-label" for="direct-reply-input">Reply to This Post</label>
+          <label v-if="this.isDirectReply" for="reply-input">Reply to This Post</label>
+          <div v-else >
+            <h2>Reply to
+              <label id="reply-to" v-if="!this.targetReply.deleted" for="reply-input">@{{this.targetReply.  usernameFrom}}</label>
+            
+            <label v-else for="reply-input">Reply to deleted reply</label>
+            </h2>
+          </div>
+        </div>
+        <div>
+          <textarea id="reply-text" v-model="replyInput.replyText" />
+
+          <!-- <label v-if="this.isDirectReply" class="direct-reply-label" for="direct-reply-input">Reply to This Post</label>
           <div v-else>
             <label class="sub-reply-label" v-if="!this.targetReply.deleted" for="sub-reply-input">Reply to {{this.targetReply.  usernameFrom}}</label>
             <label class="sub-reply-label" v-else for="sub-reply-input">Reply to deleted reply</label>
@@ -10,12 +22,13 @@
         </div>
         <div>
           <input v-if="this.isDirectReply" type="text" id="direct-reply-input" name="directReplyInput" v-model="replyInput.replyText"/>
-          <input v-else type="text" id="sub-reply-input" name="subReplyInput" v-model="replyInput.replyText"/>
+          <input v-else type="text" id="sub-reply-input" name="subReplyInput" v-model="replyInput.replyText"/> -->
+          
         </div>
       </div>
       <div>
-        <button v-if="this.isDirectReply" id="direct-reply-button" :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">reply</button>
-        <button v-else id="sub-reply-button" :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">reply</button>
+        <button v-if="this.isDirectReply" id="direct-reply-button" :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">Reply</button>
+        <button v-else id="sub-reply-button" :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">Reply</button>
       </div>
   </div>
 </template>
@@ -132,7 +145,32 @@ export default {
 }
 </script>
 <style>
-    .reply-input {
+#reply-to {
+  font-family: "Inter";
+  text-decoration-line: underline;
+  font-weight: bold;
+  font-size: 15px;
+}
+.reply-input {
+  font-family: "Inter";
+  text-indent: 10%;
+  text-align: left;
+}
+#reply-text {
+  border-radius: 5px;
+  height: 85px;
+  font-family: "Inter";
+  display: inline-block;
+  width: 50%;
+  font-size: 15px;
+  padding: 2px 0 0 2px;
+	background-color: rgba(46, 46, 46, 0.2);
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25) inset;
+	color: rgb(0, 0, 0);
+}
+    /* .reply-input {
       text-indent: 10%;
       text-align: left;
     }
@@ -205,5 +243,5 @@ export default {
       border-radius: 10px;
       width: 60px;
       box-shadow: 0 0 5px black;
-    }
+    } */
 </style>

@@ -131,6 +131,12 @@ export default {
 </script>
 
 <style scoped>
+.inline {
+  display: inline-block;
+}
+#forum-name {
+  font-style: italic;
+}
 #forum-posts {
   align-content: center;
 }

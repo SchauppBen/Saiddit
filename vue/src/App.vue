@@ -22,19 +22,30 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@300&display=swap');
+
+#app {
+  background-color: rgb(255, 211, 67);
+  height: 100%;
+}
+
+textarea, input, select {
+  font-family: "inter";
+}
+
 .pink-border {
   border-radius: 10px;
   border: groove;
   border-width: 5px;
   border-color: #ffaeb5;
+  box-shadow: 0 0 5px black;
 }
 
 .title {
   background-color: #ffd3d7;
   text-align: center;
   font-size: 50px;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: "poppins";
   color: #7c9eb7;
   width: 100%;
   margin: 0 10px 0 10px;
@@ -98,6 +109,7 @@ export default {
 }
 
 .forum-name {
+  font-family: "inter";
   font-weight: bold;
 }
 
@@ -145,11 +157,6 @@ export default {
   min-height: calc(100vh - 110px);
 }
 
-#app {
-  
-  background-color: rgb(255, 211, 67);
-  height: 100%;
-}
 .posts {
   padding: 10px;
   border-radius: 10px;

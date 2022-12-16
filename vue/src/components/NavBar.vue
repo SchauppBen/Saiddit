@@ -33,12 +33,15 @@ export default {};
 ul {
   height: calc(100% - 15px);
   list-style: none;
+  font-family: "Inter";
 }
 ul li {
   text-align: left;
 }
 #nav-title {
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: "Poppins";
   color: #7c9eb7;
+  font-weight: bold;
+  font-size: 18px;
 }
 </style>
