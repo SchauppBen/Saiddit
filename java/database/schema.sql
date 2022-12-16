@@ -90,6 +90,7 @@ INSERT INTO users (username,password_hash,role) VALUES ('thomas','$2a$10$o5.Ewr6
 INSERT INTO users (username,password_hash,role) VALUES ('tommy','$2a$10$lqxLRsaMs2jlYS4EpK45DOTRzDO5wvXsuJ4jUj1x75ghHk3LY6rAG','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('kevin','$2a$10$beTSk0ZDcT/2bcYxnzDwdOZak/VCT.45JRwMIG/0s2fHh0CsjZ/zq','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('Annoying_Dad_Joke_Bot','$2y$10$ysXpJBFRQLpmaBsUlp1n3ezOezPIiZfyYlDAtc0UrmaEmkfWF2eoC','ROLE_USER');
+
 INSERT INTO forums (name, description) VALUES ('ducks','We post pictures of ducks here');
 INSERT INTO forums (name, description) VALUES ('trucks','We post pictures of trucks here');
 INSERT INTO forums (name, description) VALUES ('flowers','We post pictures of flowers here');

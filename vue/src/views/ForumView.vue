@@ -59,9 +59,9 @@ export default {
   watch: {
     '$route.params.forumName': { 
       handler: function(newForumName) {
-        console.log("function triggered");
         this.$store.commit("SET_ACTIVE_FORUM", newForumName);
         this.getForumUsers();
+        this.getForums();
       },
       deep: true,
       immediate: true
@@ -69,12 +69,19 @@ export default {
   },
   created() {
     this.$store.commit("SET_ACTIVE_FORUM", this.$route.params.forumName);
-    this.getForumUsers;
+    this.getForumUsers();
+    this.getForums();
   },
   methods: {
     getForumUsers() {
       ForumService.getForumUsers().then((response) => {
         this.$store.commit("SET_FORUM_USERS", response.data);
+      });
+    },
+    getForums() {
+      console.log("triggered get forums method");
+      ForumService.getForums().then((response) => {
+        this.$store.commit("SET_FORUMS", response.data);
       });
     },
     joinForum() {
