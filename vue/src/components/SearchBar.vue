@@ -1,15 +1,15 @@
 <template>
-  <div id="searchBar" class="$info">
-    
-    <form @submit.prevent="search">
-      <font-awesome-icon id="fa-icon" icon="fa-solid fa-magnifying-glass" pull="left" size="lg" />
-      <select name="search" id="searchDropdown" v-model="searchOption">
-        <option value="posts">posts</option>
-        <option value="forums">forums</option>
-        <option value="users">users</option>
+  <div id="search-bar" class="$info">
+    <form class="inline" @submit.prevent="search">
+      <font-awesome-icon id="fa-icon" icon="fa-solid fa-magnifying-glass" pull="left" size="xl" />
+      <select name="search" id="search-drop-down" v-model="searchOption">
+        <option value="posts">Posts</option>
+        <option value="forums">Forums</option>
       </select>
-      <input type="text" name="q" v-model="searchTerm" />&nbsp;
-      <button type="submit" class="button is-danger is-small is-outlined radius-rounded">Search</button>
+      <div class="textbox">
+        <input type="text" name="search" id="search" v-model="searchTerm" />&nbsp;
+      </div>
+      <button type="submit" class="button">Search</button>
     </form>
   </div>
 </template>
@@ -40,13 +40,69 @@ export default {
         }))
       }
     }
-    
   }
 };
 </script>
 
 <style>
+#search-bar {
+  align-content: center;
+}
+
 #fa-icon {
-  margin-right: 7px;
+  margin: 6px 10px 0 0;
+  align-content: center;
+}
+
+.button {
+  height: 37px;
+  border-radius: 5px;
+  background-color: rgb(255, 181, 181);
+  border-color: rgb(87, 87, 87);
+  color: black;
+  margin: 0 0 0 9px;
+}
+
+#search {
+  margin: 0 5px 0 5px;
+}
+
+.inline {
+  display: flex;
+  flex-direction: row;
+}
+
+#search-drop-down {
+  height: 37px;
+  border-radius: 5px;
+  background-color: rgb(255, 181, 181);
+	border-radius: 5px;
+	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25) inset;
+	color: rgb(0, 0, 0);
+  text-align: center;
+  width: 20%;
+}
+ 
+
+.textbox {
+	position: relative;
+	width: 300px;
+}
+.textbox > input[type=text] {
+	width: 100%;
+	padding: 5px;
+	font-size: 20px;
+	background-color: rgba(46, 46, 46, 0.2);
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25) inset;
+	color: rgb(0, 0, 0);
+}
+.resp-textbox > input[type=text]:focus {
+	outline: none;
+	box-shadow: 325px 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+.textbox > input[type=text]::placeholder {
+  color: rgb(0, 0, 0);
 }
 </style>

@@ -1,12 +1,9 @@
 <template>
   <div>
     <h1 class="title pink-border">@{{ this.$route.params.username }}</h1>
-    <post
-      class="post"
-      v-for="post in userPosts"
-      :key="post.postId"
-      :post="post"
-    />
+    <div class="posts">
+      <Post :post="post" v-for="post in userPosts" :key="post.postId" />
+    </div>
   </div>
 </template>
 
@@ -16,7 +13,7 @@ export default {
   components: { Post },
   name: "user-posts",
   props: {
-    post: Object,
+    Post: Object,
   },
   created() {
     this.$store.commit("SET_ACTIVE_FORUM", "");
@@ -34,5 +31,8 @@ export default {
 <style>
 .post {
   margin: 34px 10px 0px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

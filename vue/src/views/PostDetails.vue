@@ -1,12 +1,15 @@
 <template>
   <div class="post-container">
     <h1 class="title pink-border">Post details</h1>
-    <Post :post="post" />
-    <reply-input
-      class="reply-input"
-      :postId="this.post.postId"
-      :isDirectReply="true"
-    />
+    <div class="posts">
+      <Post :post="post" />
+    </div>
+      <reply-input
+        class="reply-input"
+        :postId="this.post.postId"
+        :isDirectReply="true"
+      />
+    
     <!-- v-if is required here to make sure when post details page is rendered, the replies passed in has been updated to a nonzero length rather than its default [] state with 0 elements. Without it here, the replies could be unaccessible the first time post-details page is rendered. -->
     <reply-section
       class="reply-section"
@@ -68,6 +71,7 @@ export default {
 }
 
 .reply-section {
+  align-content: center;
   margin-top: 15px;
   padding-top: 15x;
 }
@@ -80,20 +84,14 @@ export default {
   color: royalblue;
   font-size: 20px;
 }
-.posts {
-  text-align: center;
-  color: #7e96a7;
-  background-color: #c5d6db;
-  border: groove;
-  border-width: 5px;
-  border-color: #76acbd;
-}
+
 .links {
   color: pink;
 }
 .post-container {
   padding: 10px;
 }
+
 #user {
   text-decoration-line: underline;
 }
