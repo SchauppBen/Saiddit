@@ -49,7 +49,7 @@ export default {
         .then((response) => {
           if (response.status === 201) {
             // this.$router.push("/");
-            this.$router.push(`/${this.forum.name}/`);
+            this.$router.push("/");
           }
         })
         .catch((error) => {
