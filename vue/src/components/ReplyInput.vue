@@ -13,7 +13,7 @@
         </div>
       </div>
       <div>
-        <button v-on:click="saveReply()">reply</button>
+        <button :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">reply</button>
       </div>
   </div>
 </template>
@@ -41,34 +41,87 @@ export default {
     },
     computed: {
         reply() {
-            return this.createReply(this.replyInput);
-        }
+          return this.createReply(this.replyInput);
+        },
     },
     methods: {
         createReply(replyInput) {
-            const reply = {};
-            if(this.targetReply.replyId) {
-              console.log("this statement is reached");
-              reply.replyToReplyId = this.targetReply.replyId;
-            } else {
-              reply.replyToReplyId = 0;
+          const reply = {};
+          if(this.targetReply.replyId) {
+            reply.replyToReplyId = this.targetReply.replyId;
+          } else {
+            reply.replyToReplyId = 0;
+          }
+          reply.postId = this.postId;
+          reply.userFrom = this.$store.state.user.id;
+          reply.usernameFrom = this.$store.state.user.username;
+          reply.replyText = replyInput.replyText;
+          reply.mediaLink = replyInput.mediaLink;
+          return reply;
+        },
+        getReplyWithId() {
+          console.log("get reply with id method");
+          let replyWithId = {};
+
+          replyService.getRepliesByPost(this.postId).then((response) => {
+
+            const postReplies = response.data;
+            console.log(postReplies);
+            // find replies retrieved from the database similar to the newly saved one
+            const similarReplies = postReplies.filter(
+              postReply => {
+                console.log(postReply.replyId);
+                let similar = true;
+                if (this.reply.postId != postReply.postId) {
+                  similar = false;
+                } else if (this.reply.userFrom != postReply.userFrom) {
+                  similar = false;
+                } else if (this.reply.replyToReplyId != postReply.replyToReplyId) {
+                  similar = false;
+                } else if (this.reply.replyText != postReply.replyText) {
+                  similar = false;
+                } else if (this.reply.mediaLink != postReply.mediaLink) {
+                  similar = false;
+                }
+                return similar;
+              }
+            );
+            console.log(similarReplies);
+            console.log(similarReplies.length);
+            // if there's only one, that's the one that was just saved
+            if (similarReplies.length == 1) {
+              console.log("this is activated");
+              replyWithId = similarReplies[0];
+
+            // else, find the most recently saved reply
+            } else if (similarReplies.size > 1) {
+              replyWithId = similarReplies.reduce(
+                (accumulator, currentReply) => {
+                  if(accumulator.replyId >= currentReply.replyId) {
+                    return accumulator;
+                  } else {
+                    return currentReply;
+                  }
+                }
+              );
             }
-            reply.postId = this.postId;
-            reply.userFrom = this.$store.state.user.id;
-            reply.usernameFrom = this.$store.state.user.username;
-            reply.replyText = replyInput.replyText;
-            reply.mediaLink = replyInput.mediaLink;
-            return reply;
+
+            console.log(replyWithId);
+
+            this.replyInput = {
+              replyText: "",
+              mediaLink: ""
+            }
+            this.$store.commit("SAVE_REPLY", replyWithId);
+
+            return replyWithId;
+          });
         },
         saveReply() {
-          this.$store.commit("SAVE_REPLY", this.reply);
           replyService.addReply(this.reply)
           .then(response => {
               if (response.status === 201) {
-                  this.replyInput = {
-                    replyText: "",
-                    mediaLink: ""
-                  }
+                  this.getReplyWithId();
               }
           })
           .catch(error => {
