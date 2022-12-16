@@ -1,7 +1,12 @@
 <template>
   <div class="posts">
-    <h3 @click="sortPosts(); changeSortType()">{{this.$store.state.sortByMostRecent ? "Sort by most popular posts." : "Sort by most recent posts"}}</h3>
-    <post class="allPosts" v-for="post in posts" :key="post.id" :post="post" />
+    <h3 @click="changeSortType()">{{this.$store.state.sortByMostRecent ? "Sort by most popular posts." : "Sort by most recent posts"}}</h3>
+    <div v-if="this.$store.state.sortByMostRecent">
+      <post class="allPosts" v-for="post in mostRecentPosts" :key="post.id" :post="post" />
+    </div>
+    <div v-else>
+      <post class="allPosts" v-for="post in mostPopularPosts" :key="post.id" :post="post" />
+    </div>
   </div>
 </template>
 
@@ -20,11 +25,9 @@ export default {
       });
     },
     sortPosts() {
-      if (this.$store.state.sortByMostRecent) {
-        this.sortByMostPopular();
-      } else {
-        this.sortByMostRecent();
-      }
+      this.sortByMostPopular();
+      this.sortByMostRecent();
+      
     },
     sortByMostRecent() {
       const currentPosts = this.$store.state.posts;
@@ -37,8 +40,7 @@ export default {
           return 0;
         }
       });
-      this.$store.commit("CLEAR_POSTS");
-      this.$store.commit("SET_POSTS", currentPosts);
+      this.$store.commit("SET_MOST_RECENT_POSTS", currentPosts);
     },
     changeSortType() {
       this.$store.commit("TOGGLE_SORTED_POSTS");
@@ -54,14 +56,19 @@ export default {
           return 0;
         }
       });
-      this.$store.commit("CLEAR_POSTS");
-      this.$store.commit("SET_POSTS", currentPosts);
+      this.$store.commit("SET_MOST_POPULAR_POSTS", currentPosts);
     }
   },
   computed: {
     posts() {
       return this.$store.state.posts;
     },
+    mostRecentPosts() {
+      return this.$store.state.mostRecentPosts;
+    },
+    mostPopularPosts() {
+      return this.$store.state.mostPopularPosts;
+    }
   },
   mounted() {
     this.getPosts();
