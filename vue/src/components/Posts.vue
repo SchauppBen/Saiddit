@@ -25,6 +25,12 @@ export default {
         this.$store.commit("SET_POSTS", response.data);
         this.sortPosts();
       });
+      this.getAllUserVotes();
+    },
+    getAllUserVotes() {
+      postService.getAllVotesByUser(this.$store.state.user.id).then((response) => {
+        this.$store.commit("SET_ALL_USER_VOTES", response.data);
+      });
     },
     sortPosts() {
       if (this.$store.state.sortByMostRecent) {

@@ -43,6 +43,7 @@ export default new Vuex.Store({
     userUpVotes: [],
     userDownVotes: [],
     postVotes: [],
+    allUserVotes: [],
   },
   mutations: {
     // Authentication Mutations
@@ -139,6 +140,11 @@ export default new Vuex.Store({
     SET_POST_VOTES(state, data) {
       state.postVotes = data;
     },
+
+    SET_ALL_USER_VOTES(state, data) {
+      state.allUserVotes = data;
+    },
+
     DELETE_POST(state, postToDelete) {
       state.posts = state.posts.filter((post) => {
         return post.postId != postToDelete.postId;

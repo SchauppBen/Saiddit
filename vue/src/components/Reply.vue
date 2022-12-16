@@ -106,4 +106,9 @@ export default {
 .sub-replies {
   padding-left: 25px;
 }
+
+.reply {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: #2e6c99;
+}
 </style>
