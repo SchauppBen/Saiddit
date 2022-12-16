@@ -1,6 +1,6 @@
 <template>
   <div class="forumsTab pink-border" id="active">
-    <h2><em>Active Forums</em></h2>
+    <h2><em id="forums">Active Forums</em></h2>
     <ul class="scrollable">
       <li v-for="forum in forums" :key="forum.name">
         <router-link
@@ -44,6 +44,13 @@ export default {
 </script>
 
 <style scoped>
+#forums {
+  font-family: "poppins";
+  font-weight: bold;
+  color: #7c9eb7;
+  font-size: 17px;
+}
+
 #active {
   display: flex;
   flex-direction: column;
@@ -52,6 +59,7 @@ export default {
 h2 {
   text-align: center;
 }
+
 ul {
   position: relative;
   display: flex;
@@ -60,6 +68,6 @@ ul {
   justify-content: space-evenly;
   list-style: none;
   text-align: center;
-  font-family: monospace;
+  font-family: "inter";
 }
 </style>

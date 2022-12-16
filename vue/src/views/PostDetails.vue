@@ -1,6 +1,6 @@
 <template>
   <div class="post-container">
-    <h1 class="title pink-border">Post details</h1>
+    <h1 class="title pink-border">Post Details</h1>
     <div class="posts">
       <Post :post="post" />
     </div>

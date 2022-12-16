@@ -5,7 +5,6 @@
       <p id="saiddit" class="highlighted">saiddit</p>
       </router-link>
     <search-bar class="search-bar" />
-    <chat-logo />
     <div v-if="$store.state.token != ''">
       <font-awesome-icon icon="fa-solid fa-user" size="lg" />   {{ $store.state.user.username }}
     </div>
@@ -17,10 +16,10 @@
 </template>
 
 <script>
-import ChatLogo from "../components/ChatLogo.vue";
 import SearchBar from "../components/SearchBar.vue";
+
 export default {
-  components: { SearchBar, ChatLogo },
+  components: { SearchBar },
 };
 </script>
 
@@ -57,14 +56,13 @@ div {
 }
 #saiddit {
   font-weight: bold;
-  font-size: 30px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 40px;
   height: 100%;
 }
 p {
   font-size: 25px;
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: "Poppins";
   color: #7c9eb7;
-  font-style: italic;
+  font-weight: bold;
 }
 </style>

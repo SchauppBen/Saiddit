@@ -1,15 +1,18 @@
 <template>
   <div>
-      <div class = "reply-input">
+      <div class="reply-input">
         <div>
           <label v-if="this.isDirectReply" for="reply-input">Reply to This Post</label>
           <div v-else >
-            <label v-if="!this.targetReply.deleted" for="reply-input">Reply to {{this.targetReply.  usernameFrom}}</label>
+            <h2>Reply to
+              <label id="reply-to" v-if="!this.targetReply.deleted" for="reply-input">@{{this.targetReply.  usernameFrom}}</label>
+            
             <label v-else for="reply-input">Reply to deleted reply</label>
+            </h2>
           </div>
         </div>
         <div>
-          <input type="text" id="reply-input" name="replyInput" v-model="replyInput.replyText"/>
+          <textarea id="reply-text" v-model="replyInput.replyText" />
         </div>
       </div>
       <div>
@@ -130,13 +133,20 @@ export default {
 }
 </script>
 <style>
-    .reply-input {
-    text-indent: 10%;
-    text-align: left;
-    }
-    #reply-input {
-    display: inline-block;
-    width: 50%;
-    padding:50px 10px;
-    }
+#reply-to {
+  font-family: "Inter";
+  text-decoration-line: underline;
+  font-weight: bold;
+}
+.reply-input {
+  font-family: "Inter";
+  text-indent: 10%;
+  text-align: left;
+}
+#reply-text {
+  font-family: "Inter";
+  display: inline-block;
+  width: 50%;
+  padding:50px 10px;
+}
 </style>
