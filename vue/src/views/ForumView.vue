@@ -170,14 +170,16 @@ export default {
   height: 20px;
 }
 #join-forum {
-  background-color: #7c9eb7;
-  width: 100px;
-  border-radius: 10px;
-  border-color: navy;
-  color: navy;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-style: oblique;
+  height: 40px;
+  border-radius: 5px;
+  background-color: rgb(66, 116, 209);
+  box-shadow: 0 0 10px 2px rgb(144, 183, 255) inset;
+  border-color: rgb(46, 46, 46);
+  color: rgb(206, 231, 255);
+  font-family: "inter";
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0 0 0 15px;
 }
 h3 .title {
   margin-top: -10px;

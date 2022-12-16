@@ -1,7 +1,7 @@
 <template>
   <div v-show="onForumPage" class="forumsTab pink-border" id="forum-users">
     <h2>
-      <em>{{ forum }} Users</em>
+      <em class="forum-users">{{ forum }} Users</em>
     </h2>
     <ul class="scrollable">
       <li v-for="element in forumUsers" :key="element.userId">
@@ -11,6 +11,7 @@
           src="../assets/duckie.png"
         />
         <router-link
+        id="users"
           class="highlighted"
           :to="{ name: 'user-posts', params: { username: element.username } }"
         >
@@ -18,6 +19,7 @@
         </router-link>
 
         <button
+          id="promote"
           type="submit"
           v-if="!element.moderator && userIsModerator"
           v-on:click="promoteToModerator(element)"
@@ -97,6 +99,24 @@ export default {
 h2 {
   text-align: center;
 }
+#promote {
+  height: 30px;
+  border-radius: 5px;
+  background-color: rgb(66, 116, 209);
+  box-shadow: 0 0 10px 2px rgb(144, 183, 255) inset;
+  border-color: rgb(46, 46, 46);
+  color: rgb(206, 231, 255);
+  font-family: "inter";
+  font-weight: bold;
+  font-size: 15px;
+  
+}
+.forum-users {
+  font-family: "poppins";
+  font-weight: bold;
+  color: #7c9eb7;
+  font-size: 18px;
+}
 #forum-users {
   display: flex;
   flex-direction: column;
@@ -110,6 +130,12 @@ ul {
   list-style: none;
   text-align: center;
   font-family: monospace;
+}
+#users {
+  list-style: none;
+  text-align: center;
+  font-family: "inter";
+  height: calc(100% - 15px);
 }
 .mod-logo {
   height: 20px;
