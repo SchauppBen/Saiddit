@@ -1,6 +1,12 @@
 <template>
   <div class="posts">
-    <h3 @click="sortPosts">{{this.$store.state.sortByMostRecent ? "Sort by most popular posts." : "Sort by most recent posts"}}</h3>
+    <h3 @click="sortPosts">
+      {{
+        this.$store.state.sortByMostRecent
+          ? "Sort by most popular posts."
+          : "Sort by most recent posts"
+      }}
+    </h3>
     <post class="allPosts" v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
@@ -59,7 +65,7 @@ export default {
       });
       this.$store.commit("SET_POSTS", currentPosts);
       this.$store.commit("TOGGLE_SORTED_POSTS");
-    }
+    },
   },
   computed: {
     posts() {

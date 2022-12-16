@@ -6,12 +6,13 @@
         <h2 id="user">
           <router-link
             class="highlighted"
-            :to="{ name: 'user-posts', params: { username: post.username } }">
+            :to="{ name: 'user-posts', params: { username: post.username } }"
+          >
             <font-awesome-icon :icon="['fas', 'circle-user']" size="lg" />
             {{ post.username }}
           </router-link>
         </h2>
-        <h2> in </h2>
+        <h2>in</h2>
         <h3>{{ post.datetime }}</h3>
         <h4>
           <router-link
@@ -24,7 +25,7 @@
       </div>
       <div class="posts">
         <router-link
-          style="color:navy;"
+          style="color: navy"
           :to="{
             name: 'post-details',
             params: { forumName: post.forumName, postId: post.postId },
@@ -34,35 +35,83 @@
           <img id="post-image" :src="post.mediaLink" v-show="post.mediaLink" />
           <h3 class="text">{{ post.text }}</h3>
         </router-link>
-      <div class="inline">
-
-        <!-- Up-vote & down-vote buttons -->
+        <div class="inline">
+          <!-- Up-vote & down-vote buttons -->
           <div class="votes">
-            <div class="up-vote">
-              <button @mouseover="isUpActive=true" @mouseleave="isUpActive=false" @click="upClick=!upClick; downClick=false; upVote()" class="ui button toggle" >
-                <i v-if="toggleUp(upClick) == false && isUpActive == false" >
-                    <font-awesome-icon :icon="['far', 'circle-up']" size="lg" class="up-color" />
+            <!-- <div class="up-vote">
+              <button
+                @mouseover="isUpActive = true"
+                @mouseleave="isUpActive = false"
+                @click="
+                  upClick = !upClick;
+                  downClick = false;
+                  upVote();
+                "
+                class="ui button toggle"
+              >
+                <i v-if="toggleUp(upClick) == false && isUpActive == false">
+                  <font-awesome-icon
+                    :icon="['far', 'circle-up']"
+                    size="lg"
+                    class="up-color"
+                  />
                 </i>
                 <span v-else>
-                    <font-awesome-icon :icon="['fas', 'circle-up']" size="lg" class="up-color" />
-                </span>
-              </button>{{getUpVotes}}
+                  <font-awesome-icon
+                    :icon="['fas', 'circle-up']"
+                    size="lg"
+                    class="up-color"
+                  />
+                </span></button
+              >{{ getUpVotes }}
             </div>
             <div class="down-vote">
-              <button @mouseover="isDownActive=true" @mouseleave="isDownActive=false" @click="downClick=!downClick; upClick=false; downVote()" class="ui button toggle" >
-                <i v-if="toggleDown(downClick) == false && isDownActive == false" >
-                  <font-awesome-icon :icon="['far', 'circle-down']" size="lg" class="down-color" />
+              <button
+                @mouseover="isDownActive = true"
+                @mouseleave="isDownActive = false"
+                @click="
+                  downClick = !downClick;
+                  upClick = false;
+                  downVote();
+                "
+                class="ui button toggle"
+              >
+                <i
+                  v-if="toggleDown(downClick) == false && isDownActive == false"
+                >
+                  <font-awesome-icon
+                    :icon="['far', 'circle-down']"
+                    size="lg"
+                    class="down-color"
+                  />
                 </i>
                 <span v-else>
-                  <font-awesome-icon :icon="['fas', 'circle-down']" size="lg" class="down-color" />
-                </span>
-              </button>{{getDownVotes}}
-            </div>
+                  <font-awesome-icon
+                    :icon="['fas', 'circle-down']"
+                    size="lg"
+                    class="down-color"
+                  />
+                </span></button
+              >{{ getDownVotes }}
+            </div> -->
 
             <!-- Delete post button -->
-            <div>
-              <button class="delete-btn" v-if="this.post.userId == this.$store.state.user.id" @click="doDelete()">
-                <font-awesome-icon class="delete-color" :icon="['fas', 'trash-can']" size="lg" />
+            <VoteTest :post="post" id="voteTest" />
+            <div id="votes-and-delete">
+              <button
+                class="delete-btn"
+                v-if="
+                  this.post.userId == this.$store.state.user.id ||
+                  userIsModerator() ||
+                  this.$store.state.user.username === 'admin'
+                "
+                @click="doDelete()"
+              >
+                <font-awesome-icon
+                  class="delete-color"
+                  :icon="['fas', 'trash-can']"
+                  size="lg"
+                />
               </button>
               <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
             </div>
@@ -74,12 +123,13 @@
 </template>
 
 <script>
-import postService from '../services/PostService.js';
-import ConfirmDialogue from '../components/ConfirmDialogue.vue';
+import postService from "../services/PostService.js";
+import ConfirmDialogue from "../components/ConfirmDialogue.vue";
+import VoteTest from "./VoteTest.vue";
 // import Votes from './Votes.vue'
 
 export default {
-  components: { ConfirmDialogue },
+  components: { ConfirmDialogue, VoteTest },
   name: "post",
   props: {
     post: Object,
@@ -188,9 +238,10 @@ export default {
     },
     async doDelete() {
       const ok = await this.$refs.confirmDialogue.show({
-        title: 'Delete Post',
-        message: 'Are you sure you want to delete this post? It cannot be undone.',
-        okButton: 'Delete',
+        title: "Delete Post",
+        message:
+          "Are you sure you want to delete this post? It cannot be undone.",
+        okButton: "Delete",
       });
       // If you throw an error, the method will terminate here unless you surround it wil try/catch
       if (ok) {
@@ -199,15 +250,15 @@ export default {
     },
     setVotedPosts() {
       if (this.userId !== undefined) {
-          this.$store.state.allUserVotes.forEach((vote) => {
-            if (vote.upvote) {
-              this.$store.commit("ADD_UPVOTED_POSTS", vote.postId);
-            } else {
-              this.$store.commit("ADD_DOWNVOTED_POSTS", vote.postId);
-            }
-            this.hasUserVotedOnPost();
-          });
-        }
+        this.$store.state.allUserVotes.forEach((vote) => {
+          if (vote.upvote) {
+            this.$store.commit("ADD_UPVOTED_POSTS", vote.postId);
+          } else {
+            this.$store.commit("ADD_DOWNVOTED_POSTS", vote.postId);
+          }
+          this.hasUserVotedOnPost();
+        });
+      }
     },
     hasUserVotedOnPost() {
       if (this.userId !== undefined) {
@@ -215,8 +266,7 @@ export default {
           this.userUpVoted = true;
           this.userInitiallyUpvoted = true;
           this.$store.commit("SUBTRACT_VOTE_COUNT_FOR_POST", this.post.postId);
-        }
-         else if (this.$store.state.userDownVotes.includes(this.post.postId)) {
+        } else if (this.$store.state.userDownVotes.includes(this.post.postId)) {
           this.userDownVoted = true;
           this.userInitiallyDownvoted = true;
           this.$store.commit("ADD_VOTE_COUNT_FOR_POST", this.post.postId);
@@ -233,6 +283,9 @@ export default {
     });
   },
   computed: {
+    amIAModerator() {
+      return this.userIsModerator();
+    },
     getUpVotes() {
       if (this.userUpVoted) {
         return this.initialUpVotes + 1;
@@ -282,6 +335,17 @@ export default {
 </script>
 
 <style scoped>
+#up-votes {
+  display: flex;
+}
+#votes-and-delete {
+  display: flex;
+  flex: 1;
+}
+#voteTest {
+  display: flex;
+  flex: 1;
+}
 .link-color {
   text-decoration-color: none;
 }
@@ -313,10 +377,19 @@ button {
   font-weight: bold;
 }
 
-.inline, .votes {
+.inline,
+.votes {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+.up-vote {
+  display: flex;
+  align-items: center;
+}
+.down-vote {
+  display: flex;
+  align-items: center;
 }
 
 .highlighted {

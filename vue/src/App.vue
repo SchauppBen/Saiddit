@@ -101,7 +101,7 @@ textarea, input, select {
   padding: 0.5em 1em;
   background-color: transparent;
   background-repeat: no-repeat;
-  color: rgb(24, 24, 24);
+  color: rgb(23, 31, 138);
   font-weight: bold;
   font-size: 16px;
   text-transform: uppercase;
