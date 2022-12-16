@@ -2,18 +2,20 @@
   <div>
       <div class = "reply-input">
         <div>
-          <label v-if="this.isDirectReply" for="reply-input">Reply to This Post</label>
-          <div v-else >
-            <label v-if="!this.targetReply.deleted" for="reply-input">Reply to {{this.targetReply.  usernameFrom}}</label>
-            <label v-else for="reply-input">Reply to deleted reply</label>
+          <label v-if="this.isDirectReply" class="direct-reply-label" for="direct-reply-input">Reply to This Post</label>
+          <div v-else>
+            <label class="sub-reply-label" v-if="!this.targetReply.deleted" for="sub-reply-input">Reply to {{this.targetReply.  usernameFrom}}</label>
+            <label class="sub-reply-label" v-else for="sub-reply-input">Reply to deleted reply</label>
           </div>
         </div>
         <div>
-          <input type="text" id="reply-input" name="replyInput" v-model="replyInput.replyText"/>
+          <input v-if="this.isDirectReply" type="text" id="direct-reply-input" name="directReplyInput" v-model="replyInput.replyText"/>
+          <input v-else type="text" id="sub-reply-input" name="subReplyInput" v-model="replyInput.replyText"/>
         </div>
       </div>
       <div>
-        <button :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">reply</button>
+        <button v-if="this.isDirectReply" id="direct-reply-button" :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">reply</button>
+        <button v-else id="sub-reply-button" :disabled="this.reply.replyText.length == 0" v-on:click="saveReply()">reply</button>
       </div>
   </div>
 </template>
@@ -131,12 +133,77 @@ export default {
 </script>
 <style>
     .reply-input {
-    text-indent: 10%;
-    text-align: left;
+      text-indent: 10%;
+      text-align: left;
     }
-    #reply-input {
-    display: inline-block;
-    width: 50%;
-    padding:50px 10px;
+    .direct-reply-label {
+      display: inline-block;
+      width: 300px;
+      margin: .5% 2% .5% 5%;
+      padding:5px 5px 5px 5px ;
+      font-family: Georgia, "Times New Roman", Times, serif;
+      color: #2e6c99;
+      align-content: center;
+    }
+    #direct-reply-input {
+      display: block;
+      margin: auto;
+      padding:10px 10px 50px 15px ;
+      border: groove;
+      border-width: 5px;
+      border-color: #76acbd;
+      background-color: #c5d6db;
+      border-radius: 10px;
+      width: 65%;
+      box-shadow: 0 0 5px black;
+
+    }
+    #direct-reply-button {
+      display: inline-block;
+      margin: 1% 2% 1% 7.5%;
+      padding:5px 5px 5px 5px ;
+      align-content: center;
+      border: groove;
+      border-width: 5px;
+      border-color: #76acbd;
+      background-color: #c5d6db;
+      border-radius: 10px;
+      width: 60px;
+      box-shadow: 0 0 5px black;
+    }
+
+    .sub-reply-label {
+      display: block;
+      align-content: left;
+      width: 300px;
+      margin: 5px 5px 5px 6.8%;
+      padding:5px 5px 5px 5px ;
+      font-family: Georgia, "Times New Roman", Times, serif;
+      color: #2e6c99;
+    }
+    #sub-reply-input {
+      display: inline-block;
+      padding:10px 10px 25px 15px ;
+      border: groove;
+      border-width: 5px;
+      border-color: #76acbd;
+      background-color: #c5d6db;
+      border-radius: 10px;
+      width: 45%;
+      box-shadow: 0 0 5px black;
+
+    }
+    #sub-reply-button {
+      display: block;
+      margin: 1% 2% 1% 10%;
+      padding:5px 5px 5px 5px ;
+      align-content: center;
+      border: groove;
+      border-width: 5px;
+      border-color: #76acbd;
+      background-color: #c5d6db;
+      border-radius: 10px;
+      width: 60px;
+      box-shadow: 0 0 5px black;
     }
 </style>
