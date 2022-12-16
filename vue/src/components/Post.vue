@@ -45,6 +45,7 @@
                 @click="
                   upClick = !upClick;
                   downClick = false;
+                  upVote();
                 "
                 class="ui button toggle"
               >
@@ -71,6 +72,7 @@
                 @click="
                   downClick = !downClick;
                   upClick = false;
+                  downVote();
                 "
                 class="ui button toggle"
               >
